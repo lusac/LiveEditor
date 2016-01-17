@@ -36,8 +36,15 @@ window.cont = 0;
         document.addEventListener('domOutlineOnClick', function (e) {
             self.setCurrentElement(self.domOutline.element);
             self.openCurrentSettings();
+            self.domOutline.pause();
         }, false);
 
+        this.$editor.contents().find('html').on('click', function(e) {
+            if (e.toElement != liveEditor.$currentSelected[0]) {
+                $('#floating-settings').remove();
+                self.domOutline.start();
+            }
+        });
     };
 
     LiveEditor.prototype.sendEventOnClick = function () {

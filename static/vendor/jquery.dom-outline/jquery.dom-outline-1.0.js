@@ -61,14 +61,15 @@ var DomOutline = function (options) {
         if (self.initialized !== true) {
             css +=
                 '.' + self.opts.namespace + ' {' +
-                '    background: rgba(0, 153, 204, 0.5);' +
+                '    background: rgba(0, 153, 204, 0.05);' +
                 '    position: absolute;' +
                 '    z-index: 1000000;' +
                 '    pointer-events: none;' +
+                '    outline: 3px solid rgb(0, 153, 204);' +
                 '}' +
                 '.' + self.opts.namespace + '_label {' +
                 '    background: #09c;' +
-                '    border-radius: 2px;' +
+                '    boroutlineder-radius: 2px;' +
                 '    color: #fff;' +
                 '    font: bold 12px/12px Helvetica, sans-serif;' +
                 '    padding: 4px 6px;' +
@@ -78,10 +79,12 @@ var DomOutline = function (options) {
                 '    pointer-events: none;' +
                 '}' +
                 '.' + self.opts.namespace + '_box {' +
-                '    background: rgba(0, 153, 204, 0.5);' +
+                '    background: rgba(0, 153, 204, 0.05);' +
                 '    position: absolute;' +
                 '    z-index: 1000000;' +
                 '    pointer-events: none;' +
+                '    outline: 3px solid rgb(0, 153, 204);' +
+                '    box-shadow: 6px 6px 2px rgba(0, 0, 0, 0.2);' +
                 '}';
 
             writeStylesheet(css);
@@ -160,10 +163,10 @@ var DomOutline = function (options) {
             self.elements.right.css({ top: top - b, left: pos.left + pos.width, width: b, height: pos.height + (b * 2) });
         } else {
             self.elements.box.css({
-                top: pos.top + self.opts.initialPosition.top,
-                left: pos.left + self.opts.initialPosition.left,
-                width: pos.width,
-                height: pos.height
+                top: pos.top + self.opts.initialPosition.top - 1,
+                left: pos.left + self.opts.initialPosition.left - 1,
+                width: pos.width + 2,
+                height: pos.height + 2
             });
         }
     }
@@ -177,6 +180,7 @@ var DomOutline = function (options) {
     }
 
     pub.start = function () {
+        removeOutlineElements();
         initStylesheet();
         if (self.active !== true) {
             self.active = true;
@@ -198,6 +202,13 @@ var DomOutline = function (options) {
     pub.stop = function () {
         self.active = false;
         removeOutlineElements();
+        self.opts.elem.unbind('mousemove.' + self.opts.namespace)
+            .unbind('keyup.' + self.opts.namespace)
+            .unbind('click.' + self.opts.namespace);
+    };
+
+    pub.pause = function () {
+        self.active = false;
         self.opts.elem.unbind('mousemove.' + self.opts.namespace)
             .unbind('keyup.' + self.opts.namespace)
             .unbind('click.' + self.opts.namespace);
