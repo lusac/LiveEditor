@@ -111,12 +111,28 @@
                 name: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: $DomOutlineBox.offset().left + $DomOutlineBox.width(),
                 posTop: $DomOutlineBox.offset().top,
-                container: this.getCurrentParentPath()
+                container: this.containerFormat()
             });
             floatingMenu.open();
         } else {
             console.log('No item has been selected...');
         }
+    };
+
+    LiveEditor.prototype.containerFormat = function () {
+        var pathList = this.getCurrentParentPath(),
+            _list = [];
+
+        for (var i=0; i <= pathList.length - 1; i++) {
+            if (pathList[i].tagName) {
+                _list.push({
+                    'value': pathList[i].tagName.toLowerCase(),
+                    'name': this.getElementPath(pathList[i])
+                });
+            }
+        }
+
+        return _list;
     };
 
     LiveEditor.prototype.operationInit = function (operation) {

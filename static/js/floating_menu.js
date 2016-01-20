@@ -17,9 +17,22 @@
         var name = params.name || '(element)',
             posTop = params.posTop || 0,
             posLeft = params.posLeft || 0,
-            menuHtml = this.newItem({name: name, is_header: true});
+            menuHtml = this.newItem({name: name, is_header: true}),
+            editList = [{
+                operation: 'edit-html',
+                value: 'Edit HTML', 
+            },{
+                operation: 'edit-text',
+                value:'Edit Text'
+            },{
+                operation: 'edit-classes',
+                value:'Edit Classes'
+            }, {
+                operation: 'edit-style',
+                value:'Edit Style'
+            }];
 
-        menuHtml += this.newItem({name: 'Edit Element', operation: 'edit-element'});
+        menuHtml += this.newItem({name: 'Edit Element', operation: 'edit-element', items: editList});
         menuHtml += this.newItem({klass: 'divider'});
         menuHtml += this.newItem({name: 'Move and Resize', operation: 'move-and-resize'});
         menuHtml += this.newItem({name: 'Remove', operation: 'remove'});
@@ -41,6 +54,7 @@
             if (op) {
                 var _event = new CustomEvent('floatingMenuItemClicked', {'detail': {'operation': op}});
                 document.dispatchEvent(_event);
+                console.log('Operation: ' + op);
             }
         });
     };
@@ -73,19 +87,25 @@
         }
 
         if (params.items) {
-            var menuHtml = '<ul class="dropdown-menu">';
+            var $subMenu = $('<ul class="dropdown-menu">');
 
             for (var i=0; i<=params.items.length-1; i++) {
-                var tagName = params.items[i].tagName;
-                if (tagName) {
-                    menuHtml += '<li class="container-item-el"><a tabindex="-1" href="#">' + tagName.toLowerCase() + '</a></li>';
+                var $_li = $('<li class="container-item-el">');
+
+                if (params.items[i].operation) {
+                    $_li.attr('data-operation', params.items[i].operation);
                 }
+
+                if (params.items[i].name) {
+                    $_li.attr('data-name', params.items[i].name);
+                }
+
+                $_li.append('<a tabindex="-1" href="#">' + params.items[i].value + '</a>');
+                $subMenu.append($_li);
             }
 
-            menuHtml += '</ul>';
-
             $li.addClass('dropdown-submenu');
-            $li.append(menuHtml);
+            $li.append($subMenu);
         }
 
         return $li.prop('outerHTML');
