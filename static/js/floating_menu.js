@@ -35,7 +35,9 @@
 
     FloatingMenu.prototype.bindEvents = function () {
         this.$menu.on('click', 'li', function(e) {
-            console.log('Item clicked');
+            var operation = $(e.toElement).parent().data('operation'),
+                _event = new CustomEvent('floatingMenuItemClicked', {'detail': {'operation': operation}});
+            document.dispatchEvent(_event);
         });
     };
 
