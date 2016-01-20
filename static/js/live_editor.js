@@ -99,7 +99,7 @@
             });
             floatingMenu.open();
         } else {
-            console.log('No item was been selected...');
+            console.log('No item has been selected...');
         }
     };
 
