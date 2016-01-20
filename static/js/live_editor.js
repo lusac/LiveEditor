@@ -12,6 +12,7 @@
     LiveEditor.prototype.init = function (params) {
         this.initVars(params);
         this.domOutlineInit();
+        this.floatingMenuInit();
         this.bindEvents();
     };
 
@@ -28,6 +29,10 @@
             initialPosition: this.$editor.offset()
         });
         this.domOutline.start();
+    };
+
+    LiveEditor.prototype.floatingMenuInit = function () {
+        window.floatingMenu = new FloatingMenu();
     };
 
     LiveEditor.prototype.bindEvents = function () {
@@ -54,7 +59,7 @@
     LiveEditor.prototype.setCurrentElement = function (elem) {
         this.currentSelected = this.getElementPath(elem);
         this.$currentSelected = this.$editor.contents().find(this.currentSelected);
-        console.log("Current: " +  this.currentSelected);
+        console.log('Current: ' +  this.currentSelected);
     };
 
     LiveEditor.prototype.getElementPath = function (elem) {
@@ -85,28 +90,16 @@
 
     LiveEditor.prototype.openCurrentSettings = function () {
         if (this.currentSelected) {
-            console.log('Opening float settings...');
+            var $DomOutlineBox = $('.DomOutline_box');
 
-            var $DomOutlineBox = $('.DomOutline_box'),
-                name = this.$currentSelected.prop("tagName").toLowerCase(),
-                menuHtml = '<ul id="floating-settings" class="dropdown-menu" role="menu">';
-                    menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#"> (' + name + ') </a></li>';
-                    menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit Element</a></li>';
-                    menuHtml += '<li role="presentation" class="divider"></li>';
-                    menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Move and Resize</a></li>';
-                    menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Remove</a></li>    '
-                    menuHtml += '<li role="presentation" class="divider"></li>';
-                    menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select Container</a></li>    '
-                menuHtml += '</ul>';
-            $('#floating-settings').remove();
-            $('body').append(menuHtml);
-            $("#floating-settings").css({
-                top: $DomOutlineBox.offset().top - 10,
-                left: $DomOutlineBox.offset().left + $DomOutlineBox.width() + 10
+            floatingMenu.create({
+                name: this.$currentSelected.prop('tagName').toLowerCase(),
+                posLeft: $DomOutlineBox.offset().left + $DomOutlineBox.width(),
+                posTop: $DomOutlineBox.offset().top
             });
-            $("#floating-settings").show();
+            floatingMenu.open();
         } else {
-            console.log('No item was selected...');
+            console.log('No item was been selected...');
         }
     };
 
