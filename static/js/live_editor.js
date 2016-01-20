@@ -19,6 +19,7 @@
     LiveEditor.prototype.initVars = function (params) {
         this.$editor = $(params.editor).find('iframe');
         this.domOutline = null;
+        this.scriptList = [];
     };
 
     LiveEditor.prototype.domOutlineInit = function () {
@@ -42,6 +43,10 @@
             self.setCurrentElement(self.domOutline.element);
             self.openCurrentSettings();
             self.domOutline.pause();
+        }, false);
+
+        document.addEventListener('floatingMenuItemClicked', function (e) {
+            self.operationInit(e.detail.operation);
         }, false);
 
         this.$editor.contents().find('html').on('click', function(e) {
@@ -102,6 +107,25 @@
             console.log('No item has been selected...');
         }
     };
+
+    LiveEditor.prototype.operationInit = function (operation) {
+        if (operation === 'remove') {
+            this.currentSelectedRemove();
+        }
+
+        this.domOutline.start();
+        floatingMenu.close();
+    };
+
+    LiveEditor.prototype.currentSelectedRemove = function () {
+        var str = '$("' + this.currentSelected + '").remove()';
+        this.addToScript(str);
+        this.$editor.contents().find(this.currentSelected).remove();
+    }
+
+    LiveEditor.prototype.addToScript = function (str) {
+        this.scriptList.push(str);
+    }
 
     window.LiveEditor = LiveEditor;
 })(window, document, $);
