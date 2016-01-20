@@ -51,7 +51,7 @@
     };
 
     FloatingMenu.prototype.newItem = function (params) {
-        var $li = $('<li role="presentation">');
+        var $li = $('<li>');
 
         if (params.operation) {
             $li.attr('data-operation', params.operation);
@@ -61,7 +61,7 @@
             $li.addClass('dropdown-header')
                .append('(' + params.name + ')');
         } else if (params.name) {
-            $li.append('<a role="menuitem" tabindex="-1" href="#">' + params.name + '</a>');
+            $li.append('<a tabindex="-1" href="#">' + params.name + '</a>');
         }
 
         if (params.klass) {
