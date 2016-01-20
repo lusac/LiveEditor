@@ -93,6 +93,16 @@
         return path;
     };
 
+    LiveEditor.prototype.getCurrentParentPath = function () {
+        var a = this.$currentSelected[0];
+        var els = [];
+        while (a) {
+            els.unshift(a);
+            a = a.parentNode;
+        }
+        return els
+    };
+
     LiveEditor.prototype.openCurrentSettings = function () {
         if (this.currentSelected) {
             var $DomOutlineBox = $('.DomOutline_box');
@@ -100,7 +110,8 @@
             floatingMenu.create({
                 name: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: $DomOutlineBox.offset().left + $DomOutlineBox.width(),
-                posTop: $DomOutlineBox.offset().top
+                posTop: $DomOutlineBox.offset().top,
+                container: this.getCurrentParentPath()
             });
             floatingMenu.open();
         } else {

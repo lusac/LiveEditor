@@ -24,7 +24,7 @@
         menuHtml += this.newItem({name: 'Move and Resize', operation: 'move-and-resize'});
         menuHtml += this.newItem({name: 'Remove', operation: 'remove'});
         menuHtml += this.newItem({klass: 'divider'});
-        menuHtml += this.newItem({name: 'Select Container', operation: 'select-container'});
+        menuHtml += this.newItem({name: 'Select Container', items: params.container});
 
         this.$menu.append(menuHtml);
         this.$menu.css({
@@ -35,9 +35,13 @@
 
     FloatingMenu.prototype.bindEvents = function () {
         this.$menu.on('click', 'li', function(e) {
-            var operation = $(e.toElement).parent().data('operation'),
-                _event = new CustomEvent('floatingMenuItemClicked', {'detail': {'operation': operation}});
-            document.dispatchEvent(_event);
+            var $el = $(e.toElement).parent(),
+                op = $el.data('operation');
+
+            if (op) {
+                var _event = new CustomEvent('floatingMenuItemClicked', {'detail': {'operation': op}});
+                document.dispatchEvent(_event);
+            }
         });
     };
 
@@ -66,6 +70,22 @@
 
         if (params.klass) {
             $li.addClass(params.klass);
+        }
+
+        if (params.items) {
+            var menuHtml = '<ul class="dropdown-menu">';
+
+            for (var i=0; i<=params.items.length-1; i++) {
+                var tagName = params.items[i].tagName;
+                if (tagName) {
+                    menuHtml += '<li class="container-item-el"><a tabindex="-1" href="#">' + tagName.toLowerCase() + '</a></li>';
+                }
+            }
+
+            menuHtml += '</ul>';
+
+            $li.addClass('dropdown-submenu');
+            $li.append(menuHtml);
         }
 
         return $li.prop('outerHTML');
