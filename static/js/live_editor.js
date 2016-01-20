@@ -46,7 +46,7 @@
 
         this.$editor.contents().find('html').on('click', function(e) {
             if (e.toElement != liveEditor.$currentSelected[0]) {
-                $('#floating-settings').remove();
+                floatingMenu.close();
                 self.domOutline.start();
             }
         });

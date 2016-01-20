@@ -9,6 +9,7 @@
 
     FloatingMenu.prototype.init = function (params) {
         this.$menu = $('<ul id="floating-settings" class="dropdown-menu" role="menu">');
+        $('body').append(this.$menu);
     };
 
     FloatingMenu.prototype.create = function (params) {
@@ -23,22 +24,20 @@
             menuHtml += '<li role="presentation" class="divider"></li>';
             menuHtml += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select Container</a></li>';
 
-        this.$menu.empty();
         this.$menu.append(menuHtml);
         this.$menu.css({
             top: posTop - 10,
             left: posLeft + 10
         });
-
-        $('body').append(this.$menu);
     };
 
     FloatingMenu.prototype.open = function () {
-        $('#floating-settings').show();
+        this.$menu.show();
     };
 
     FloatingMenu.prototype.close = function () {
-        $('#floating-settings').hide();
+        this.$menu.hide();
+        this.$menu.empty();
     };
 
     window.FloatingMenu = FloatingMenu;
