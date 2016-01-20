@@ -1,5 +1,5 @@
 /* global $ */
-window.cont = 0;
+
 (function (window, document, $) {
     'use strict';
 
