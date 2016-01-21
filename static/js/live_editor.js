@@ -18,6 +18,7 @@
 
     LiveEditor.prototype.initVars = function (params) {
         this.$editor = $(params.editor).find('iframe');
+        this.$codePainel = $('#code-painel').find('textarea');
         this.domOutline = null;
         this.scriptList = [];
     };
@@ -142,17 +143,22 @@
 
         this.domOutline.start();
         floatingMenu.close();
+        this.codePainelUpdate();
     };
 
     LiveEditor.prototype.currentSelectedRemove = function () {
-        var str = '$("' + this.currentSelected + '").remove()';
+        var str = '$("' + this.currentSelected + '").remove();';
         this.addToScript(str);
         this.$editor.contents().find(this.currentSelected).remove();
-    }
+    };
 
     LiveEditor.prototype.addToScript = function (str) {
         this.scriptList.push(str);
-    }
+    };
+
+    LiveEditor.prototype.codePainelUpdate = function () {
+        this.$codePainel.html(this.scriptList);
+    };
 
     window.LiveEditor = LiveEditor;
 })(window, document, $);

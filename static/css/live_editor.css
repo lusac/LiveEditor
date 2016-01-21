@@ -18,3 +18,26 @@
     background: #FFF;
     position: absolute;
 }
+
+.code-painel-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.code-painel {
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    position: absolute !important;
+}
+
+.code-painel .well {
+    margin: 0;
+}
+
+.code-painel-buttons {
+    top: 200px;
+    right: 20px;
+    position: absolute;
+}
