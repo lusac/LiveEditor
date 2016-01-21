@@ -56,6 +56,8 @@
                 document.dispatchEvent(_event);
                 console.log('Operation: ' + op);
             }
+
+            e.stopPropagation();
         });
     };
 
