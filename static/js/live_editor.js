@@ -69,8 +69,6 @@
     };
 
     LiveEditor.prototype.getElementPath = function (elem) {
-        console.log('Getting element path...: ' + elem);
-
         if (elem.length != 1)
             elem = $(elem);
 
