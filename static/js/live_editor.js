@@ -19,6 +19,7 @@
     LiveEditor.prototype.initVars = function (params) {
         this.$editor = $(params.editor).find('iframe');
         this.$codePainel = $('#code-painel').find('textarea');
+        this.$editHtmlModal = $('#edit-html');
         this.domOutline = null;
         this.scriptList = [];
     };
@@ -55,6 +56,15 @@
                 floatingMenu.close();
                 self.domOutline.start();
             }
+        });
+
+        // Modals
+
+        this.$editHtmlModal.on('show.bs.modal', function (event) {
+            var modal = $(this),
+                html = self.$currentSelected[0].outerHTML;
+
+            modal.find('.modal-body textarea').val(html);
         });
     };
 
@@ -125,8 +135,10 @@
         for (var i=0; i <= pathList.length - 1; i++) {
             if (pathList[i].tagName) {
                 _list.push({
-                    'value': pathList[i].tagName.toLowerCase(),
-                    'name': this.getElementPath(pathList[i])
+                    value: pathList[i].tagName.toLowerCase(),
+                    attrs: {
+                        'name': this.getElementPath(pathList[i])
+                    }
                 });
             }
         }

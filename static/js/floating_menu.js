@@ -19,20 +19,30 @@
             posLeft = params.posLeft || 0,
             menuHtml = this.newItem({name: name, is_header: true}),
             editList = [{
-                operation: 'edit-html',
-                value: 'Edit HTML', 
+                value: 'Edit HTML',
+                attrs: {
+                    'operation': 'edit-html',
+                    'data-toggle': 'modal', 
+                    'data-target':'#edit-html'
+                }
             },{
-                operation: 'edit-text',
-                value:'Edit Text'
+                value: 'Edit Text',
+                attrs: {
+                    'operation': 'edit-text'
+                }
             },{
-                operation: 'edit-classes',
-                value:'Edit Classes'
+                value: 'Edit Classes',
+                attrs: {
+                    'operation': 'edit-classes'
+                }
             }, {
-                operation: 'edit-style',
-                value:'Edit Style'
+                value: 'Edit Style',
+                attrs: {
+                    'operation': 'edit-style'
+                }
             }];
 
-        menuHtml += this.newItem({name: 'Edit Element', operation: 'edit-element', items: editList});
+        menuHtml += this.newItem({name: 'Edit Element', operation: 'edit-element', items: editList });
         menuHtml += this.newItem({klass: 'divider'});
         menuHtml += this.newItem({name: 'Move and Resize', operation: 'move-and-resize'});
         menuHtml += this.newItem({name: 'Remove', operation: 'remove'});
@@ -57,7 +67,7 @@
                 console.log('Operation: ' + op);
             }
 
-            e.stopPropagation();
+            // e.stopPropagation();
         });
     };
 
@@ -94,13 +104,7 @@
             for (var i=0; i<=params.items.length-1; i++) {
                 var $_li = $('<li class="container-item-el">');
 
-                if (params.items[i].operation) {
-                    $_li.attr('data-operation', params.items[i].operation);
-                }
-
-                if (params.items[i].name) {
-                    $_li.attr('data-name', params.items[i].name);
-                }
+                $_li.attr(params.items[i].attrs);
 
                 $_li.append('<a tabindex="-1" href="#">' + params.items[i].value + '</a>');
                 $subMenu.append($_li);
