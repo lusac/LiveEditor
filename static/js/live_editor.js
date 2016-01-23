@@ -183,7 +183,6 @@
 
     LiveEditor.prototype.addToScript = function (str) {
         this.scriptList.push(str);
-        debugger;
     };
 
     LiveEditor.prototype.codePainelUpdate = function () {
