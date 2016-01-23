@@ -42,7 +42,7 @@
                 }
             }];
 
-        menuHtml += this.newItem({name: 'Edit Element', operation: 'edit-element', items: editList });
+        menuHtml += this.newItem({name: 'Edit Element', items: editList });
         menuHtml += this.newItem({klass: 'divider'});
         menuHtml += this.newItem({name: 'Move and Resize', operation: 'move-and-resize'});
         menuHtml += this.newItem({name: 'Remove', operation: 'remove'});
