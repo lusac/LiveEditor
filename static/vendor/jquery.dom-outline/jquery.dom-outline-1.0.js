@@ -84,7 +84,7 @@ var DomOutline = function (options) {
                 '}' +
                 '.' + self.opts.namespace + '_box {' +
                 '    background: rgba(0, 153, 204, 0.05);' +
-                '    position: fixed;' +
+                '    position: absolute;' +
                 '    z-index: 1000000;' +
                 '    pointer-events: none;' +
                 '    outline: 3px solid rgb(0, 153, 204);' +
@@ -167,7 +167,7 @@ var DomOutline = function (options) {
             self.elements.right.css({ top: top - b, left: pos.left + pos.width, width: b, height: pos.height + (b * 2) });
         } else {
             self.elements.box.css({
-                top: pos.top - 1,
+                top: self.opts.$elem.scrollTop() + pos.top - 1,
                 left: pos.left - 1,
                 width: pos.width + 2,
                 height: pos.height + 2
