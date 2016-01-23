@@ -16,6 +16,7 @@
  * myDomOutline.start();
  * myDomOutline.stop();
  */
+ 
 var DomOutline = function (options) {
     'use strict';
 
@@ -25,11 +26,8 @@ var DomOutline = function (options) {
         self = {
             opts: {
                 namespace: options.namespace || 'DomOutline',
-                borderWidth: options.borderWidth || 2,
                 onClick: options.onClick || false,
-                border: options.border || false,
                 realtime: options.realtime || false,
-                label: options.label || false,
                 $elem: options.elem || jQuery('body')
             },
             keyCodes: {
@@ -97,7 +95,6 @@ var DomOutline = function (options) {
     }
 
     function createOutlineElements() {
-        self.elements.label = jQuery('<div>').addClass(self.opts.namespace + '_label').appendTo(self.opts.$elem);
         self.elements.top = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
         self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
         self.elements.left = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
@@ -112,18 +109,8 @@ var DomOutline = function (options) {
         });
     }
 
-    function compileLabelText(element, width, height) {
-        var label = element.tagName.toLowerCase();
-        if (element.id) {
-            label += '#' + element.id;
-        }
-        if (element.className) {
-            label += ('.' + jQuery.trim(element.className).replace(/ /g, '.')).replace(/\.\.+/g, '.');
-        }
-        return label + ' (' + Math.round(width) + 'x' + Math.round(height) + ')';
-    }
-
     function getScrollTop() {
+        // Verify if is necessary
         if (!self.elements.window) {
             self.elements.window = jQuery(window);
         }
@@ -145,34 +132,20 @@ var DomOutline = function (options) {
 
         pub.element = e.target;
 
-        var b = self.opts.borderWidth,
-            scroll_top = getScrollTop(),
+        var scroll_top = getScrollTop(),
             pos = pub.element.getBoundingClientRect(),
             top = pos.top + scroll_top,
             label_text = '',
             label_top = 0,
             label_left = 0;
 
-        if (self.opts.label) {
-            label_text = compileLabelText(pub.element, pos.width, pos.height);
-            label_top = Math.max(0, top - 20 - b, scroll_top);
-            label_left = Math.max(0, pos.left - b);
-            self.elements.label.css({ top: label_top, left: label_left }).text(label_text);
-        }
-
-        if (self.opts.border) {
-            self.elements.top.css({ top: Math.max(0, top - b), left: pos.left - b, width: pos.width + b, height: b });
-            self.elements.bottom.css({ top: top + pos.height, left: pos.left - b, width: pos.width + b, height: b });
-            self.elements.left.css({ top: top - b, left: Math.max(0, pos.left - b), width: b, height: pos.height + b });
-            self.elements.right.css({ top: top - b, left: pos.left + pos.width, width: b, height: pos.height + (b * 2) });
-        } else {
-            self.elements.box.css({
-                top: self.opts.$elem.scrollTop() + pos.top - 1,
-                left: pos.left - 1,
-                width: pos.width + 2,
-                height: pos.height + 2
-            });
-        }
+        
+        self.elements.box.css({
+            top: self.opts.$elem.scrollTop() + pos.top - 1,
+            left: pos.left - 1,
+            width: pos.width + 2,
+            height: pos.height + 2
+        });
     }
 
     function clickHandler(e) {
