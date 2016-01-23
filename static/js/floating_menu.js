@@ -35,7 +35,9 @@
             },{
                 value: 'Edit Classes',
                 attrs: {
-                    'data-operation': 'edit-classes'
+                    'data-operation': 'edit-classes',
+                    'data-toggle': 'modal', 
+                    'data-target':'#edit-classes-modal'
                 }
             }, {
                 value: 'Edit Style',

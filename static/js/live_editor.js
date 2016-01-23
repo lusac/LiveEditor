@@ -21,6 +21,7 @@
         this.$codePainel = $('#code-painel').find('textarea');
         this.$editHtmlModal = $('#edit-html-modal');
         this.$editTextModal = $('#edit-text-modal');
+        this.$editClassesModal = $('#edit-classes-modal');
         this.domOutline = null;
         this.scriptList = [];
     };
@@ -63,6 +64,18 @@
         $('#edit-text-modal-save').on('click', function() {
             self.operationInit('edit-text-save');
             self.$editTextModal.modal('hide');
+        });
+
+        // Edit Classes
+        this.$editClassesModal.on('show.bs.modal', function () {
+            var current_without_cache = self.$editor.contents().find(self.currentSelected),
+                classes = current_without_cache.attr('class');
+            $(this).find('.modal-body input').val(classes);
+        });
+
+        $('#edit-classes-modal-save').on('click', function() {
+            self.operationInit('edit-classes-save');
+            self.$editClassesModal.modal('hide');
         });
     };
 
@@ -185,6 +198,10 @@
             this.currentSelectedEditText();
         }
 
+        if (operation === 'edit-classes-save') {
+            this.currentSelectedEditClasses();
+        }
+
         this.codePainelUpdate();
     };
 
@@ -208,6 +225,14 @@
 
         this.addToScript(str);
         this.$editor.contents().find(this.currentSelected).text(text);
+    };
+
+    LiveEditor.prototype.currentSelectedEditClasses = function () {
+        var classes = this.$editClassesModal.find('.modal-body input').val(),
+            str = '$("' + this.currentSelected + '").attr("class", "' + classes + '");';
+
+        this.addToScript(str);
+        this.$editor.contents().find(this.currentSelected).attr('class', classes);
     };
 
     LiveEditor.prototype.addToScript = function (str) {
