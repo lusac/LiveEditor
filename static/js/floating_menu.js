@@ -23,7 +23,7 @@
                 attrs: {
                     'data-operation': 'edit-html',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-html'
+                    'data-target':'#edit-html-modal'
                 }
             },{
                 value: 'Edit Text',
