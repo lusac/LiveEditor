@@ -42,7 +42,8 @@
         var self = this;
 
         this.$editHtmlModal.on('show.bs.modal', function () {
-            var html = self.$currentSelected[0].outerHTML;
+            var current_without_cache = self.$editor.contents().find(self.currentSelected)[0],
+                html = current_without_cache.outerHTML;
             $(this).find('.modal-body textarea').val(html);
         });
 
