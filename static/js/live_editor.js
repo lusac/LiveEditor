@@ -117,7 +117,7 @@
             var $DomOutlineBox = $('.DomOutline_box');
 
             floatingMenu.create({
-                name: this.$currentSelected.prop('tagName').toLowerCase(),
+                value: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: $DomOutlineBox.offset().left + $DomOutlineBox.width(),
                 posTop: $DomOutlineBox.offset().top,
                 container: this.containerFormat()
@@ -137,7 +137,7 @@
                 _list.push({
                     value: pathList[i].tagName.toLowerCase(),
                     attrs: {
-                        'name': this.getElementPath(pathList[i])
+                        'value': this.getElementPath(pathList[i])
                     }
                 });
             }
@@ -149,10 +149,10 @@
     LiveEditor.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
             this.currentSelectedRemove();
+            floatingMenu.close();
+            this.domOutline.start();
         }
 
-        this.domOutline.start();
-        floatingMenu.close();
         this.codePainelUpdate();
     };
 

@@ -14,10 +14,10 @@
     };
 
     FloatingMenu.prototype.create = function (params) {
-        var name = params.name || '(element)',
+        var value = params.value || '(element)',
             posTop = params.posTop || 0,
             posLeft = params.posLeft || 0,
-            menuHtml = this.newItem({name: name, is_header: true}),
+            menuHtml = this.newItem({value: value, is_header: true}),
             editList = [{
                 value: 'Edit HTML',
                 attrs: {
@@ -42,12 +42,12 @@
                 }
             }];
 
-        menuHtml += this.newItem({name: 'Edit Element', items: editList });
-        menuHtml += this.newItem({klass: 'divider'});
-        menuHtml += this.newItem({name: 'Move and Resize', operation: 'move-and-resize'});
-        menuHtml += this.newItem({name: 'Remove', operation: 'remove'});
-        menuHtml += this.newItem({klass: 'divider'});
-        menuHtml += this.newItem({name: 'Select Container', items: params.container});
+        menuHtml += this.newItem({value: 'Edit Element', items: editList });
+        menuHtml += this.newItem({attrs: {'class': 'divider'}});
+        menuHtml += this.newItem({value: 'Move and Resize', attrs: {'data-operation': 'move-and-resize'}});
+        menuHtml += this.newItem({value: 'Remove', attrs: {'data-operation': 'remove'}});
+        menuHtml += this.newItem({attrs: {'class': 'divider'}});
+        menuHtml += this.newItem({value: 'Select Container', items: params.container});
 
         this.$menu.append(menuHtml);
         this.$menu.css({
@@ -83,19 +83,15 @@
     FloatingMenu.prototype.newItem = function (params) {
         var $li = $('<li>');
 
-        if (params.operation) {
-            $li.attr('data-operation', params.operation);
+        if (params.attrs) {
+            $li.attr(params.attrs);
         }
 
         if (params.is_header) {
             $li.addClass('dropdown-header')
-               .append('(' + params.name + ')');
-        } else if (params.name) {
-            $li.append('<a tabindex="-1" href="#">' + params.name + '</a>');
-        }
-
-        if (params.klass) {
-            $li.addClass(params.klass);
+               .append('(' + params.value + ')');
+        } else if (params.value) {
+            $li.append('<a tabindex="-1" href="#">' + params.value + '</a>');
         }
 
         if (params.items) {
@@ -104,9 +100,9 @@
             for (var i=0; i<=params.items.length-1; i++) {
                 var $_li = $('<li class="container-item-el">');
 
-                $_li.attr(params.items[i].attrs);
+                $_li.attr(params.items[i].attrs)
+                    .append('<a tabindex="-1" href="#">' + params.items[i].value + '</a>');
 
-                $_li.append('<a tabindex="-1" href="#">' + params.items[i].value + '</a>');
                 $subMenu.append($_li);
             }
 
