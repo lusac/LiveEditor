@@ -186,7 +186,7 @@
     };
 
     LiveEditor.prototype.codePainelUpdate = function () {
-        this.$codePainel.html(this.scriptList);
+        this.$codePainel.val(this.scriptList);
     };
 
     window.LiveEditor = LiveEditor;
