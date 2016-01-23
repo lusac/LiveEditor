@@ -28,8 +28,7 @@
         this.domOutline = DomOutline({
             realtime: true,
             onClick: this.sendEventOnClick,
-            elem: this.$editor.contents().find('html body'),
-            initialPosition: this.$editor.offset()
+            elem: this.$editor.contents().find('html body')
         });
         this.domOutline.start();
     };
@@ -122,12 +121,15 @@
 
     LiveEditor.prototype.openCurrentSettings = function () {
         if (this.currentSelected) {
-            var $DomOutlineBox = $('.DomOutline_box');
+            var $DomOutlineBox = this.$editor.contents().find('.DomOutline_box'),
+                top = this.$editor.offset().top,
+                left = this.$editor.offset().left,
+                scrollTop = this.$editor.contents().scrollTop();
 
             floatingMenu.create({
                 value: this.$currentSelected.prop('tagName').toLowerCase(),
-                posLeft: $DomOutlineBox.offset().left + $DomOutlineBox.width(),
-                posTop: $DomOutlineBox.offset().top,
+                posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
+                posTop: top + $DomOutlineBox.offset().top - scrollTop,
                 container: this.containerFormat()
             });
             floatingMenu.open();

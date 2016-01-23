@@ -30,8 +30,7 @@ var DomOutline = function (options) {
                 border: options.border || false,
                 realtime: options.realtime || false,
                 label: options.label || false,
-                elem: options.elem || jQuery('body'),
-                initialPosition: options.initialPosition || {top:0, left:0}
+                $elem: options.elem || jQuery('body')
             },
             keyCodes: {
                 BACKSPACE: 8,
@@ -46,7 +45,12 @@ var DomOutline = function (options) {
     function writeStylesheet(css) {
         var element = document.createElement('style');
         element.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(element);
+
+        if (self.opts.$elem) {
+            self.opts.$elem.append(element);
+        } else {
+            document.getElementsByTagName('head')[0].appendChild(element);
+        }
 
         if (element.styleSheet) {
             element.styleSheet.cssText = css; // IE
@@ -62,7 +66,7 @@ var DomOutline = function (options) {
             css +=
                 '.' + self.opts.namespace + ' {' +
                 '    background: rgba(0, 153, 204, 0.05);' +
-                '    position: absolute;' +
+                '    position: fixed;' +
                 '    z-index: 1000000;' +
                 '    pointer-events: none;' +
                 '    outline: 3px solid rgb(0, 153, 204);' +
@@ -73,14 +77,14 @@ var DomOutline = function (options) {
                 '    color: #fff;' +
                 '    font: bold 12px/12px Helvetica, sans-serif;' +
                 '    padding: 4px 6px;' +
-                '    position: absolute;' +
+                '    position: fixed;' +
                 '    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);' +
                 '    z-index: 1000001;' +
                 '    pointer-events: none;' +
                 '}' +
                 '.' + self.opts.namespace + '_box {' +
                 '    background: rgba(0, 153, 204, 0.05);' +
-                '    position: absolute;' +
+                '    position: fixed;' +
                 '    z-index: 1000000;' +
                 '    pointer-events: none;' +
                 '    outline: 3px solid rgb(0, 153, 204);' +
@@ -93,13 +97,13 @@ var DomOutline = function (options) {
     }
 
     function createOutlineElements() {
-        self.elements.label = jQuery('<div>').addClass(self.opts.namespace + '_label').appendTo('body');
-        self.elements.top = jQuery('<div>').addClass(self.opts.namespace).appendTo('body');
-        self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).appendTo('body');
-        self.elements.left = jQuery('<div>').addClass(self.opts.namespace).appendTo('body');
-        self.elements.right = jQuery('<div>').addClass(self.opts.namespace).appendTo('body');
+        self.elements.label = jQuery('<div>').addClass(self.opts.namespace + '_label').appendTo(self.opts.$elem);
+        self.elements.top = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
+        self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
+        self.elements.left = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
+        self.elements.right = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
 
-        self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').appendTo('body');
+        self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').appendTo(self.opts.$elem);
     }
 
     function removeOutlineElements() {
@@ -163,8 +167,8 @@ var DomOutline = function (options) {
             self.elements.right.css({ top: top - b, left: pos.left + pos.width, width: b, height: pos.height + (b * 2) });
         } else {
             self.elements.box.css({
-                top: pos.top + self.opts.initialPosition.top - 1,
-                left: pos.left + self.opts.initialPosition.left - 1,
+                top: pos.top - 1,
+                left: pos.left - 1,
                 width: pos.width + 2,
                 height: pos.height + 2
             });
@@ -186,15 +190,15 @@ var DomOutline = function (options) {
             self.active = true;
             createOutlineElements();
 
-            self.opts.elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
+            self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
             if (self.opts.onClick) {
                 setTimeout(function () {
-                    self.opts.elem.bind('click.' + self.opts.namespace, clickHandler);
+                    self.opts.$elem.bind('click.' + self.opts.namespace, clickHandler);
                 }, 50);
             }
 
             if (self.opts.realtime) {
-                self.opts.elem.bind('mousemove.' + self.opts.namespace, draw);
+                self.opts.$elem.bind('mousemove.' + self.opts.namespace, draw);
             }
         }
     };
@@ -202,14 +206,14 @@ var DomOutline = function (options) {
     pub.stop = function () {
         self.active = false;
         removeOutlineElements();
-        self.opts.elem.unbind('mousemove.' + self.opts.namespace)
+        self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
             .unbind('keyup.' + self.opts.namespace)
             .unbind('click.' + self.opts.namespace);
     };
 
     pub.pause = function () {
         self.active = false;
-        self.opts.elem.unbind('mousemove.' + self.opts.namespace)
+        self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
             .unbind('keyup.' + self.opts.namespace)
             .unbind('click.' + self.opts.namespace);
     };
