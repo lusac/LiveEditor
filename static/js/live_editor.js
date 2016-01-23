@@ -20,6 +20,7 @@
         this.$editor = $(params.editor).find('iframe');
         this.$codePainel = $('#code-painel').find('textarea');
         this.$editHtmlModal = $('#edit-html-modal');
+        this.$editTextModal = $('#edit-text-modal');
         this.domOutline = null;
         this.scriptList = [];
     };
@@ -40,6 +41,7 @@
     LiveEditor.prototype.modalEvents = function () {
         var self = this;
 
+        // Edit HTML
         this.$editHtmlModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editor.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
@@ -49,6 +51,18 @@
         $('#edit-html-modal-save').on('click', function() {
             self.operationInit('edit-html-save');
             self.$editHtmlModal.modal('hide');
+        });
+
+        // Edit Text
+        this.$editTextModal.on('show.bs.modal', function () {
+            var current_without_cache = self.$editor.contents().find(self.currentSelected)[0],
+                text = current_without_cache.textContent;
+            $(this).find('.modal-body textarea').val(text);
+        });
+
+        $('#edit-text-modal-save').on('click', function() {
+            self.operationInit('edit-text-save');
+            self.$editTextModal.modal('hide');
         });
     };
 
@@ -167,6 +181,10 @@
             this.currentSelectedEditHtml();
         }
 
+        if (operation === 'edit-text-save') {
+            this.currentSelectedEditText();
+        }
+
         this.codePainelUpdate();
     };
 
@@ -181,7 +199,15 @@
             str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
 
         this.addToScript(str);
-        this.$editor.contents().find(this.currentSelected).replaceWith(html)
+        this.$editor.contents().find(this.currentSelected).replaceWith(html);
+    };
+
+    LiveEditor.prototype.currentSelectedEditText = function () {
+        var text = this.$editTextModal.find('.modal-body textarea').val(),
+            str = '$("' + this.currentSelected + '").val("' + text + '");';
+
+        this.addToScript(str);
+        this.$editor.contents().find(this.currentSelected).text(text);
     };
 
     LiveEditor.prototype.addToScript = function (str) {

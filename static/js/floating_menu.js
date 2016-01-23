@@ -28,7 +28,9 @@
             },{
                 value: 'Edit Text',
                 attrs: {
-                    'data-operation': 'edit-text'
+                    'data-operation': 'edit-text',
+                    'data-toggle': 'modal', 
+                    'data-target':'#edit-text-modal'
                 }
             },{
                 value: 'Edit Classes',
