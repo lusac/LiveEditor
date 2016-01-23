@@ -21,24 +21,24 @@
             editList = [{
                 value: 'Edit HTML',
                 attrs: {
-                    'operation': 'edit-html',
+                    'data-operation': 'edit-html',
                     'data-toggle': 'modal', 
                     'data-target':'#edit-html'
                 }
             },{
                 value: 'Edit Text',
                 attrs: {
-                    'operation': 'edit-text'
+                    'data-operation': 'edit-text'
                 }
             },{
                 value: 'Edit Classes',
                 attrs: {
-                    'operation': 'edit-classes'
+                    'data-operation': 'edit-classes'
                 }
             }, {
                 value: 'Edit Style',
                 attrs: {
-                    'operation': 'edit-style'
+                    'data-operation': 'edit-style'
                 }
             }];
 
