@@ -93,7 +93,7 @@
 
         if (params.is_header) {
             $li.addClass('dropdown-header')
-               .append('(' + params.value + ')');
+               .text('<' + params.value + '>');
         } else if (params.value) {
             $li.append('<a tabindex="-1" href="#">' + params.value + '</a>');
         }
