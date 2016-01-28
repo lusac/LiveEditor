@@ -21,7 +21,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            window.liveEditor = new LiveEditor({editor: '.live-editor'});
+            window.liveEditor = new LiveEditor({editor: '#live-editor', url: 'globo.html'});
         }, false);
     </script>
 </head>
@@ -89,9 +89,7 @@
         </div>
     </div>
 
-    <div id="editor" class="live-editor">
-        <iframe src="globo.html" width="100%" height="100%" frameborder="0"></iframe>
-    </div>
+    <div id="live-editor"></div>
 
     <button class="btn btn-primary btn-sm code-painel-button" type="button" data-toggle="collapse" data-target="#code-painel">
       < edit code >

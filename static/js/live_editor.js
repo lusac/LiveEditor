@@ -13,8 +13,9 @@
         var self = this;
 
         this.initVars(params);
+        this.buildIframe(params);
 
-        this.$editor.on('load', function() {
+        this.$editorIframe.on('load', function() {
             self.domOutlineInit();
             self.floatingMenuInit();
             self.bindEvents();
@@ -22,7 +23,7 @@
     };
 
     LiveEditor.prototype.initVars = function (params) {
-        this.$editor = $(params.editor).find('iframe');
+        this.$editor = $(params.editor);
         this.$codePainel = $('#code-painel').find('textarea');
         this.$editHtmlModal = $('#edit-html-modal');
         this.$editTextModal = $('#edit-text-modal');
@@ -31,11 +32,26 @@
         this.scriptList = [];
     };
 
+    LiveEditor.prototype.buildIframe = function (params) {
+        var $iframe = $('<iframe>');
+        $iframe.attr({
+            'src': params.url,
+            'width': '100%',
+            'height': '100%',
+            'frameborder': '0'
+        });
+
+        this.$editor.append($iframe);
+        this.$editor.addClass('live-editor');
+
+        this.$editorIframe = this.$editor.find('iframe');
+    };
+
     LiveEditor.prototype.domOutlineInit = function () {
         this.domOutline = DomOutline({
             realtime: true,
             onClick: this.sendEventOnClick,
-            elem: this.$editor.contents().find('html body')
+            elem: this.$editorIframe.contents().find('html body')
         });
         this.domOutline.start();
     };
@@ -99,7 +115,7 @@
             self.operationInit(e.detail.operation);
         }, false);
 
-        this.$editor.contents().find('html').on('click', function(e) {
+        this.$editorIframe.contents().find('html').on('click', function(e) {
             if (e.toElement != liveEditor.$currentSelected[0]) {
                 floatingMenu.close();
                 self.domOutline.start();
@@ -113,7 +129,7 @@
     }
     LiveEditor.prototype.setCurrentElement = function (elem) {
         this.currentSelected = this.getElementPath(elem);
-        this.$currentSelected = this.$editor.contents().find(this.currentSelected);
+        this.$currentSelected = this.$editorIframe.contents().find(this.currentSelected);
         console.log('Current: ' +  this.currentSelected);
     };
 
@@ -153,10 +169,10 @@
 
     LiveEditor.prototype.openCurrentSettings = function () {
         if (this.currentSelected) {
-            var $DomOutlineBox = this.$editor.contents().find('.DomOutline_box'),
-                top = this.$editor.offset().top,
-                left = this.$editor.offset().left,
-                scrollTop = this.$editor.contents().scrollTop();
+            var $DomOutlineBox = this.$editorIframe.contents().find('.DomOutline_box'),
+                top = this.$editorIframe.offset().top,
+                left = this.$editorIframe.offset().left,
+                scrollTop = this.$editorIframe.contents().scrollTop();
 
             floatingMenu.create({
                 value: this.$currentSelected.prop('tagName').toLowerCase(),
@@ -213,7 +229,7 @@
     LiveEditor.prototype.currentSelectedRemove = function () {
         var str = '$("' + this.currentSelected + '").remove();';
         this.addToScript(str);
-        this.$editor.contents().find(this.currentSelected).remove();
+        this.$editorIframe.contents().find(this.currentSelected).remove();
     };
 
     LiveEditor.prototype.currentSelectedEditHtml = function () {
@@ -221,7 +237,7 @@
             str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
 
         this.addToScript(str);
-        this.$editor.contents().find(this.currentSelected).replaceWith(html);
+        this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
     };
 
     LiveEditor.prototype.currentSelectedEditText = function () {
@@ -229,7 +245,7 @@
             str = '$("' + this.currentSelected + '").val("' + text + '");';
 
         this.addToScript(str);
-        this.$editor.contents().find(this.currentSelected).text(text);
+        this.$editorIframe.contents().find(this.currentSelected).text(text);
     };
 
     LiveEditor.prototype.currentSelectedEditClasses = function () {
@@ -237,7 +253,7 @@
             str = '$("' + this.currentSelected + '").attr("class", "' + classes + '");';
 
         this.addToScript(str);
-        this.$editor.contents().find(this.currentSelected).attr('class', classes);
+        this.$editorIframe.contents().find(this.currentSelected).attr('class', classes);
     };
 
     LiveEditor.prototype.addToScript = function (str) {
