@@ -127,7 +127,7 @@
     };
 
     LiveEditor.prototype.unselectElements = function (e) {
-        if (e.toElement != liveEditor.$currentSelected[0]) {
+        if (e.toElement != this.$currentSelected[0]) {
             floatingMenu.close();
             this.domOutline.start();
         }
