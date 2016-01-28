@@ -65,7 +65,7 @@
 
         // Edit HTML
         this.$editHtmlModal.on('show.bs.modal', function () {
-            var current_without_cache = self.$editor.contents().find(self.currentSelected)[0],
+            var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
             $(this).find('.modal-body textarea').val(html);
         });
@@ -77,7 +77,7 @@
 
         // Edit Text
         this.$editTextModal.on('show.bs.modal', function () {
-            var current_without_cache = self.$editor.contents().find(self.currentSelected)[0],
+            var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 text = current_without_cache.textContent;
             $(this).find('.modal-body textarea').val(text);
         });
@@ -89,7 +89,7 @@
 
         // Edit Classes
         this.$editClassesModal.on('show.bs.modal', function () {
-            var current_without_cache = self.$editor.contents().find(self.currentSelected),
+            var current_without_cache = self.$editorIframe.contents().find(self.currentSelected),
                 classes = current_without_cache.attr('class');
             $(this).find('.modal-body input').val(classes);
         });
