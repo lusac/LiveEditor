@@ -2,13 +2,11 @@
 <html>
 <head>
     <title>A/B Editor</title>
-    <link rel="stylesheet" href="static/vendor/tiny_editor/tiny_editor.min.css" />
     <link rel="stylesheet" href="static/css/live_editor.css" />
     <link rel="stylesheet" href="static/css/bootstrap_addon.css" />
 
     <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="static/vendor/jquery.dom-outline/jquery.dom-outline-1.0.js"></script>
-    <script src="static/vendor/tiny_editor/tiny_editor.min.js"></script>
     <script src="static/js/floating_menu.js"></script>
     <script src="static/js/live_editor.js"></script>
 
@@ -23,90 +21,77 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            new TINY.editor.edit('editor', {
-                id:'editor',
-                width: '100%',
-                height: '100%',
-                cssclass:'live-editor',
-                rowclass:'',
-                dividerclass:'',
-                controls:[],
-                xhtml:true,
-                bodyid:'editor',
-            });
-
             window.liveEditor = new LiveEditor({editor: '.live-editor'});
         }, false);
     </script>
 </head>
 <body>
+    <!-- Modal: Edit HTML -->
+    <div class="modal fade" id="edit-html-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Edit HTML</h4>
+                </div>
 
-<!-- Modal: Edit HTML -->
-<div class="modal fade" id="edit-html-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                <h4 class="modal-title">Edit HTML</h4>
-            </div>
+                <div class="modal-body">
+                    <textarea class="form-control"></textarea>
+                </div>
 
-            <div class="modal-body">
-                <textarea class="form-control"></textarea>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="edit-html-modal-save">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal: Edit text -->
-<div class="modal fade" id="edit-text-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                <h4 class="modal-title">Edit text</h4>
-            </div>
-
-            <div class="modal-body">
-                <textarea class="form-control"></textarea>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="edit-text-modal-save">Save</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="edit-html-modal-save">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal: Edit classes -->
-<div class="modal fade" id="edit-classes-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                <h4 class="modal-title">Edit Classes</h4>
-            </div>
+    <!-- Modal: Edit text -->
+    <div class="modal fade" id="edit-text-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Edit text</h4>
+                </div>
 
-            <div class="modal-body">
-                <input type="text" class="form-control">
-            </div>
+                <div class="modal-body">
+                    <textarea class="form-control"></textarea>
+                </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="edit-classes-modal-save">Save</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="edit-text-modal-save">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<textarea id="editor">
-<iframe src="globo.html" width="100%" height="100%" frameborder="0"></iframe>
-</textarea>
+    <!-- Modal: Edit classes -->
+    <div class="modal fade" id="edit-classes-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Edit Classes</h4>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="edit-classes-modal-save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editor" class="live-editor">
+        <iframe src="globo.html" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
 
     <button class="btn btn-primary btn-sm code-painel-button" type="button" data-toggle="collapse" data-target="#code-painel">
       < edit code >

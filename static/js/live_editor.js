@@ -10,10 +10,15 @@
     }
 
     LiveEditor.prototype.init = function (params) {
+        var self = this;
+
         this.initVars(params);
-        this.domOutlineInit();
-        this.floatingMenuInit();
-        this.bindEvents();
+
+        this.$editor.on('load', function() {
+            self.domOutlineInit();
+            self.floatingMenuInit();
+            self.bindEvents();
+        });
     };
 
     LiveEditor.prototype.initVars = function (params) {
