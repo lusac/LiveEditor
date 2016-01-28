@@ -116,17 +116,28 @@
         }, false);
 
         this.$editorIframe.contents().find('html').on('click', function(e) {
-            if (e.toElement != liveEditor.$currentSelected[0]) {
-                floatingMenu.close();
-                self.domOutline.start();
+            self.unselectElements(e);
+        });
+
+        this.$editorIframe.contents().keyup(function(e) {
+            if (e.keyCode == 27) { // Esc
+                self.unselectElements(e);
             }
         });
+    };
+
+    LiveEditor.prototype.unselectElements = function (e) {
+        if (e.toElement != liveEditor.$currentSelected[0]) {
+            floatingMenu.close();
+            this.domOutline.start();
+        }
     };
 
     LiveEditor.prototype.sendEventOnClick = function () {
         var _event = new Event('domOutlineOnClick');
         document.dispatchEvent(_event);
-    }
+    };
+
     LiveEditor.prototype.setCurrentElement = function (elem) {
         this.currentSelected = this.getElementPath(elem);
         this.$currentSelected = this.$editorIframe.contents().find(this.currentSelected);
