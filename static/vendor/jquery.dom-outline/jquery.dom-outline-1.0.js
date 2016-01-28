@@ -95,12 +95,12 @@ var DomOutline = function (options) {
     }
 
     function createOutlineElements() {
-        self.elements.top = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
-        self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
-        self.elements.left = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
-        self.elements.right = jQuery('<div>').addClass(self.opts.namespace).appendTo(self.opts.$elem);
+        self.elements.top = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+        self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+        self.elements.left = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+        self.elements.right = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
 
-        self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').appendTo(self.opts.$elem);
+        self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').insertAfter(self.opts.$elem);
     }
 
     function removeOutlineElements() {
