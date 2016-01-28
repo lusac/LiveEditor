@@ -1,0 +1,22 @@
+{
+  "name": "live-editor",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "uglifyjs": "~2.4.10",
+    "uglifycss": "~0.0.20"
+  },
+  "devDependencies": {
+    "watchify": "~0.1.0",
+    "catw": "~0.0.1",
+    "tap": "~0.4.4"
+  },
+  "scripts": {
+    "build-js": "uglifyjs static/vendor/*/*.js static/js/*.js > dist/js/bundle.js",
+    "build-css": "uglifycss static/css/*.css > dist/css/bundle.css",
+    "build": "npm run build-js && npm run build-css",
+    "watch-js": "watchify static/js/*.js -o dist/js/bundle.js -dv",
+    "watch-css": "catw static/css/*.css -o dist/css/bundle.css -v",
+    "watch": "npm run watch-js & npm run watch-css"
+  }
+}

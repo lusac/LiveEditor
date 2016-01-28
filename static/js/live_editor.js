@@ -7,7 +7,7 @@
         console.log('Live Editor Init...');
         this.init(params);
         console.log('Live Editor Done...');
-    }
+    };
 
     LiveEditor.prototype.init = function (params) {
         var self = this;
@@ -126,7 +126,7 @@
     LiveEditor.prototype.sendEventOnClick = function () {
         var _event = new Event('domOutlineOnClick');
         document.dispatchEvent(_event);
-    }
+    };
     LiveEditor.prototype.setCurrentElement = function (elem) {
         this.currentSelected = this.getElementPath(elem);
         this.$currentSelected = this.$editorIframe.contents().find(this.currentSelected);
@@ -146,7 +146,7 @@
             var parent = node.parent();
 
             var siblings = parent.children(name);
-            if (siblings.length > 1) { 
+            if (siblings.length > 1) {
                 name += ':eq(' + siblings.index(realNode) + ')';
             }
 
@@ -164,7 +164,7 @@
             els.unshift(a);
             a = a.parentNode;
         }
-        return els
+        return els;
     };
 
     LiveEditor.prototype.openCurrentSettings = function () {
