@@ -58,7 +58,7 @@
     };
 
     LiveEditor.prototype.floatingMenuInit = function () {
-        window.floatingMenu = window.floatingMenu || new FloatingMenu();
+        this.floatingMenu = new FloatingMenu();
     };
 
     LiveEditor.prototype.modalEvents = function () {
@@ -129,7 +129,7 @@
 
     LiveEditor.prototype.unselectElements = function (e) {
         if (e.toElement != this.$currentSelected[0]) {
-            floatingMenu.close();
+            this.floatingMenu.close();
             this.domOutline.start();
         }
     };
@@ -186,13 +186,13 @@
                 left = this.$editorIframe.offset().left,
                 scrollTop = this.$editorIframe.contents().scrollTop();
 
-            floatingMenu.create({
+            this.floatingMenu.create({
                 value: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
                 posTop: top + $DomOutlineBox.offset().top - scrollTop,
                 container: this.containerFormat()
             });
-            floatingMenu.open();
+            this.floatingMenu.open();
         } else {
             console.log('No item has been selected...');
         }
@@ -219,7 +219,7 @@
     LiveEditor.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
             this.currentSelectedRemove();
-            floatingMenu.close();
+            this.floatingMenu.close();
             this.domOutline.start();
         }
 
