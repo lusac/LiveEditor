@@ -9,6 +9,7 @@
 
     FloatingMenu.prototype.init = function (params) {
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
+        this.elemId = params.elemId;
         $('body').append(this.$menu);
         this.bindEvents();
     };
@@ -23,21 +24,21 @@
                 attrs: {
                     'data-operation': 'edit-html',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-html-modal['+params.elemId+']'
+                    'data-target':'#edit-html-modal[' + this.elemId + ']'
                 }
             },{
                 value: 'Edit Text',
                 attrs: {
                     'data-operation': 'edit-text',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-text-modal['+params.elemId+']'
+                    'data-target':'#edit-text-modal[' + this.elemId + ']'
                 }
             },{
                 value: 'Edit Classes',
                 attrs: {
                     'data-operation': 'edit-classes',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-classes-modal['+params.elemId+']'
+                    'data-target':'#edit-classes-modal[' + this.elemId + ']'
                 }
             }, {
                 value: 'Edit Style',
@@ -69,12 +70,16 @@
     };
 
     FloatingMenu.prototype.bindEvents = function () {
+        var self = this;
+
         this.$menu.on('click', 'li', function(e) {
             var $el = $(e.toElement).parent(),
                 op = $el.data('operation');
 
             if (op) {
-                var _event = new CustomEvent('floatingMenuItemClicked', {'detail': {'operation': op}});
+                var _event = new CustomEvent('floatingMenuItemClicked', {
+                    'detail': {'operation': op, 'liveEditor': self.elemId}
+                });
                 document.dispatchEvent(_event);
                 console.log('Operation: ' + op);
             }

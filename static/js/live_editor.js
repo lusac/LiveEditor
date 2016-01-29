@@ -56,10 +56,6 @@
         this.domOutline.start();
     };
 
-    LiveEditor.prototype.floatingMenuInit = function () {
-        this.floatingMenu = new FloatingMenu();
-    };
-
     LiveEditor.prototype.modalEvents = function () {
         var self = this;
 
@@ -116,7 +112,9 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
-            self.operationInit(e.detail.operation);
+            if (self.$editor.attr('id') == e.detail.liveEditor) {
+                self.operationInit(e.detail.operation);
+            }
         }, false);
 
         this.$editorIframe.contents().find('html').on('click', function(e) {
@@ -189,9 +187,8 @@
                 left = this.$editorIframe.offset().left,
                 scrollTop = this.$editorIframe.contents().scrollTop();
 
-            this.floatingMenuInit();
+            this.floatingMenu = new FloatingMenu({elemId: this.$editor.attr('id')});
             this.floatingMenu.create({
-                elemId: this.$editor.attr('id'),
                 value: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
                 posTop: top + $DomOutlineBox.offset().top - scrollTop,
