@@ -44,6 +44,12 @@
                 attrs: {
                     'data-operation': 'edit-style'
                 }
+            }],
+            events = [{
+                value: 'Click',
+                attrs: {
+                    'data-operation': 'add-event-click'
+                }
             }];
 
         menuHtml += this.newItem({value: 'Edit Element', items: editList });
@@ -52,6 +58,8 @@
         menuHtml += this.newItem({value: 'Remove', attrs: {'data-operation': 'remove'}});
         menuHtml += this.newItem({attrs: {'class': 'divider'}});
         menuHtml += this.newItem({value: 'Select Container', items: params.container});
+        menuHtml += this.newItem({attrs: {'class': 'divider'}});
+        menuHtml += this.newItem({value: 'Create new goal', items: events});
 
         this.$menu.append(menuHtml);
         this.$menu.css({

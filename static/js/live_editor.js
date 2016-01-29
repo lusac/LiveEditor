@@ -30,6 +30,7 @@
         this.$editClassesModal = $('#edit-classes-modal');
         this.domOutline = null;
         this.scriptList = [];
+        this.scriptGoal = [];
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
@@ -222,6 +223,10 @@
             this.domOutline.start();
         }
 
+        if (operation === 'add-event-click') {
+            this.currentSelectedAddEvent('click');
+        }
+
         if (operation === 'edit-html-save') {
             this.currentSelectedEditHtml();
         }
@@ -239,15 +244,21 @@
 
     LiveEditor.prototype.currentSelectedRemove = function () {
         var str = '$("' + this.currentSelected + '").remove();';
-        this.addToScript(str);
+        this.addToScriptList(str);
         this.$editorIframe.contents().find(this.currentSelected).remove();
+    };
+
+    LiveEditor.prototype.currentSelectedAddEvent = function (e) {
+        var str = '$("' + this.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+
+        this.addToScriptGoal(str);
     };
 
     LiveEditor.prototype.currentSelectedEditHtml = function () {
         var html = this.$editHtmlModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
 
-        this.addToScript(str);
+        this.addToScriptList(str);
         this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
     };
 
@@ -255,7 +266,7 @@
         var text = this.$editTextModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").val("' + text + '");';
 
-        this.addToScript(str);
+        this.addToScriptList(str);
         this.$editorIframe.contents().find(this.currentSelected).text(text);
     };
 
@@ -263,13 +274,25 @@
         var classes = this.$editClassesModal.find('.modal-body input').val(),
             str = '$("' + this.currentSelected + '").attr("class", "' + classes + '");';
 
-        this.addToScript(str);
+        this.addToScriptList(str);
         this.$editorIframe.contents().find(this.currentSelected).attr('class', classes);
     };
 
-    LiveEditor.prototype.addToScript = function (str) {
+    LiveEditor.prototype.addToScriptList = function (str) {
         this.scriptList.push(str);
     };
+
+    LiveEditor.prototype.addToScriptGoal = function (str) {
+        this.scriptGoal.push(str);
+
+        // workaround... to remove duplicates.
+        var result = [];
+        $.each(this.scriptGoal, function(i, e) {
+            if ($.inArray(e, result) == -1) result.push(e);
+        });
+
+        this.scriptGoal = result;
+    }
 
     LiveEditor.prototype.codePainelUpdate = function () {
         this.$codePainel.val(this.scriptList);
