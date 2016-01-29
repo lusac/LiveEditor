@@ -49,7 +49,7 @@
     };
 
     LiveEditor.prototype.domOutlineInit = function () {
-        this.domOutline = DomOutline({
+        this.domOutline = new DomOutline({
             realtime: true,
             onClick: this.sendEventOnClick,
             elem: this.$editorIframe.contents().find('html body')
@@ -58,7 +58,7 @@
     };
 
     LiveEditor.prototype.floatingMenuInit = function () {
-        window.floatingMenu = new FloatingMenu();
+        window.floatingMenu = window.floatingMenu || new FloatingMenu();
     };
 
     LiveEditor.prototype.modalEvents = function () {
@@ -292,7 +292,7 @@
         });
 
         this.scriptGoal = result;
-    }
+    };
 
     LiveEditor.prototype.codePainelUpdate = function () {
         this.$codePainel.val(this.scriptList);
