@@ -264,7 +264,7 @@
 
     LiveEditor.prototype.currentSelectedEditText = function () {
         var text = this.$editTextModal.find('.modal-body textarea').val(),
-            str = '$("' + this.currentSelected + '").val("' + text + '");';
+            str = '$("' + this.currentSelected + '").text("' + text + '");';
 
         this.addToScriptList(str);
         this.$editorIframe.contents().find(this.currentSelected).text(text);
