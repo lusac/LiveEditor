@@ -8,7 +8,7 @@
     };
 
     FloatingMenu.prototype.init = function (params) {
-        this.$menu = $('<ul id="floating-settings" class="dropdown-menu" role="menu">');
+        this.$menu = $('<ul class="dropdown-menu" role="menu">');
         $('body').append(this.$menu);
         this.bindEvents();
     };
@@ -23,21 +23,21 @@
                 attrs: {
                     'data-operation': 'edit-html',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-html-modal'
+                    'data-target':'#edit-html-modal['+params.elemId+']'
                 }
             },{
                 value: 'Edit Text',
                 attrs: {
                     'data-operation': 'edit-text',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-text-modal'
+                    'data-target':'#edit-text-modal['+params.elemId+']'
                 }
             },{
                 value: 'Edit Classes',
                 attrs: {
                     'data-operation': 'edit-classes',
                     'data-toggle': 'modal', 
-                    'data-target':'#edit-classes-modal'
+                    'data-target':'#edit-classes-modal['+params.elemId+']'
                 }
             }, {
                 value: 'Edit Style',

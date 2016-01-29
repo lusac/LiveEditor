@@ -17,17 +17,16 @@
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
-            self.floatingMenuInit();
             self.bindEvents();
         });
     };
 
     LiveEditor.prototype.initVars = function (params) {
         this.$editor = $(params.editor);
-        this.$codePainel = $('#code-painel').find('textarea');
-        this.$editHtmlModal = $('#edit-html-modal');
-        this.$editTextModal = $('#edit-text-modal');
-        this.$editClassesModal = $('#edit-classes-modal');
+        this.$codePainel = $('#code-painel[' + params.editor.replace('#', '') + ']').find('textarea');
+        this.$editHtmlModal = $('#edit-html-modal[' + params.editor.replace('#', '') + ']');
+        this.$editTextModal = $('#edit-text-modal[' + params.editor.replace('#', '') + ']');
+        this.$editClassesModal = $('#edit-classes-modal[' + params.editor.replace('#', '') + ']');
         this.domOutline = null;
         this.scriptList = [];
         this.scriptGoal = [];
@@ -71,7 +70,7 @@
             $(this).find('.modal-body textarea').val(html);
         });
 
-        $('#edit-html-modal-save').on('click', function() {
+        $('[' + this.$editor.attr('id') + '] #edit-html-modal-save').on('click', function() {
             self.operationInit('edit-html-save');
             self.$editHtmlModal.modal('hide');
         });
@@ -83,7 +82,7 @@
             $(this).find('.modal-body textarea').val(text);
         });
 
-        $('#edit-text-modal-save').on('click', function() {
+        $('[' + this.$editor.attr('id') + '] #edit-text-modal-save').on('click', function() {
             self.operationInit('edit-text-save');
             self.$editTextModal.modal('hide');
         });
@@ -95,7 +94,7 @@
             $(this).find('.modal-body input').val(classes);
         });
 
-        $('#edit-classes-modal-save').on('click', function() {
+        $('[' + this.$editor.attr('id') + '] #edit-classes-modal-save').on('click', function() {
             self.operationInit('edit-classes-save');
             self.$editClassesModal.modal('hide');
         });
@@ -107,9 +106,13 @@
         this.modalEvents();
 
         document.addEventListener('domOutlineOnClick', function (e) {
-            self.setCurrentElement(self.domOutline.element);
-            self.openCurrentSettings();
-            self.domOutline.pause();
+            // same event for all editor. Should better this.
+            if (self.$editorIframe.contents().find($(e.detail)).length > 0) {
+                self.setCurrentElement(self.domOutline.element);
+                self.openCurrentSettings();
+                self.domOutline.pause();
+                console.log('dom clicked!');
+            }
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
@@ -134,8 +137,8 @@
         }
     };
 
-    LiveEditor.prototype.sendEventOnClick = function () {
-        var _event = new Event('domOutlineOnClick');
+    LiveEditor.prototype.sendEventOnClick = function (e) {
+        var _event = new CustomEvent('domOutlineOnClick', {'detail': e});
         document.dispatchEvent(_event);
     };
 
@@ -186,7 +189,9 @@
                 left = this.$editorIframe.offset().left,
                 scrollTop = this.$editorIframe.contents().scrollTop();
 
+            this.floatingMenuInit();
             this.floatingMenu.create({
+                elemId: this.$editor.attr('id'),
                 value: this.$currentSelected.prop('tagName').toLowerCase(),
                 posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
                 posTop: top + $DomOutlineBox.offset().top - scrollTop,
