@@ -32,69 +32,6 @@
         <div id="original" class="tab-pane fade in active">
             <div id="live-editor-original"></div>
 
-            <!-- Modal: Edit HTML -->
-            <div class="modal fade" id="edit-html-modal" tabindex="-1" role="dialog" live-editor-original="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit HTML</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <textarea class="form-control"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-html-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal: Edit text -->
-            <div class="modal fade" id="edit-text-modal" tabindex="-1" role="dialog" live-editor-original="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit text</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <textarea class="form-control"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-text-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal: Edit classes -->
-            <div class="modal fade" id="edit-classes-modal" tabindex="-1" role="dialog" live-editor-original="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit Classes</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <input type="text" class="form-control">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-classes-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <button class="btn btn-primary btn-sm code-painel-button" type="button" data-toggle="collapse" data-target="#code-painel[live-editor-original]" live-editor-original="1">
               < edit code >
             </button>
@@ -115,70 +52,7 @@
         </div>
 
         <div id="teste" class="tab-pane fade">
-            <div id="live-editor-test"></div>  
-
-            <!-- Modal: Edit HTML -->
-            <div class="modal fade" id="edit-html-modal" tabindex="-1" role="dialog" live-editor-test="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit HTML</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <textarea class="form-control"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-html-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal: Edit text -->
-            <div class="modal fade" id="edit-text-modal" tabindex="-1" role="dialog" live-editor-test="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit text</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <textarea class="form-control"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-text-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal: Edit classes -->
-            <div class="modal fade" id="edit-classes-modal" tabindex="-1" role="dialog" live-editor-test="1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <h4 class="modal-title">Edit Classes</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <input type="text" class="form-control">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="edit-classes-modal-save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="live-editor-test"></div>
 
             <button class="btn btn-primary btn-sm code-painel-button" type="button" data-toggle="collapse" data-target="#code-painel[live-editor-test]" live-editor-test="1">
               < edit code >
@@ -199,9 +73,9 @@
             </div>
         </div>
     </div>
-
     
     <script src="static/vendor/jquery.dom-outline/jquery.dom-outline-1.0.js"></script>
+    <script src="static/js/modal.js"></script>
     <script src="static/js/floating_menu.js"></script>
     <script src="static/js/live_editor.js"></script>
 </body>

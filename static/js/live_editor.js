@@ -14,6 +14,7 @@
 
         this.initVars(params);
         this.buildIframe(params);
+        this.buildModals(params);
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
@@ -22,11 +23,9 @@
     };
 
     LiveEditor.prototype.initVars = function (params) {
+        this.id = params.editor.replace('#', '');
         this.$editor = $(params.editor);
-        this.$codePainel = $('#code-painel[' + params.editor.replace('#', '') + ']').find('textarea');
-        this.$editHtmlModal = $('#edit-html-modal[' + params.editor.replace('#', '') + ']');
-        this.$editTextModal = $('#edit-text-modal[' + params.editor.replace('#', '') + ']');
-        this.$editClassesModal = $('#edit-classes-modal[' + params.editor.replace('#', '') + ']');
+        this.$codePainel = $('#code-painel[' + this.id + ']').find('textarea');
         this.domOutline = null;
         this.scriptList = [];
         this.scriptGoal = [];
@@ -45,6 +44,36 @@
         this.$editor.addClass('live-editor');
 
         this.$editorIframe = this.$editor.find('iframe');
+    };
+
+    LiveEditor.prototype.buildModals = function (params) {
+        var modals = [
+                {
+                    name: 'edit-html-modal',
+                    title: 'Edit HTML',
+                    field: 'textarea'
+                }, {
+                    name: 'edit-text-modal',
+                    title: 'Edit Text',
+                    field: 'textarea'
+                }, {
+                    name: 'edit-classes-modal',
+                    title: 'Edit Classes',
+                    field: 'input'
+                }
+            ]
+
+        for (var i=0; i<=modals.length-1; i++) {
+            var modal = new LiveEditorModal({
+                editor: this.id,
+                data: modals[i]
+            });
+            modal.create();
+        }
+
+        this.$editHtmlModal = $('#edit-html-modal[' + this.id + ']');
+        this.$editTextModal = $('#edit-text-modal[' + this.id + ']');
+        this.$editClassesModal = $('#edit-classes-modal[' + this.id + ']');
     };
 
     LiveEditor.prototype.domOutlineInit = function () {
