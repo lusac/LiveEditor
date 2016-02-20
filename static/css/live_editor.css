@@ -41,3 +41,9 @@
     right: 20px;
     position: absolute;
 }
+
+.nav-tabs {
+    z-index: 10;
+    background: #FFF;
+    position: relative;
+}
