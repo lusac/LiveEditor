@@ -35,18 +35,17 @@
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
-        var $iframe = $('<iframe style="display: none;">');
-        
+        this.$editorIframe = $('<iframe style="display: none;">');
         this.$spinnerContainer = $('<span class="spinner-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span>');
 
-        $iframe.attr({
+        this.$editorIframe.attr({
             'src': params.url,
             'width': '100%',
             'height': '100%',
             'frameborder': '0'
         });
 
-        this.$editor.append(this.$spinnerContainer, $iframe);
+        this.$editor.append(this.$spinnerContainer, this.$editorIframe);
         this.$editor.addClass('live-editor');
 
         this.$editorIframe = this.$editor.find('iframe');
