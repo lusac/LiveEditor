@@ -19,6 +19,9 @@
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
             self.bindEvents();
+            self.$editorIframe.show();
+            self.$spinnerContainer.hide();
+            console.log('*** iframe fully loaded! ***');
         });
     };
 
@@ -32,7 +35,10 @@
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
-        var $iframe = $('<iframe>');
+        var $iframe = $('<iframe style="display: none;">');
+        
+        this.$spinnerContainer = $('<span class="spinner-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span>');
+
         $iframe.attr({
             'src': params.url,
             'width': '100%',
@@ -40,7 +46,7 @@
             'frameborder': '0'
         });
 
-        this.$editor.append($iframe);
+        this.$editor.append(this.$spinnerContainer, $iframe);
         this.$editor.addClass('live-editor');
 
         this.$editorIframe = this.$editor.find('iframe');
