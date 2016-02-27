@@ -100,21 +100,11 @@
             $(this).find('.modal-body textarea').val(html);
         });
 
-        $('[' + this.$editor.attr('id') + '] #edit-html-modal-save').on('click', function() {
-            self.operationInit('edit-html-save');
-            self.$editHtmlModal.modal('hide');
-        });
-
         // Edit Text
         this.$editTextModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 text = current_without_cache.textContent;
             $(this).find('.modal-body textarea').val(text);
-        });
-
-        $('[' + this.$editor.attr('id') + '] #edit-text-modal-save').on('click', function() {
-            self.operationInit('edit-text-save');
-            self.$editTextModal.modal('hide');
         });
 
         // Edit Classes
@@ -124,9 +114,20 @@
             $(this).find('.modal-body input').val(classes);
         });
 
-        $('[' + this.$editor.attr('id') + '] #edit-classes-modal-save').on('click', function() {
-            self.operationInit('edit-classes-save');
-            self.$editClassesModal.modal('hide');
+        this.bindModalSave(this.$editHtmlModal, 'html');
+        this.bindModalSave(this.$editTextModal, 'text');
+        this.bindModalSave(this.$editClassesModal, 'classes');
+
+    };
+
+    LiveEditor.prototype.bindModalSave = function ($modal, label) {
+        var self = this,
+            selector = '[' + this.$editor.attr('id') + '] #edit-' + label + '-modal-save',
+            saveId = 'edit-' + label + '-save';
+
+        $(selector).on('click', function() {
+            self.operationInit(saveId);
+            $modal.modal('hide');
         });
     };
 
