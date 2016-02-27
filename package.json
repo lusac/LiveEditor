@@ -9,8 +9,7 @@
   "devDependencies": {
     "watchify": "~0.1.0",
     "catw": "~0.0.1",
-    "tap": "~0.4.4",
-    "jasmine-jquery": "~2.1.1"
+    "tap": "~0.4.4"
   },
   "scripts": {
     "build-js": "uglifyjs static/vendor/*/*.js static/js/*.js > dist/js/bundle.js",
