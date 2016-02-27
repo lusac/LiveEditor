@@ -9,7 +9,8 @@
   "devDependencies": {
     "watchify": "~0.1.0",
     "catw": "~0.0.1",
-    "tap": "~0.4.4"
+    "tap": "~0.4.4",
+    "jasmine": "~2.4.1"
   },
   "scripts": {
     "build-js": "uglifyjs static/vendor/*/*.js static/js/*.js > dist/js/bundle.js",
@@ -17,6 +18,7 @@
     "build": "npm run build-js && npm run build-css",
     "watch-js": "watchify static/js/*.js -o dist/js/bundle.js -dv",
     "watch-css": "catw static/css/*.css -o dist/css/bundle.css -v",
-    "watch": "npm run watch-js & npm run watch-css"
+    "watch": "npm run watch-js & npm run watch-css",
+    "jasmine": "jasmine"
   }
 }
