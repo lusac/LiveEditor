@@ -19,24 +19,24 @@
     position: absolute;
 }
 
-.code-painel-button {
+.code-panel-button {
     position: absolute;
     bottom: 10px;
     right: 10px;
 }
 
-.code-painel {
+.code-panel {
     left: 0 !important;
     bottom: 0 !important;
     width: 100% !important;
     position: absolute !important;
 }
 
-.code-painel .well {
+.code-panel .well {
     margin: 0;
 }
 
-.code-painel-buttons {
+.code-panel-buttons {
     top: 200px;
     right: 20px;
     position: absolute;

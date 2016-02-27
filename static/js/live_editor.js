@@ -15,6 +15,7 @@
         this.initVars(params);
         this.buildIframe(params);
         this.buildModals(params);
+        this.buildPanels(params);
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
@@ -28,7 +29,6 @@
     LiveEditor.prototype.initVars = function (params) {
         this.id = params.editor.replace('#', '');
         this.$editor = $(params.editor);
-        this.$codePainel = $('#code-painel[' + this.id + ']').find('textarea');
         this.domOutline = null;
         this.scriptList = [];
         this.scriptGoal = [];
@@ -80,6 +80,17 @@
         this.$editTextModal = $('#edit-text-modal[' + this.id + ']');
         this.$editClassesModal = $('#edit-classes-modal[' + this.id + ']');
     };
+
+    LiveEditor.prototype.buildPanels = function () {
+        var codePanel = new LiveEditorCodePanel({
+            editorName: this.id,
+            appendTo: this.$editor.parent()
+        });
+
+        codePanel.create();
+
+        this.$codePanel = $('#code-panel[' + this.id + ']').find('textarea');
+    }
 
     LiveEditor.prototype.domOutlineInit = function () {
         this.domOutline = new DomOutline({
@@ -276,7 +287,7 @@
             this.currentSelectedEditClasses();
         }
 
-        this.codePainelUpdate();
+        this.codePanelUpdate();
     };
 
     LiveEditor.prototype.currentSelectedRemove = function () {
@@ -331,8 +342,8 @@
         this.scriptGoal = result;
     };
 
-    LiveEditor.prototype.codePainelUpdate = function () {
-        this.$codePainel.val(this.scriptList);
+    LiveEditor.prototype.codePanelUpdate = function () {
+        this.$codePanel.val(this.scriptList);
     };
 
     window.LiveEditor = LiveEditor;
