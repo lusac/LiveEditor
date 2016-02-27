@@ -1,7 +1,7 @@
 describe("CodePanel", function() {
     beforeEach(function() {
-        $container = $('<div class="container"></div>');
-        $('body').append($container);
+        setFixtures('<div class="container"></div>');
+        $container = $('.container');
 
         codePanel = new window.LiveEditorCodePanel({
             editorName: 'test-editor'
