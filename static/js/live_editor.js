@@ -86,8 +86,6 @@
             appendTo: this.$editor.parent()
         });
 
-        codePanel.create();
-
         this.$codePanel = $('#code-panel[' + this.id + ']').find('textarea');
     }
 

@@ -10,6 +10,7 @@
     LiveEditorCodePanel.prototype.init = function (params) {
         this.editorName = params.editorName;
         this.appendTo = params.appendTo || null;
+        this.create();
      };
 
     LiveEditorCodePanel.prototype.create = function () {

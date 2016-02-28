@@ -6,7 +6,6 @@ describe("CodePanel", function() {
         codePanel = new window.LiveEditorCodePanel({
             editorName: 'test-editor'
         });
-        codePanel.create();
     });
 
     afterEach(function(){
@@ -31,7 +30,6 @@ describe("CodePanel", function() {
                 editorName: 'test-editor-custom',
                 appendTo: $container
             });
-            codePanelCustom.create();
 
             var $btn = $('.container .code-panel-button');
             expect($btn.length).toEqual(1);
@@ -42,7 +40,6 @@ describe("CodePanel", function() {
                 editorName: 'test-editor-custom',
                 appendTo: $container
             });
-            codePanelCustom.create();
 
             var $panel = $('.container #code-panel');
             expect($panel.length).toEqual(1);
