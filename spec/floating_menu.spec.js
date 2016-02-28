@@ -2,6 +2,7 @@ describe('Floating Menu', function() {
 
     beforeEach(function() {
         menu = new FloatingMenu({elemId: 'my-id'});
+        $menu = $('ul.dropdown-menu[role]');
     });
 
     afterEach(function() {
@@ -10,8 +11,7 @@ describe('Floating Menu', function() {
 
     describe('Init method', function() {
         it('Should create a menu', function() {
-            $m = $('.dropdown-menu[role]');
-            expect($m.length).toEqual(1);
+            expect($menu.length).toEqual(1);
         });
     });
 
@@ -39,9 +39,8 @@ describe('Floating Menu', function() {
         });
 
         it('Should add correct position', function() {
-            var menu = $('ul.dropdown-menu[role]');
-            expect(menu.css('left')).toBe(150 + 10 + 'px');
-            expect(menu.css('top')).toBe(130 - 10 + 'px');
+            expect($menu.css('left')).toBe(150 + 10 + 'px');
+            expect($menu.css('top')).toBe(130 - 10 + 'px');
         });
 
         it('Should create a header', function() {
@@ -85,14 +84,14 @@ describe('Floating Menu', function() {
         });
 
         it('Should create Move and Resize item', function() {
-            var $i = $('.dropdown-menu[role]>li:eq(3)');
+            var $i = $menu.find('>li:eq(3)');
 
             expect($i.find('a').text()).toBe('Move and Resize');
             expect($i.data('operation')).toBe('move-and-resize');
         });
 
         it('Should create Remove item', function() {
-            var $i = $('.dropdown-menu[role]>li:eq(4)');
+            var $i = $menu.find('>li:eq(4)');
 
             expect($i.find('a').text()).toBe('Remove');
             expect($i.data('operation')).toBe('remove');
@@ -168,8 +167,6 @@ describe('Floating Menu', function() {
                     }
                 ]
             });
-
-            $menu = $('ul.dropdown-menu[role]');
         });
 
         it('Should hide menu', function() {
@@ -186,8 +183,6 @@ describe('Floating Menu', function() {
 
     describe('Open method', function () {
         it('Should show up menu', function() {
-            var $menu = $('ul.dropdown-menu[role]');
-
             menu.open();
             expect($menu.css('display')).toBe('block');
         });
