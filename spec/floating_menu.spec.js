@@ -1,20 +1,22 @@
 describe('Floating Menu', function() {
 
+    beforeEach(function() {
+        menu = new FloatingMenu({elemId: 'my-id'});
+    });
+
     afterEach(function() {
-        $('.dropdown-menu').remove();
+        $('ul.dropdown-menu[role]').remove();
     });
 
     describe('Init method', function() {
         it('Should create a menu', function() {
-            var menu = new FloatingMenu({elemId: 'my-id'}),
-                $m = $('.dropdown-menu[role]');
+            $m = $('.dropdown-menu[role]');
             expect($m.length).toEqual(1);
         });
     });
 
     describe('Create method', function() {
         beforeEach(function() {
-            var menu = new FloatingMenu({elemId: 'my-id'});
             menu.create({
                 value: 'element',
                 posLeft: 150,
@@ -139,11 +141,53 @@ describe('Floating Menu', function() {
         });
     });
     
+    describe('Close method', function () {
+        beforeEach(function() {
+            menu.create({
+                value: 'element',
+                posLeft: 150,
+                posTop: 130,
+                container: [
+                    {
+                        value: 'Item Value 1',
+                        attrs: {
+                            'value': 'attr-value-1'
+                        }
+                    },
+                    {
+                        value: 'Item Value 2',
+                        attrs: {
+                            'value': 'attr-value-2'
+                        }
+                    }
+                ]
+            });
+
+            $menu = $('ul.dropdown-menu[role]');
+        });
+
+        it('Should hide menu', function() {
+            menu.close();
+            expect($menu.css('display')).toBe('none');
+        });
+
+        it('Should empty menu', function() {
+            expect($menu.children().length).not.toBe(0);
+            menu.close();
+            expect($menu.children().length).toBe(0);
+        });
+    });
+
+    describe('Open method', function () {
+        it('Should show up menu', function() {
+            var $menu = $('ul.dropdown-menu[role]');
+
+            menu.open();
+            expect($menu.css('display')).toBe('block');
+        });
+    });
+
     // describe('BindEvents method', function () {
-    //     beforeEach(function() {
-
-    //     });
-
     //     it('Should dispatch an event', function() {
 
     //     });
