@@ -148,7 +148,7 @@
             // same event for all editor. Should better this.
             if (self.$editorIframe.contents().find($(e.detail)).length > 0) {
                 self.setCurrentElement(self.domOutline.element);
-                self.openCurrentSettings();
+                self.openCurrentMenu();
                 self.domOutline.pause();
                 console.log('dom clicked!');
             }
@@ -223,7 +223,7 @@
         return els;
     };
 
-    LiveEditor.prototype.openCurrentSettings = function () {
+    LiveEditor.prototype.openCurrentMenu = function () {
         if (this.currentSelected) {
             var $DomOutlineBox = this.$editorIframe.contents().find('.DomOutline_box'),
                 top = this.$editorIframe.offset().top,
