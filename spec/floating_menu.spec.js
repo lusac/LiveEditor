@@ -189,7 +189,8 @@ describe('Floating Menu', function() {
 
     describe('BindEvents method', function () {
         it('Should dispatch an event', function() {
-            var _event;
+            var _event,
+                counter = 0;
 
             menu.create({
                 value: 'element',
@@ -199,11 +200,13 @@ describe('Floating Menu', function() {
 
             document.addEventListener('floatingMenuItemClicked', function (e) {
                 _event = e;
+                counter ++;
             }, false);
 
             var $el = $('[data-operation]:first');
             $el.click()
 
+            expect(counter).toBe(1);
             expect(_event.detail.operation).toBe('edit-html');
             expect(_event.detail.liveEditor).toBe('my-id');
         });
