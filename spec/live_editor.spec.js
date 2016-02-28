@@ -68,22 +68,58 @@ describe('LiveEditor', function() {
             waits(100);
         });
 
-        it('Click in any element should set currentSelected', function() {
+        it('Click in any element should call setCurrentElement method', function() {
+            var $p = liveEditor.$editorIframe.contents().find('p');
+
+            spyOn(liveEditor, 'setCurrentElement');
+
+            $p.trigger('mousemove').click();
+
+            expect(liveEditor.setCurrentElement).toHaveBeenCalled();
+        });
+
+        it('Click in any element should call openCurrentMenu method', function() {
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            
+            spyOn(liveEditor, 'openCurrentMenu');
+            
+            $p.trigger('mousemove').click();
+
+            expect(liveEditor.openCurrentMenu).toHaveBeenCalled();
+        });
+
+        it('Click in floating menu item should call operationInit method', function() {
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            $p.trigger('mousemove').click();
+            
+            spyOn(liveEditor, 'operationInit');
+            
+            $('ul.dropdown-menu[role] li').click();
+
+            expect(liveEditor.operationInit).toHaveBeenCalled();
+        });
+
+        it('When an element is already select and another one is clicked, should call unselectElements method', function() {
             var $p = liveEditor.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
 
-            expect(liveEditor.currentSelected).toBe('html>body>p');
-            expect(liveEditor.$currentSelected).toBe($p);
+            spyOn(liveEditor, 'unselectElements');
+
+            liveEditor.$editorIframe.contents().find('h1').trigger('mousemove').click();
+
+            expect(liveEditor.unselectElements).toHaveBeenCalled();
         });
 
-        it('Click in any element should build floating menu', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
-            $p.trigger('mousemove').click();
+        // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
+        //     var $p = liveEditor.$editorIframe.contents().find('p');
+        //     $p.trigger('mousemove').click();
 
-            var $dm = $('ul.dropdown-menu[role]');
+        //     spyOn(liveEditor, 'unselectElements');
 
-            expect($dm.css('display')).toBe('block');
-        });
+        //     liveEditor.$editorIframe.contents().find('html').trigger('keyup', {which: 27});
+
+        //     expect(liveEditor.unselectElements).toHaveBeenCalled();
+        // });
     });
 
     describe('setCurrentElement method', function() {
@@ -117,10 +153,16 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('modalEvents method', function() {
+    describe('openCurrentMenu method', function() {
     });
 
     describe('operationInit method', function() {
+    });
+
+    describe('unselectElements method', function() {
+    });
+
+    describe('modalEvents method', function() {
     });
 
     describe('getCurrentParentsPath method', function() {
