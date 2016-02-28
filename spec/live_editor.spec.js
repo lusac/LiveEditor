@@ -9,6 +9,7 @@ describe('LiveEditor', function() {
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
+        $('ul.dropdown-menu[role]').remove();
     })
 
     describe('Build Iframe', function() {
@@ -67,16 +68,21 @@ describe('LiveEditor', function() {
             waits(100);
         });
 
-        it('Click in any element should start DOM outline', function() {
+        it('Click in any element should set currentSelected', function() {
             var $p = liveEditor.$editorIframe.contents().find('p');
+            $p.trigger('mousemove').click();
 
-            $p.trigger('mousemove').click().click();
-            
-            var $d = liveEditor.$editorIframe.contents().find('.DomOutline_box');
-            
-            expect($d.css('display')).toBe('block');
             expect(liveEditor.currentSelected).toBe('html>body>p');
             expect(liveEditor.$currentSelected).toBe($p);
+        });
+
+        it('Click in any element should build floating menu', function() {
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            $p.trigger('mousemove').click();
+
+            var $dm = $('ul.dropdown-menu[role]');
+
+            expect($dm.css('display')).toBe('block');
         });
     });
 
