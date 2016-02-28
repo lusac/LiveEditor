@@ -1,23 +1,9 @@
 describe('Floating Menu', function() {
 
     beforeEach(function() {
-        menu = new FloatingMenu({elemId: 'my-id'});
-        $menu = $('ul.dropdown-menu[role]');
-    });
-
-    afterEach(function() {
-        $menu.remove();
-    });
-
-    describe('Init method', function() {
-        it('Should create a menu', function() {
-            expect($menu.length).toEqual(1);
-        });
-    });
-
-    describe('Create method', function() {
-        beforeEach(function() {
-            menu.create({
+        menu = new FloatingMenu({
+            elemId: 'my-id',
+            data: {
                 value: 'element',
                 posLeft: 150,
                 posTop: 130,
@@ -35,9 +21,23 @@ describe('Floating Menu', function() {
                         }
                     }
                 ]
-            });
+            }
         });
 
+        $menu = $('ul.dropdown-menu[role]');
+    });
+
+    afterEach(function() {
+        $menu.remove();
+    });
+
+    describe('Init method', function() {
+        it('Should create a menu', function() {
+            expect($menu.length).toEqual(1);
+        });
+    });
+
+    describe('Create method', function() {
         it('Should add correct position', function() {
             expect($menu.css('left')).toBe(150 + 10 + 'px');
             expect($menu.css('top')).toBe(130 - 10 + 'px');
@@ -147,37 +147,9 @@ describe('Floating Menu', function() {
     });
     
     describe('Close method', function () {
-        beforeEach(function() {
-            menu.create({
-                value: 'element',
-                posLeft: 150,
-                posTop: 130,
-                container: [
-                    {
-                        value: 'Item Value 1',
-                        attrs: {
-                            'value': 'attr-value-1'
-                        }
-                    },
-                    {
-                        value: 'Item Value 2',
-                        attrs: {
-                            'value': 'attr-value-2'
-                        }
-                    }
-                ]
-            });
-        });
-
         it('Should hide menu', function() {
             menu.close();
-            expect($menu.css('display')).toBe('none');
-        });
-
-        it('Should empty menu', function() {
-            expect($menu.children().length).not.toBe(0);
-            menu.close();
-            expect($menu.children().length).toBe(0);
+            expect($('ul.dropdown-menu[role]').length).toBe(0);
         });
     });
 
@@ -192,12 +164,6 @@ describe('Floating Menu', function() {
         it('Should dispatch an event', function() {
             var _event,
                 counter = 0;
-
-            menu.create({
-                value: 'element',
-                posLeft: 150,
-                posTop: 130
-            });
 
             document.addEventListener('floatingMenuItemClicked', function (e) {
                 _event = e;

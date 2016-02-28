@@ -11,6 +11,7 @@
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
         this.elemId = params.elemId;
         $('body').append(this.$menu);
+        this.create(params.data);
         this.bindEvents();
     };
 
@@ -93,8 +94,7 @@
     };
 
     FloatingMenu.prototype.close = function () {
-        this.$menu.hide();
-        this.$menu.empty();
+        this.$menu.remove();
     };
 
     FloatingMenu.prototype.newItem = function (params) {

@@ -233,13 +233,16 @@
                 left = this.$editorIframe.offset().left,
                 scrollTop = this.$editorIframe.contents().scrollTop();
 
-            this.floatingMenu = new FloatingMenu({elemId: this.$editor.attr('id')});
-            this.floatingMenu.create({
-                value: this.$currentSelected.prop('tagName').toLowerCase(),
-                posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
-                posTop: top + $DomOutlineBox.offset().top - scrollTop,
-                container: this.containerFormat()
+            this.floatingMenu = new FloatingMenu({
+                elemId: this.$editor.attr('id'),
+                data: {
+                    value: this.$currentSelected.prop('tagName').toLowerCase(),
+                    posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
+                    posTop: top + $DomOutlineBox.offset().top - scrollTop,
+                    container: this.containerFormat()
+                }
             });
+
             this.floatingMenu.open();
         } else {
             console.log('No item has been selected...');
