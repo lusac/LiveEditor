@@ -15,7 +15,7 @@
         this.initVars(params);
         this.buildIframe(params);
         this.buildModals(params);
-        this.buildPanels(params);
+        this.buildPanel(params);
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
@@ -80,7 +80,7 @@
         this.$editClassesModal = $('#edit-classes-modal[' + this.id + ']');
     };
 
-    LiveEditor.prototype.buildPanels = function () {
+    LiveEditor.prototype.buildPanel = function () {
         var codePanel = new LiveEditorCodePanel({
             editorName: this.id,
             appendTo: this.$editor.parent()
@@ -183,17 +183,17 @@
         document.dispatchEvent(_event);
     };
 
-    LiveEditor.prototype.setCurrentElement = function (elem) {
-        this.currentSelected = this.getElementPath(elem);
+    LiveEditor.prototype.setCurrentElement = function ($elem) {
+        this.currentSelected = this.getElementPath($elem);
         this.$currentSelected = this.$editorIframe.contents().find(this.currentSelected);
         console.log('Current: ' +  this.currentSelected);
     };
 
-    LiveEditor.prototype.getElementPath = function (elem) {
-        if (elem.length != 1)
-            elem = $(elem);
+    LiveEditor.prototype.getElementPath = function ($elem) {
+        if ($elem.length != 1)
+            $elem = $($elem);
 
-        var path, node = elem;
+        var path, node = $elem;
         while (node.length) {
             var realNode = node[0], name = realNode.localName;
             if (!name) break;
@@ -213,7 +213,7 @@
         return path;
     };
 
-    LiveEditor.prototype.getCurrentParentPath = function () {
+    LiveEditor.prototype.getCurrentParentsPath = function () {
         var a = this.$currentSelected[0];
         var els = [];
         while (a) {
@@ -247,7 +247,7 @@
     };
 
     LiveEditor.prototype.containerFormat = function () {
-        var pathList = this.getCurrentParentPath(),
+        var pathList = this.getCurrentParentsPath(),
             _list = [];
 
         for (var i=0; i <= pathList.length - 1; i++) {
