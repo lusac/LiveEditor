@@ -38,6 +38,12 @@ describe('Floating Menu', function() {
             });
         });
 
+        it('Should add correct position', function() {
+            var menu = $('ul.dropdown-menu[role]');
+            expect(menu.css('left')).toBe(150 + 10 + 'px');
+            expect(menu.css('top')).toBe(130 - 10 + 'px');
+        });
+
         it('Should create a header', function() {
             var $h = $('.dropdown-header');
             expect($h.text()).toBe('<element>');
