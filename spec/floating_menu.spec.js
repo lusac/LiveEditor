@@ -70,12 +70,12 @@ describe('Floating Menu', function() {
             expect($editHTML.data('toggle')).toBe('modal');
             expect($editText.data('toggle')).toBe('modal');
             expect($editClasses.data('toggle')).toBe('modal');
-            expect($editStyle.data('toggle')).not.toExist();
+            expect($editStyle).not.toHaveAttr('toggle');
 
             expect($editHTML.data('target')).toBe('#edit-html-modal[my-id]');
             expect($editText.data('target')).toBe('#edit-text-modal[my-id]');
             expect($editClasses.data('target')).toBe('#edit-classes-modal[my-id]');
-            expect($editStyle.data('target')).not.toExist();
+            expect($editStyle).not.toHaveAttr('target');
         });
 
         it('Should create Move and Resize item', function() {
@@ -111,14 +111,14 @@ describe('Floating Menu', function() {
             expect($item1.attr('value')).toBe('attr-value-1');
             expect($item2.attr('value')).toBe('attr-value-2');
 
-            expect($item1.data('operation')).not.toExist();
-            expect($item2.data('operation')).not.toExist();
+            expect($item1).not.toHaveAttr('operation');
+            expect($item2).not.toHaveAttr('operation');
 
-            expect($item1.data('toggle')).not.toExist();
-            expect($item2.data('toggle')).not.toExist();
+            expect($item1).not.toHaveAttr('toggle');
+            expect($item2).not.toHaveAttr('toggle');
 
-            expect($item1.data('target')).not.toExist();
-            expect($item2.data('target')).not.toExist();
+            expect($item1).not.toHaveAttr('target');
+            expect($item2).not.toHaveAttr('target');
         });
 
         it('Should create Goal item', function() {
@@ -136,8 +136,8 @@ describe('Floating Menu', function() {
 
             // Attrs
             expect($click.data('operation')).toBe('add-event-click');
-            expect($click.data('toggle')).not.toExist();
-            expect($click.data('target')).not.toExist();
+            expect($click).not.toHaveAttr('toggle');
+            expect($click).not.toHaveAttr('target');
         });
     });
     
