@@ -187,9 +187,25 @@ describe('Floating Menu', function() {
         });
     });
 
-    // describe('BindEvents method', function () {
-    //     it('Should dispatch an event', function() {
+    describe('BindEvents method', function () {
+        it('Should dispatch an event', function() {
+            var _event;
 
-    //     });
-    // });
+            menu.create({
+                value: 'element',
+                posLeft: 150,
+                posTop: 130
+            });
+
+            document.addEventListener('floatingMenuItemClicked', function (e) {
+                _event = e;
+            }, false);
+
+            var $el = $('[data-operation]:first');
+            $el.click()
+
+            expect(_event.detail.operation).toBe('edit-html');
+            expect(_event.detail.liveEditor).toBe('my-id');
+        });
+    });
 });

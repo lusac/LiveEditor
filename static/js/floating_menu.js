@@ -73,13 +73,13 @@
         var self = this;
 
         this.$menu.on('click', 'li', function(e) {
-            var $el = $(e.toElement).parent(),
-                op = $el.data('operation');
+            var op = $(this).data('operation');
 
             if (op) {
                 var _event = new CustomEvent('floatingMenuItemClicked', {
                     'detail': {'operation': op, 'liveEditor': self.elemId}
                 });
+
                 document.dispatchEvent(_event);
                 console.log('Operation: ' + op);
             }
