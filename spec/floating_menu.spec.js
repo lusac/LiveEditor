@@ -6,7 +6,7 @@ describe('Floating Menu', function() {
     });
 
     afterEach(function() {
-        $('ul.dropdown-menu[role]').remove();
+        $menu.remove();
     });
 
     describe('Init method', function() {
