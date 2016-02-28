@@ -19,9 +19,6 @@ describe("Modal", function() {
                 editor: 'editor-id',
                 data: datas[1]
             });
-
-        modal1.create();
-        modal2.create();
     });
 
     afterEach(function() {

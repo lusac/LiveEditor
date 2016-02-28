@@ -73,7 +73,6 @@
                 editor: this.id,
                 data: modals[i]
             });
-            modal.create();
         }
 
         this.$editHtmlModal = $('#edit-html-modal[' + this.id + ']');

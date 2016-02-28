@@ -12,6 +12,7 @@
         this.name = params.data.name;
         this.title = params.data.title;
         this.field = params.data.field;
+        this.create();
     };
 
     LiveEditorModal.prototype.create = function () {
