@@ -12,7 +12,7 @@
     "tap": "~0.4.4"
   },
   "scripts": {
-    "build-js": "uglifyjs static/vendor/*/*.js static/js/*.js > dist/js/bundle.js",
+    "build-js": "uglifyjs static/vendor/jquery.dom-outline/jquery.dom-outline-1.0.js static/js/modal.js static/js/code_panel.js static/js/floating_menu.js static/js/live_editor.js > dist/js/bundle.js",
     "build-css": "uglifycss static/css/*.css > dist/css/bundle.css",
     "build": "npm run build-js && npm run build-css",
     "watch-js": "watchify static/js/*.js -o dist/js/bundle.js -dv",
