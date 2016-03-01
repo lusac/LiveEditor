@@ -77,9 +77,9 @@ describe('Floating Menu', function() {
             expect($editClasses.data('toggle')).toBe('modal');
             expect($editStyle).not.toHaveAttr('toggle');
 
-            expect($editHTML.data('target')).toBe('#edit-html-modal[my-id]');
-            expect($editText.data('target')).toBe('#edit-text-modal[my-id]');
-            expect($editClasses.data('target')).toBe('#edit-classes-modal[my-id]');
+            expect($editHTML.data('target')).toBe('#edit-html-modal-my-id');
+            expect($editText.data('target')).toBe('#edit-text-modal-my-id');
+            expect($editClasses.data('target')).toBe('#edit-classes-modal-my-id');
             expect($editStyle).not.toHaveAttr('target');
         });
 

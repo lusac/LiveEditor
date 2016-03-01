@@ -68,7 +68,7 @@ describe("Modal", function() {
         });
 
         it("Should render save button", function() {
-            var $b = $('#edit-html-modal .modal-footer #edit-html-modal-save');
+            var $b = $('#edit-html-modal .modal-footer .save-btn');
 
             expect($b.length).toEqual(1);
             expect($b.attr('type')).toEqual('submit');

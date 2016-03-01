@@ -29,11 +29,10 @@
                         '</div>',
             $footer = '<div class="modal-footer">' +
                             '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' +
-                            '<button type="submit" class="btn btn-primary" id="' + this.name + '-save">Save</button>' +
-                        '</div>';
+                            '<button type="submit" class="btn btn-primary save-btn">Save</button>' +
+                      '</div>';
 
         $modal.attr('id', this.name)
-        $modal.attr(this.editor, 1);
 
         $modal.append(
             $div2.append(

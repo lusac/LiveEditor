@@ -36,9 +36,9 @@ describe('LiveEditor', function() {
 
     describe('Build Modals', function() {
         it('Should build Modals', function() {
-            var $m1 = $('#edit-html-modal[live-editor-test]'),
-                $m2 = $('#edit-text-modal[live-editor-test]'),
-                $m3 = $('#edit-classes-modal[live-editor-test]');
+            var $m1 = $('#edit-html-modal-live-editor-test'),
+                $m2 = $('#edit-text-modal-live-editor-test'),
+                $m3 = $('#edit-classes-modal-live-editor-test');
 
             expect($m1).toExist();
             expect($m2).toExist();
@@ -65,7 +65,7 @@ describe('LiveEditor', function() {
 
     describe('bindEvents method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(200);
         });
 
         it('Click in any element should call setCurrentElement method', function() {

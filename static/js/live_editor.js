@@ -54,15 +54,15 @@
     LiveEditor.prototype.buildModals = function (params) {
         var modals = [
                 {
-                    name: 'edit-html-modal',
+                    name: 'edit-html-modal-' + this.id,
                     title: 'Edit HTML',
                     field: 'textarea'
                 }, {
-                    name: 'edit-text-modal',
+                    name: 'edit-text-modal-' + this.id,
                     title: 'Edit Text',
                     field: 'textarea'
                 }, {
-                    name: 'edit-classes-modal',
+                    name: 'edit-classes-modal-' + this.id,
                     title: 'Edit Classes',
                     field: 'input'
                 }
@@ -75,9 +75,9 @@
             });
         }
 
-        this.$editHtmlModal = $('#edit-html-modal[' + this.id + ']');
-        this.$editTextModal = $('#edit-text-modal[' + this.id + ']');
-        this.$editClassesModal = $('#edit-classes-modal[' + this.id + ']');
+        this.$editHtmlModal = $('#edit-html-modal-' + this.id);
+        this.$editTextModal = $('#edit-text-modal-' + this.id);
+        this.$editClassesModal = $('#edit-classes-modal-' + this.id);
     };
 
     LiveEditor.prototype.buildPanel = function () {
@@ -130,10 +130,9 @@
 
     LiveEditor.prototype.bindModalSave = function ($modal, label) {
         var self = this,
-            selector = '[' + this.$editor.attr('id') + '] #edit-' + label + '-modal-save',
             saveId = 'edit-' + label + '-save';
 
-        $(selector).on('click', function() {
+        $modal.find('.save-btn').on('click', function() {
             self.operationInit(saveId);
             $modal.modal('hide');
         });
