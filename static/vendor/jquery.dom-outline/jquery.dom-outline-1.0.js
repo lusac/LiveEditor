@@ -16,180 +16,186 @@
  * myDomOutline.start();
  * myDomOutline.stop();
  */
- 
-var DomOutline = function (options) {
-    'use strict';
 
-    options = options || {};
+(function (window, document, $) {
+    window.DomOutline = {};
 
-    var pub = {},
-        self = {
-            opts: {
-                namespace: options.namespace || 'DomOutline',
-                onClick: options.onClick || false,
-                realtime: options.realtime || false,
-                $elem: options.elem || jQuery('body')
-            },
-            keyCodes: {
-                BACKSPACE: 8,
-                ESC: 27,
-                DELETE: 46
-            },
-            active: false,
-            initialized: false,
-            elements: {}
+    var DomOutline = function (options) {
+        'use strict';
+
+        options = options || {};
+
+        var pub = {},
+            self = {
+                opts: {
+                    namespace: options.namespace || 'DomOutline',
+                    onClick: options.onClick || false,
+                    realtime: options.realtime || false,
+                    $elem: options.elem || jQuery('body')
+                },
+                keyCodes: {
+                    BACKSPACE: 8,
+                    ESC: 27,
+                    DELETE: 46
+                },
+                active: false,
+                initialized: false,
+                elements: {}
+            };
+
+        function writeStylesheet(css) {
+            var element = document.createElement('style');
+            element.type = 'text/css';
+
+            if (self.opts.$elem) {
+                self.opts.$elem.append(element);
+            } else {
+                document.getElementsByTagName('head')[0].appendChild(element);
+            }
+
+            if (element.styleSheet) {
+                element.styleSheet.cssText = css; // IE
+            } else {
+                element.innerHTML = css; // Non-IE
+            }
+        }
+
+        function initStylesheet() {
+            var css = '';
+
+            if (self.initialized !== true) {
+                css +=
+                    '.' + self.opts.namespace + ' {' +
+                    '    background: rgba(0, 153, 204, 0.05);' +
+                    '    position: fixed;' +
+                    '    z-index: 1000000;' +
+                    '    pointer-events: none;' +
+                    '    outline: 3px solid rgb(0, 153, 204);' +
+                    '}' +
+                    '.' + self.opts.namespace + '_label {' +
+                    '    background: #09c;' +
+                    '    boroutlineder-radius: 2px;' +
+                    '    color: #fff;' +
+                    '    font: bold 12px/12px Helvetica, sans-serif;' +
+                    '    padding: 4px 6px;' +
+                    '    position: fixed;' +
+                    '    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);' +
+                    '    z-index: 1000001;' +
+                    '    pointer-events: none;' +
+                    '}' +
+                    '.' + self.opts.namespace + '_box {' +
+                    '    background: rgba(0, 153, 204, 0.05);' +
+                    '    position: absolute;' +
+                    '    z-index: 1000000;' +
+                    '    pointer-events: none;' +
+                    '    outline: 3px solid rgb(0, 153, 204);' +
+                    '    box-shadow: 6px 6px 2px rgba(0, 0, 0, 0.2);' +
+                    '}';
+
+                writeStylesheet(css);
+                self.initialized = true;
+            }
+        }
+
+        function createOutlineElements() {
+            self.elements.top = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+            self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+            self.elements.left = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+            self.elements.right = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
+
+            self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').insertAfter(self.opts.$elem);
+        }
+
+        function removeOutlineElements() {
+            jQuery.each(self.elements, function (name, element) {
+                element.remove();
+            });
+        }
+
+        function getScrollTop() {
+            // Verify if is necessary
+            if (!self.elements.window) {
+                self.elements.window = jQuery(window);
+            }
+            return self.elements.window.scrollTop();
+        }
+
+        function stopOnEscape(e) {
+            if (e.keyCode === self.keyCodes.ESC || e.keyCode === self.keyCodes.BACKSPACE || e.keyCode === self.keyCodes.DELETE) {
+                pub.stop();
+            }
+
+            return false;
+        }
+
+        function draw(e) {
+            if (e.target.className.indexOf(self.opts.namespace) !== -1) {
+                return;
+            }
+
+            pub.element = e.target;
+
+            var scroll_top = getScrollTop(),
+                pos = pub.element.getBoundingClientRect(),
+                top = pos.top + scroll_top,
+                label_text = '',
+                label_top = 0,
+                label_left = 0;
+
+            
+            self.elements.box.css({
+                top: self.opts.$elem.scrollTop() + pos.top - 1,
+                left: pos.left - 1,
+                width: pos.width + 2,
+                height: pos.height + 2
+            });
+        }
+
+        function clickHandler(e) {
+            if (!self.opts.realtime) {
+                draw(e);
+            }
+            self.opts.onClick(pub.element);
+            return false;
+        }
+
+        pub.start = function () {
+            removeOutlineElements();
+            initStylesheet();
+            if (self.active !== true) {
+                self.active = true;
+                createOutlineElements();
+
+                self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
+                if (self.opts.onClick) {
+                    setTimeout(function () {
+                        self.opts.$elem.bind('click.' + self.opts.namespace, clickHandler);
+                    }, 50);
+                }
+
+                if (self.opts.realtime) {
+                    self.opts.$elem.bind('mousemove.' + self.opts.namespace, draw);
+                }
+            }
         };
 
-    function writeStylesheet(css) {
-        var element = document.createElement('style');
-        element.type = 'text/css';
+        pub.stop = function () {
+            self.active = false;
+            removeOutlineElements();
+            self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
+                .unbind('keyup.' + self.opts.namespace)
+                .unbind('click.' + self.opts.namespace);
+        };
 
-        if (self.opts.$elem) {
-            self.opts.$elem.append(element);
-        } else {
-            document.getElementsByTagName('head')[0].appendChild(element);
-        }
+        pub.pause = function () {
+            self.active = false;
+            self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
+                .unbind('keyup.' + self.opts.namespace)
+                .unbind('click.' + self.opts.namespace);
+        };
 
-        if (element.styleSheet) {
-            element.styleSheet.cssText = css; // IE
-        } else {
-            element.innerHTML = css; // Non-IE
-        }
-    }
+        return pub;
+    }; 
 
-    function initStylesheet() {
-        var css = '';
-
-        if (self.initialized !== true) {
-            css +=
-                '.' + self.opts.namespace + ' {' +
-                '    background: rgba(0, 153, 204, 0.05);' +
-                '    position: fixed;' +
-                '    z-index: 1000000;' +
-                '    pointer-events: none;' +
-                '    outline: 3px solid rgb(0, 153, 204);' +
-                '}' +
-                '.' + self.opts.namespace + '_label {' +
-                '    background: #09c;' +
-                '    boroutlineder-radius: 2px;' +
-                '    color: #fff;' +
-                '    font: bold 12px/12px Helvetica, sans-serif;' +
-                '    padding: 4px 6px;' +
-                '    position: fixed;' +
-                '    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);' +
-                '    z-index: 1000001;' +
-                '    pointer-events: none;' +
-                '}' +
-                '.' + self.opts.namespace + '_box {' +
-                '    background: rgba(0, 153, 204, 0.05);' +
-                '    position: absolute;' +
-                '    z-index: 1000000;' +
-                '    pointer-events: none;' +
-                '    outline: 3px solid rgb(0, 153, 204);' +
-                '    box-shadow: 6px 6px 2px rgba(0, 0, 0, 0.2);' +
-                '}';
-
-            writeStylesheet(css);
-            self.initialized = true;
-        }
-    }
-
-    function createOutlineElements() {
-        self.elements.top = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-        self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-        self.elements.left = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-        self.elements.right = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-
-        self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').insertAfter(self.opts.$elem);
-    }
-
-    function removeOutlineElements() {
-        jQuery.each(self.elements, function (name, element) {
-            element.remove();
-        });
-    }
-
-    function getScrollTop() {
-        // Verify if is necessary
-        if (!self.elements.window) {
-            self.elements.window = jQuery(window);
-        }
-        return self.elements.window.scrollTop();
-    }
-
-    function stopOnEscape(e) {
-        if (e.keyCode === self.keyCodes.ESC || e.keyCode === self.keyCodes.BACKSPACE || e.keyCode === self.keyCodes.DELETE) {
-            pub.stop();
-        }
-
-        return false;
-    }
-
-    function draw(e) {
-        if (e.target.className.indexOf(self.opts.namespace) !== -1) {
-            return;
-        }
-
-        pub.element = e.target;
-
-        var scroll_top = getScrollTop(),
-            pos = pub.element.getBoundingClientRect(),
-            top = pos.top + scroll_top,
-            label_text = '',
-            label_top = 0,
-            label_left = 0;
-
-        
-        self.elements.box.css({
-            top: self.opts.$elem.scrollTop() + pos.top - 1,
-            left: pos.left - 1,
-            width: pos.width + 2,
-            height: pos.height + 2
-        });
-    }
-
-    function clickHandler(e) {
-        if (!self.opts.realtime) {
-            draw(e);
-        }
-        self.opts.onClick(pub.element);
-        return false;
-    }
-
-    pub.start = function () {
-        removeOutlineElements();
-        initStylesheet();
-        if (self.active !== true) {
-            self.active = true;
-            createOutlineElements();
-
-            self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
-            if (self.opts.onClick) {
-                setTimeout(function () {
-                    self.opts.$elem.bind('click.' + self.opts.namespace, clickHandler);
-                }, 50);
-            }
-
-            if (self.opts.realtime) {
-                self.opts.$elem.bind('mousemove.' + self.opts.namespace, draw);
-            }
-        }
-    };
-
-    pub.stop = function () {
-        self.active = false;
-        removeOutlineElements();
-        self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
-            .unbind('keyup.' + self.opts.namespace)
-            .unbind('click.' + self.opts.namespace);
-    };
-
-    pub.pause = function () {
-        self.active = false;
-        self.opts.$elem.unbind('mousemove.' + self.opts.namespace)
-            .unbind('keyup.' + self.opts.namespace)
-            .unbind('click.' + self.opts.namespace);
-    };
-
-    return pub;
-}; 
+    window.DomOutline = DomOutline;
+})(window, document, $);
