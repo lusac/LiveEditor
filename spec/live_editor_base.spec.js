@@ -74,7 +74,7 @@ describe('LiveEditorBase', function() {
 
     describe('bindEvents method', function() {
         beforeEach(function() {
-            waits(200);
+            waits(1100);
         });
 
         it('Click in any element should call setCurrentElement method', function() {
