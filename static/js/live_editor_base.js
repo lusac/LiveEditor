@@ -4,9 +4,7 @@
     'use strict';
 
     var LiveEditorBase = function LiveEditorBase (params) {
-        console.log('Live Editor Init...');
         this.init(params);
-        console.log('Live Editor Done...');
     };
 
     LiveEditorBase.prototype.init = function (params) {
@@ -14,6 +12,7 @@
 
         this.initVars(params);
         this.buildIframe(params);
+        this.buildButtons();
         this.buildModals(params);
         this.buildPanel(params);
 
@@ -32,6 +31,15 @@
         this.domOutline = null;
         this.scriptList = [];
         this.scriptGoal = [];
+        this.undoList = [];
+        this.redoList = [];
+    };
+
+    LiveEditorBase.prototype.buildButtons = function () {
+        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
+        this.$redoButton = $('<button type="button" class="btn btn-default btn-redo">Redo</button>');
+
+        this.$editor.parent().append(this.$undoButton, this.$redoButton);
     };
 
     LiveEditorBase.prototype.buildIframe = function (params) {
@@ -168,6 +176,19 @@
                 self.unselectElements(e);
             }
         });
+
+        this.$undoButton.on('click', function () {
+            // to do: js test
+            if (self.undoList.length) {
+                var script = self.undoList.pop();
+                self.scriptList.pop();
+                self.codePanelUpdate();
+                eval(script);
+            }
+        });
+
+        this.$redoButton.on('click', function () {
+        });
     };
 
     LiveEditorBase.prototype.unselectElements = function (e) {
@@ -290,8 +311,16 @@
     };
 
     LiveEditorBase.prototype.currentSelectedRemove = function () {
+        // remove script
         var str = '$("' + this.currentSelected + '").remove();';
         this.addToScriptList(str);
+
+        // undo script
+        var parentPath = this.getElementPath(this.$currentSelected.parent()),
+            str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
+
+        this.undoList.push(str_undo);
+
         this.$editorIframe.contents().find(this.currentSelected).remove();
     };
 
