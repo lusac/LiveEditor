@@ -360,10 +360,18 @@
     };
 
     LiveEditorBase.prototype.currentSelectedEditText = function () {
-        var text = this.$editTextModal.find('.modal-body textarea').val(),
+        var oldText = this.$currentSelected.text(),
+            text = this.$editTextModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").text("' + text + '");';
 
         this.addToScriptList(str);
+
+        // undo script
+        // to do: test
+        var str_undo = "self.$editorIframe.contents().find('" + this.currentSelected + "').text('" + oldText + "');";
+
+        this.undoList.push(str_undo);
+
         this.$editorIframe.contents().find(this.currentSelected).text(text);
     };
 
