@@ -12,7 +12,13 @@ describe('Floating Menu', function() {
                     "box_width": 10,
                     "iframe_width": 10000,
                 },
-                posTop: 130,
+                posTop: {
+                    iframe_top: -12,
+                    box_offset_top: 14,
+                    scroll_top: 0,
+                    iframe_height: 500,
+                    box_heigh: 67
+                },
                 container: [
                     {
                         value: 'Item Value 1',
@@ -46,7 +52,7 @@ describe('Floating Menu', function() {
     describe('Create method', function() {
         it('Should add correct position', function() {
             expect($menu.css('left')).toBe(340 + 'px');
-            expect($menu.css('top')).toBe(130 - 10 + 'px');
+            expect($menu.css('top')).toBe(-8 + 'px');
         });
 
         it('Should not leave screen on right', function() {
@@ -61,7 +67,13 @@ describe('Floating Menu', function() {
                         box_width: 36,
                         iframe_width: 1280
                     },
-                    posTop: 130,
+                    posTop: {
+                        iframe_top: -12,
+                        box_offset_top: 379,
+                        scroll_top: 0,
+                        iframe_height: 500,
+                        box_heigh: 34
+                    },
                     container: [
                         {
                             value: 'Item Value 1',
@@ -80,6 +92,7 @@ describe('Floating Menu', function() {
             });
             $menu = $('ul.dropdown-menu[role]');
             expect($menu.css('left')).toBe(-96 + 'px');
+            expect($menu.css('top')).toBe(103 + 'px');
         });
 
         it('Should create a header', function() {

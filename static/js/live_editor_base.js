@@ -260,7 +260,13 @@
                         "box_width": $DomOutlineBox.width(),
                         "iframe_width": this.$editorIframe.width(),
                     },
-                    posTop: top + $DomOutlineBox.offset().top - scrollTop,
+                    posTop: {
+                        "iframe_top": top,
+                        "box_offset_top": $DomOutlineBox.offset().top,
+                        "scroll_top": scrollTop,
+                        "iframe_height": this.$editorIframe.height(),
+                        "box_heigh": $DomOutlineBox.height(),
+                    },
                     container: this.containerFormat()
                 }
             });

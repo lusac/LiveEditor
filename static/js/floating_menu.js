@@ -9,6 +9,7 @@
 
     FloatingMenu.prototype.init = function (params) {
         this.LEFT_GAP = 10;
+        this.TOP_GAP = -10;
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
         this.elemId = params.elemId;
         $('body').append(this.$menu);
@@ -66,7 +67,7 @@
 
         this.$menu.append(menuHtml);
         this.$menu.css({
-            top: posTop - 10,
+            top: this.defineTop(posTop, this.$menu.height()),
             left: this.defineLeft(posLeft, this.$menu.width()),
         });
     };
@@ -138,6 +139,19 @@
             next_location = leftData.iframe_left + leftData.box_offset_left - menu_width - this.LEFT_GAP;
         }
         return next_location
+    };
+
+    FloatingMenu.prototype.defineTop = function(topData, menu_height) {
+        if (topData === 0) {
+            return 0;
+        } 
+        console.log(topData)
+        var next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + this.TOP_GAP
+        if (next_location + menu_height >= topData.iframe_height) {
+            next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + topData.box_heigh - menu_height + this.TOP_GAP;
+        }
+        console.log(next_location)
+        return next_location    
     }
 
     window.FloatingMenu = FloatingMenu;
