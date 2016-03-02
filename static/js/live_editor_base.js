@@ -254,7 +254,12 @@
                 elemId: this.$editor.attr('id'),
                 data: {
                     value: this.$currentSelected.prop('tagName').toLowerCase(),
-                    posLeft: left + $DomOutlineBox.offset().left + $DomOutlineBox.width(),
+                    posLeft: {
+                        "iframe_left":left,
+                        "box_offset_left": $DomOutlineBox.offset().left,
+                        "box_width": $DomOutlineBox.width(),
+                        "iframe_width": this.$editorIframe.width(),
+                    },
                     posTop: top + $DomOutlineBox.offset().top - scrollTop,
                     container: this.containerFormat()
                 }

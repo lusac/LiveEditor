@@ -8,6 +8,7 @@
     };
 
     FloatingMenu.prototype.init = function (params) {
+        this.LEFT_GAP = 10;
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
         this.elemId = params.elemId;
         $('body').append(this.$menu);
@@ -66,7 +67,7 @@
         this.$menu.append(menuHtml);
         this.$menu.css({
             top: posTop - 10,
-            left: posLeft + 10
+            left: this.defineLeft(posLeft, this.$menu.width()),
         });
     };
 
@@ -126,6 +127,19 @@
         }
 
         return $li.prop('outerHTML');
+    };
+
+    FloatingMenu.prototype.defineLeft = function(leftData, menu_width) {
+        if (leftData === 0) {
+            return 0;
+        }
+        console.log(leftData)
+        var next_location = leftData.iframe_left + leftData.box_offset_left + leftData.box_width + this.LEFT_GAP;
+        if (next_location + menu_width >= leftData.iframe_width) {
+            next_location = leftData.iframe_left + leftData.box_offset_left - menu_width - this.LEFT_GAP;
+        }
+        console.log(next_location)
+        return next_location
     }
 
     window.FloatingMenu = FloatingMenu;

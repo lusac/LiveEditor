@@ -1,11 +1,17 @@
 describe('Floating Menu', function() {
 
     beforeEach(function() {
+        $('ul.dropdown-menu[role]').remove();
         menu = new FloatingMenu({
             elemId: 'my-id',
             data: {
                 value: 'element',
-                posLeft: 150,
+                posLeft: {
+                    "iframe_left": 20,
+                    "box_offset_left": 300,
+                    "box_width": 10,
+                    "iframe_width": 10000,
+                },
                 posTop: 130,
                 container: [
                     {
@@ -39,8 +45,41 @@ describe('Floating Menu', function() {
 
     describe('Create method', function() {
         it('Should add correct position', function() {
-            expect($menu.css('left')).toBe(150 + 10 + 'px');
+            expect($menu.css('left')).toBe(340 + 'px');
             expect($menu.css('top')).toBe(130 - 10 + 'px');
+        });
+
+        it('Should not leave screen on right', function() {
+            $('ul.dropdown-menu[role]').remove();
+            menu = new FloatingMenu({
+                elemId: 'my-id',
+                data: {
+                    value: 'element',
+                    posLeft: {
+                        iframe_left: 20,
+                        box_offset_left: 1118,
+                        box_width: 36,
+                        iframe_width: 1280
+                    },
+                    posTop: 130,
+                    container: [
+                        {
+                            value: 'Item Value 1',
+                            attrs: {
+                                'value': 'attr-value-1'
+                            }
+                        },
+                        {
+                            value: 'Item Value 2',
+                            attrs: {
+                                'value': 'attr-value-2'
+                            }
+                        }
+                    ]
+                }
+            });
+            $menu = $('ul.dropdown-menu[role]');
+            expect($menu.css('left')).toBe(-96 + 'px');
         });
 
         it('Should create a header', function() {
