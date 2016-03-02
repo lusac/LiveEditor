@@ -133,12 +133,10 @@
         if (leftData === 0) {
             return 0;
         }
-        console.log(leftData)
         var next_location = leftData.iframe_left + leftData.box_offset_left + leftData.box_width + this.LEFT_GAP;
         if (next_location + menu_width >= leftData.iframe_width) {
             next_location = leftData.iframe_left + leftData.box_offset_left - menu_width - this.LEFT_GAP;
         }
-        console.log(next_location)
         return next_location
     }
 
