@@ -24,21 +24,21 @@
                 value: 'Edit HTML',
                 attrs: {
                     'data-operation': 'edit-html',
-                    'data-toggle': 'modal', 
+                    'data-toggle': 'modal',
                     'data-target':'#edit-html-modal-' + this.elemId
                 }
             },{
                 value: 'Edit Text',
                 attrs: {
                     'data-operation': 'edit-text',
-                    'data-toggle': 'modal', 
+                    'data-toggle': 'modal',
                     'data-target':'#edit-text-modal-' + this.elemId
                 }
             },{
                 value: 'Edit Classes',
                 attrs: {
                     'data-operation': 'edit-classes',
-                    'data-toggle': 'modal', 
+                    'data-toggle': 'modal',
                     'data-target':'#edit-classes-modal-' + this.elemId
                 }
             }, {
