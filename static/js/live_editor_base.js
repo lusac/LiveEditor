@@ -344,42 +344,49 @@
 
     LiveEditorBase.prototype.currentSelectedEditHtml = function () {
         // remove script
+        // to do: test
         var html = this.$editHtmlModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
-
         this.addToScriptList(str);
 
         // undo script
         // to do: test
         var parentPath = this.getElementPath(this.$currentSelected.parent()),
             str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
-
         this.undoList.push(str_undo);
 
         this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
     };
 
     LiveEditorBase.prototype.currentSelectedEditText = function () {
+        // undo script
+        // to do: test
         var oldText = this.$currentSelected.text(),
             text = this.$editTextModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").text("' + text + '");';
-
         this.addToScriptList(str);
 
         // undo script
         // to do: test
         var str_undo = "self.$editorIframe.contents().find('" + this.currentSelected + "').text('" + oldText + "');";
-
         this.undoList.push(str_undo);
 
         this.$editorIframe.contents().find(this.currentSelected).text(text);
     };
 
     LiveEditorBase.prototype.currentSelectedEditClasses = function () {
-        var classes = this.$editClassesModal.find('.modal-body input').val(),
+        // undo script
+        // to do: test
+        var oldClass = this.$currentSelected.attr('class'),
+            classes = this.$editClassesModal.find('.modal-body input').val(),
             str = '$("' + this.currentSelected + '").attr("class", "' + classes + '");';
-
         this.addToScriptList(str);
+
+        // undo script
+        // to do: test
+        var str_undo = "self.$editorIframe.contents().find('" + this.currentSelected + "').attr('class', '" + oldClass + "');";
+        this.undoList.push(str_undo);
+
         this.$editorIframe.contents().find(this.currentSelected).attr('class', classes);
     };
 
