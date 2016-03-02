@@ -37,9 +37,9 @@
 
     LiveEditorBase.prototype.buildButtons = function () {
         this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
-        this.$redoButton = $('<button type="button" class="btn btn-default btn-redo">Redo</button>');
+        // this.$redoButton = $('<button type="button" class="btn btn-default btn-redo">Redo</button>');
 
-        this.$editor.parent().append(this.$undoButton, this.$redoButton);
+        this.$editor.parent().append(this.$undoButton); //, this.$redoButton);
     };
 
     LiveEditorBase.prototype.buildIframe = function (params) {
@@ -191,9 +191,6 @@
                 self.codePanelUpdate();
                 eval(script);
             }
-        });
-
-        this.$redoButton.on('click', function () {
         });
     };
 
