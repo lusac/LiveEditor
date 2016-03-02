@@ -1,19 +1,18 @@
-# LiveEditor
+LiveEditor
+==========
 open source live editor for webpages.
 
-# Developer
+
+Developer
+=========
 
 ### Server Start
 To see index example working, you should start an HTTP server.
-
-Example:
-
-Run `python -m SimpleHTTPServer 3000` then access `http://localhost:3000/index.html`
+Run `make run` then access `http://localhost:8888/index.html`
 
 
 ### Static build
 To update the static dist, you should have `npm` in your enviroment.
-
 Inside LiveEditor directory:
 
 `npm install`
@@ -21,3 +20,7 @@ Inside LiveEditor directory:
 Then:
 
 `npm run build`
+
+### Test
+We use jasmine to write tests.
+To run tests use `make test`.
