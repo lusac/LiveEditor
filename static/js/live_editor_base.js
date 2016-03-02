@@ -11,8 +11,8 @@
         var self = this;
 
         this.initVars(params);
-        this.buildIframe(params);
         this.buildButtons();
+        this.buildIframe(params);
         this.buildModals(params);
         this.buildPanel(params);
 
@@ -55,7 +55,6 @@
         this.$editor.append(this.$spinnerContainer, this.$editorIframe);
         this.$editor.addClass('live-editor');
 
-        // this.$editorIframe = this.$editor.find('iframe');
         this.$editorIframe[0].contentDocument.write(params.content);
     };
 
