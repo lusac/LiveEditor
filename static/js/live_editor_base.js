@@ -332,9 +332,10 @@
         // undo script
         // to do: test
         var parentPath = this.getElementPath(this.$currentSelected.parent()),
-            str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
+            oldHtml = this.$currentSelected.parent()[0].outerHTML,
+            strUndo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
 
-        this.undoList.push(str_undo);
+        this.undoList.push(strUndo);
 
         this.$editorIframe.contents().find(this.currentSelected).remove();
     };
@@ -355,8 +356,9 @@
         // undo script
         // to do: test
         var parentPath = this.getElementPath(this.$currentSelected.parent()),
-            str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
-        this.undoList.push(str_undo);
+            oldHtml = this.$currentSelected.parent()[0].outerHTML,
+            strUndo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
+        this.undoList.push(strUndo);
 
         this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
     };
@@ -371,8 +373,8 @@
 
         // undo script
         // to do: test
-        var str_undo = "self.$editorIframe.contents().find('" + this.currentSelected + "').text('" + oldText + "');";
-        this.undoList.push(str_undo);
+        var strUndo = "self.$editorIframe.contents().find('" + this.currentSelected + "').text('" + oldText + "');";
+        this.undoList.push(strUndo);
 
         this.$editorIframe.contents().find(this.currentSelected).text(text);
     };
@@ -387,8 +389,8 @@
 
         // undo script
         // to do: test
-        var str_undo = "self.$editorIframe.contents().find('" + this.currentSelected + "').attr('class', '" + oldClass + "');";
-        this.undoList.push(str_undo);
+        var strUndo = "self.$editorIframe.contents().find('" + this.currentSelected + "').attr('class', '" + oldClass + "');";
+        this.undoList.push(strUndo);
 
         this.$editorIframe.contents().find(this.currentSelected).attr('class', classes);
     };
