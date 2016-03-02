@@ -157,6 +157,13 @@
                 self.setCurrentElement(self.domOutline.element);
                 self.openCurrentMenu();
                 self.domOutline.pause();
+                self.$editorIframe.contents().find("html *").on("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.$editorIframe.contents().find("html *").off("click");
+                    self.domOutline.start();
+                    self.floatingMenu.close();
+                });
                 console.log('dom clicked!');
             }
         }, false);
