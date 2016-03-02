@@ -316,6 +316,7 @@
         this.addToScriptList(str);
 
         // undo script
+        // to do: test
         var parentPath = this.getElementPath(this.$currentSelected.parent()),
             str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
 
@@ -331,10 +332,19 @@
     };
 
     LiveEditorBase.prototype.currentSelectedEditHtml = function () {
+        // remove script
         var html = this.$editHtmlModal.find('.modal-body textarea').val(),
             str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
 
         this.addToScriptList(str);
+
+        // undo script
+        // to do: test
+        var parentPath = this.getElementPath(this.$currentSelected.parent()),
+            str_undo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + this.$currentSelected.parent()[0].outerHTML + "');";
+
+        this.undoList.push(str_undo);
+
         this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
     };
 
