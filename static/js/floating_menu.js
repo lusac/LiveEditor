@@ -145,12 +145,12 @@
         if (topData === 0) {
             return 0;
         } 
-        console.log(topData)
+
         var next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + this.TOP_GAP
         if (next_location + menu_height >= topData.iframe_height) {
             next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + topData.box_heigh - menu_height + this.TOP_GAP;
         }
-        console.log(next_location)
+
         return next_location    
     }
 
