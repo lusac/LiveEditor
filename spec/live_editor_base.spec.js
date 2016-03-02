@@ -1,11 +1,20 @@
-describe('LiveEditor', function() {
+describe('LiveEditorBase', function() {
     beforeEach(function() {
-        liveEditor = new LiveEditor({editor: '#live-editor-test', url: 'site.html'});
-        $liveEditor = $('.live-editor');
+        var html = '<html>' +
+                        '<head>' +
+                            '<title>Teste Jasmine</title>' +
+                        '</head>' +
+                        '<body>' +
+                            '<h1>Teste Jasmine</h1>' +
+                            '<p>Hello World!</p>' +
+                        '</body>' +
+                    '</html>';
+        liveEditorBase = new LiveEditorBase({editor: '#live-editor-test-1', content: html});
+        $liveEditorBase = $('.live-editor');
     });
 
     afterEach(function() {
-        $liveEditor.empty();
+        $liveEditorBase.empty();
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
@@ -14,7 +23,7 @@ describe('LiveEditor', function() {
 
     describe('Build Iframe', function() {
         it('Should build iframe', function() {
-            var $iframe = $liveEditor.find('iframe');
+            var $iframe = $liveEditorBase.find('iframe');
             expect($iframe).toExist();
         });
 
@@ -28,7 +37,7 @@ describe('LiveEditor', function() {
         it ('Loading Spinner disappears when iframe is fully loaded', function() {
             var $s = $('.spinner-container');
 
-            liveEditor.$editorIframe.on('load', function() {
+            liveEditorBase.$editorIframe.on('load', function() {
                 expect($s.css('display')).toBe('none');
             });
         });
@@ -36,9 +45,9 @@ describe('LiveEditor', function() {
 
     describe('Build Modals', function() {
         it('Should build Modals', function() {
-            var $m1 = $('#edit-html-modal-live-editor-test'),
-                $m2 = $('#edit-text-modal-live-editor-test'),
-                $m3 = $('#edit-classes-modal-live-editor-test');
+            var $m1 = $('#edit-html-modal-live-editor-test-1'),
+                $m2 = $('#edit-text-modal-live-editor-test-1'),
+                $m3 = $('#edit-classes-modal-live-editor-test-1');
 
             expect($m1).toExist();
             expect($m2).toExist();
@@ -48,15 +57,15 @@ describe('LiveEditor', function() {
 
     describe('Build Panel', function() {
         it('Should build Panel', function() {
-            var $p = $('#code-panel[live-editor-test]');
+            var $p = $('#code-panel[live-editor-test-1]');
             expect($p).toExist();
         });
     });
 
     describe('Build DOM outline', function() {
         it('Should init DOM outline', function() {
-            liveEditor.$editorIframe.on('load', function() {
-                var $d = liveEditor.$editorIframe.contents().find('.DomOutline_box');
+            liveEditorBase.$editorIframe.on('load', function() {
+                var $d = liveEditorBase.$editorIframe.contents().find('.DomOutline_box');
                 expect($d).toExist();
                 expect($d.css('display')).toBe('none');
             });
@@ -69,56 +78,56 @@ describe('LiveEditor', function() {
         });
 
         it('Click in any element should call setCurrentElement method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
 
-            spyOn(liveEditor, 'setCurrentElement');
+            spyOn(liveEditorBase, 'setCurrentElement');
 
             $p.trigger('mousemove').click();
 
-            expect(liveEditor.setCurrentElement).toHaveBeenCalled();
+            expect(liveEditorBase.setCurrentElement).toHaveBeenCalled();
         });
 
         it('Click in any element should call openCurrentMenu method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
             
-            spyOn(liveEditor, 'openCurrentMenu');
+            spyOn(liveEditorBase, 'openCurrentMenu');
             
             $p.trigger('mousemove').click();
 
-            expect(liveEditor.openCurrentMenu).toHaveBeenCalled();
+            expect(liveEditorBase.openCurrentMenu).toHaveBeenCalled();
         });
 
         it('Click in floating menu item should call operationInit method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
             
-            spyOn(liveEditor, 'operationInit');
+            spyOn(liveEditorBase, 'operationInit');
             
             $('ul.dropdown-menu[role] li').click();
 
-            expect(liveEditor.operationInit).toHaveBeenCalled();
+            expect(liveEditorBase.operationInit).toHaveBeenCalled();
         });
 
         it('When an element is already select and another one is clicked, should call unselectElements method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
 
-            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditorBase, 'unselectElements');
 
-            liveEditor.$editorIframe.contents().find('h1').trigger('mousemove').click();
+            liveEditorBase.$editorIframe.contents().find('h1').trigger('mousemove').click();
 
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
+            expect(liveEditorBase.unselectElements).toHaveBeenCalled();
         });
 
         // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
-        //     var $p = liveEditor.$editorIframe.contents().find('p');
+        //     var $p = liveEditorBase.$editorIframe.contents().find('p');
         //     $p.trigger('mousemove').click();
 
-        //     spyOn(liveEditor, 'unselectElements');
+        //     spyOn(liveEditorBase, 'unselectElements');
 
-        //     liveEditor.$editorIframe.contents().find('html').trigger('keyup', {which: 27});
+        //     liveEditorBase.$editorIframe.contents().find('html').trigger('keyup', {which: 27});
 
-        //     expect(liveEditor.unselectElements).toHaveBeenCalled();
+        //     expect(liveEditorBase.unselectElements).toHaveBeenCalled();
         // });
     });
 
@@ -128,15 +137,15 @@ describe('LiveEditor', function() {
         });
 
         it('set value to attributes', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
 
-            expect(liveEditor.hasOwnProperty('currentSelected')).toBe(false);
-            expect(liveEditor.hasOwnProperty('$currentSelected')).toBe(false);
+            expect(liveEditorBase.hasOwnProperty('currentSelected')).toBe(false);
+            expect(liveEditorBase.hasOwnProperty('$currentSelected')).toBe(false);
             
-            liveEditor.setCurrentElement($p)
+            liveEditorBase.setCurrentElement($p)
 
-            expect(liveEditor.currentSelected).toBe('html>body>p');
-            expect(liveEditor.$currentSelected).toBe($p);
+            expect(liveEditorBase.currentSelected).toBe('html>body>p');
+            expect(liveEditorBase.$currentSelected).toBe($p);
         });
     });
 
@@ -146,8 +155,8 @@ describe('LiveEditor', function() {
         });
 
         it('return correct path', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p'),
-                path = liveEditor.getElementPath($p);
+            var $p = liveEditorBase.$editorIframe.contents().find('p'),
+                path = liveEditorBase.getElementPath($p);
 
             expect(path).toBe('html>body>p');
         });

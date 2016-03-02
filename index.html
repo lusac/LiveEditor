@@ -17,8 +17,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            window.liveEditorOriginal = new LiveEditor({editor: '#live-editor-original', url: 'globo.html'});
-            window.liveEditorTest = new LiveEditor({editor: '#live-editor-test', url: 'globo.html'});
+            window.liveEditor = new LiveEditor({
+                editors: ['#live-editor-original', '#live-editor-test'],
+                url: 'globo.html'
+            });
         }, false);
     </script>
 </head>
@@ -42,5 +44,6 @@
     <script src="static/js/modal.js"></script>
     <script src="static/js/code_panel.js"></script>
     <script src="static/js/floating_menu.js"></script>
+    <script src="static/js/live_editor_base.js"></script>
     <script src="static/js/live_editor.js"></script>
 </body>
