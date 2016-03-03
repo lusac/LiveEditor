@@ -17,8 +17,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            window.liveEditorOriginal = new LiveEditor({editor: '#live-editor-original', url: 'globo.html'});
-            window.liveEditorTest = new LiveEditor({editor: '#live-editor-test', url: 'globo.html'});
+            window.liveEditor = new LiveEditor({
+                editors: ['#live-editor-original', '#live-editor-test'],
+                url: 'globo.html'
+            });
         }, false);
     </script>
 </head>

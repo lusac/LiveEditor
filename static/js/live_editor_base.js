@@ -15,6 +15,7 @@
         this.buildIframe(params);
         this.buildModals(params);
         this.buildPanel(params);
+        this.initActions();
 
         setTimeout(function() {
             self.domOutlineInit();
@@ -33,6 +34,10 @@
         this.scriptGoal = [];
         this.undoList = [];
         this.redoList = [];
+    };
+
+    LiveEditorBase.prototype.initActions = function () {
+        this.actions = new LiveEditorActions(this);
     };
 
     LiveEditorBase.prototype.buildButtons = function () {
@@ -300,99 +305,28 @@
 
     LiveEditorBase.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
-            this.currentSelectedRemove();
+            this.actions.currentSelectedRemove();
             this.floatingMenu.close();
             this.domOutline.start();
         }
 
         if (operation === 'add-event-click') {
-            this.currentSelectedAddEvent('click');
+            this.actions.currentSelectedAddEvent('click');
         }
 
         if (operation === 'edit-html-save') {
-            this.currentSelectedEditHtml();
+            this.actions.currentSelectedEditHtml();
         }
 
         if (operation === 'edit-text-save') {
-            this.currentSelectedEditText();
+            this.actions.currentSelectedEditText();
         }
 
         if (operation === 'edit-classes-save') {
-            this.currentSelectedEditClasses();
+            this.actions.currentSelectedEditClasses();
         }
 
         this.codePanelUpdate();
-    };
-
-    LiveEditorBase.prototype.currentSelectedRemove = function () {
-        // remove script
-        var str = '$("' + this.currentSelected + '").remove();';
-        this.addToScriptList(str);
-
-        // undo script
-        // to do: test
-        var parentPath = this.getElementPath(this.$currentSelected.parent()),
-            oldHtml = this.$currentSelected.parent()[0].outerHTML,
-            strUndo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
-
-        this.undoList.push(strUndo);
-
-        this.$editorIframe.contents().find(this.currentSelected).remove();
-    };
-
-    LiveEditorBase.prototype.currentSelectedAddEvent = function (e) {
-        var str = '$("' + this.currentSelected + '").attr("easyab-track-' + e + '", 1);';
-
-        this.addToScriptGoal(str);
-    };
-
-    LiveEditorBase.prototype.currentSelectedEditHtml = function () {
-        // remove script
-        // to do: test
-        var html = this.$editHtmlModal.find('.modal-body textarea').val(),
-            str = '$("' + this.currentSelected + '").replaceWith("' + html + '");';
-        this.addToScriptList(str);
-
-        // undo script
-        // to do: test
-        var parentPath = this.getElementPath(this.$currentSelected.parent()),
-            oldHtml = this.$currentSelected.parent()[0].outerHTML,
-            strUndo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
-        this.undoList.push(strUndo);
-
-        this.$editorIframe.contents().find(this.currentSelected).replaceWith(html);
-    };
-
-    LiveEditorBase.prototype.currentSelectedEditText = function () {
-        // undo script
-        // to do: test
-        var oldText = this.$currentSelected.text(),
-            text = this.$editTextModal.find('.modal-body textarea').val(),
-            str = '$("' + this.currentSelected + '").text("' + text + '");';
-        this.addToScriptList(str);
-
-        // undo script
-        // to do: test
-        var strUndo = "self.$editorIframe.contents().find('" + this.currentSelected + "').text('" + oldText + "');";
-        this.undoList.push(strUndo);
-
-        this.$editorIframe.contents().find(this.currentSelected).text(text);
-    };
-
-    LiveEditorBase.prototype.currentSelectedEditClasses = function () {
-        // undo script
-        // to do: test
-        var oldClass = this.$currentSelected.attr('class'),
-            classes = this.$editClassesModal.find('.modal-body input').val(),
-            str = '$("' + this.currentSelected + '").attr("class", "' + classes + '");';
-        this.addToScriptList(str);
-
-        // undo script
-        // to do: test
-        var strUndo = "self.$editorIframe.contents().find('" + this.currentSelected + "').attr('class', '" + oldClass + "');";
-        this.undoList.push(strUndo);
-
-        this.$editorIframe.contents().find(this.currentSelected).attr('class', classes);
     };
 
     LiveEditorBase.prototype.addToScriptList = function (str) {
