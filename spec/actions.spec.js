@@ -35,8 +35,8 @@ describe("Actions", function() {
 
         it("Should add script in undoList", function() {
             liveEditorBase.actions.currentSelectedRemove();
-            var expt = ["self.$editorIframe.contents().find('html>body').replaceWith('<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>');"];
-            
+            var expt = ['self.$editorIframe.contents().find('html>body').replaceWith('<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>');'];
+
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
         });
@@ -65,7 +65,7 @@ describe("Actions", function() {
         it("Should add script in undoList", function() {
             liveEditorBase.$editHtmlModal.find('.modal-body textarea').val("my custom html");
             liveEditorBase.actions.currentSelectedEditHtml();
-            var expt = ["self.$editorIframe.contents().find('html>body').replaceWith('<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>');"];
+            var expt = ['self.$editorIframe.contents().find("html>body").replaceWith("<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>");'];
             
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
@@ -85,7 +85,7 @@ describe("Actions", function() {
         it("Should add script in undoList", function() {
             liveEditorBase.$editTextModal.find('.modal-body textarea').val("my custom html")
             liveEditorBase.actions.currentSelectedEditText();
-            var expt = ["self.$editorIframe.contents().find('html>body>p').text('Hello World!');"];
+            var expt = ['self.$editorIframe.contents().find("html>body>p").text("Hello World!");'];
             
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
@@ -106,7 +106,7 @@ describe("Actions", function() {
             liveEditorBase.$currentSelected.addClass('my-class')
             liveEditorBase.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
             liveEditorBase.actions.currentSelectedEditClasses();
-            var expt = ["self.$editorIframe.contents().find('html>body>p').attr('class', 'my-class');"];
+            var expt = ['self.$editorIframe.contents().find("html>body>p").attr("class", "my-class");'];
             
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
@@ -115,7 +115,7 @@ describe("Actions", function() {
         it("Should add script in undoList - with no class", function() {
             liveEditorBase.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
             liveEditorBase.actions.currentSelectedEditClasses();
-            var expt = ["self.$editorIframe.contents().find('html>body>p').attr('class', '');"];
+            var expt = ['self.$editorIframe.contents().find("html>body>p").attr("class", "");'];
             
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);

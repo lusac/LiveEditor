@@ -329,6 +329,10 @@
         this.codePanelUpdate();
     };
 
+    LiveEditorBase.prototype.addToUndoList = function (str) {
+        this.undoList.push(str);
+    }
+
     LiveEditorBase.prototype.addToScriptList = function (str) {
         this.scriptList.push(str);
     };
