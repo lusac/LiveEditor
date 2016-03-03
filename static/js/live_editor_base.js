@@ -197,6 +197,12 @@
                 eval(script);
             }
         });
+
+        this.$editorIframe.on("mouseleave", function(e){
+            if( !(e.toElement.className === "dropdown-menu") && !($(e.toElement).parents("ul.dropdown-menu").length) ){
+                self.floatingMenu.close();
+            }
+        });
     };
 
     LiveEditorBase.prototype.unselectElements = function (e) {
