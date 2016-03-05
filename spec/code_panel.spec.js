@@ -71,5 +71,20 @@ describe("CodePanel", function() {
             expect($buttons.first().text()).toEqual('cancel');
             expect($buttons.last().text()).toEqual('save code');
         });
+
+        it('Should create an ace editor', function() {
+            var $aceEditor = $('.ace_editor');
+            expect($aceEditor.length).toEqual(1);
+        });
+
+        it('Should have an aceEditor attribute', function() {
+            expect(codePanel.hasOwnProperty('aceEditor')).toEqual(true);
+            expect(codePanel.aceEditor.constructor).toEqual(LiveEditorAceEditor);
+        });
+
+        it('Should have an editorId attribute', function() {
+            expect(codePanel.hasOwnProperty('editorId')).toEqual(true);
+            expect(codePanel.editorId).toEqual('code-panel-ace-editor-test-editor');
+        })
     });
 });

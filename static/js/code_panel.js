@@ -9,6 +9,7 @@
 
     LiveEditorCodePanel.prototype.init = function (params) {
         this.editorName = params.editorName;
+        this.editorId = 'code-panel-ace-editor-' + this.editorName
         this.appendTo = params.appendTo || null;
         this.create();
      };
@@ -19,7 +20,8 @@
             html = '<div class="well">' +
                         '<div class="row">' +
                             '<div class="col-xs-10">' +
-                                '<textarea class="form-control" rows="10"></textarea>' +
+                                // '<textarea class="form-control" rows="10"></textarea>' +
+                                '<div id="' + this.editorId + '" class="ace-editor-field"></div>' +
                             '</div>' +
                             '<div class="code-panel-buttons">' +
                                 '<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">cancel</button>' +
@@ -36,6 +38,10 @@
             $('body').append($button, $panel);
         }
 
+        this.aceEditor = new LiveEditorAceEditor({
+            id: this.editorId,
+            language: 'javascript'
+        });
     };
 
     window.LiveEditorCodePanel = LiveEditorCodePanel;

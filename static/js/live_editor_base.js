@@ -93,12 +93,10 @@
     };
 
     LiveEditorBase.prototype.buildPanel = function () {
-        var codePanel = new LiveEditorCodePanel({
+        this.codePanel = new LiveEditorCodePanel({
             editorName: this.id,
             appendTo: this.$editor.parent()
         });
-
-        this.$codePanel = $('#code-panel[' + this.id + ']').find('textarea');
     }
 
     LiveEditorBase.prototype.domOutlineInit = function () {
@@ -356,7 +354,7 @@
     };
 
     LiveEditorBase.prototype.codePanelUpdate = function () {
-        this.$codePanel.val(this.scriptList);
+        this.codePanel.aceEditor.aceEditor.setValue(this.scriptList.join(' '), -1);
     };
 
     window.LiveEditorBase = LiveEditorBase;
