@@ -35,7 +35,7 @@ describe("Actions", function() {
 
         it("Should add script in undoList", function() {
             liveEditorBase.actions.currentSelectedRemove();
-            var expt = ['self.$editorIframe.contents().find('html>body').replaceWith('<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>');'];
+            var expt = ["self.$editorIframe.contents().find('html>body').replaceWith('<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>');"];
 
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
@@ -65,7 +65,7 @@ describe("Actions", function() {
         it("Should add script in undoList", function() {
             liveEditorBase.$editHtmlModal.find('.modal-body textarea').val("my custom html");
             liveEditorBase.actions.currentSelectedEditHtml();
-            var expt = ['self.$editorIframe.contents().find("html>body").replaceWith("<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>");'];
+            var expt = ['self.$editorIframe.contents().find(\'html>body\').replaceWith(\'<body><h1>Teste Jasmine</h1><p>Hello World!</p></body>\');'];
             
             expect(liveEditorBase.undoList.length).toEqual(1);
             expect(liveEditorBase.undoList).toEqual(expt);
