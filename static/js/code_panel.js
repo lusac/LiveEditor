@@ -19,13 +19,14 @@
             $panel = $('<div id="code-panel" class="code-panel collapse" ' + this.editorName + '="1">'),
             html = '<div class="well">' +
                         '<div class="row">' +
-                            '<div class="col-xs-10">' +
-                                // '<textarea class="form-control" rows="10"></textarea>' +
+                            '<div class="col-xs-9">' +
                                 '<div id="' + this.editorId + '" class="ace-editor-field"></div>' +
                             '</div>' +
-                            '<div class="code-panel-buttons">' +
-                                '<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">cancel</button>' +
-                                '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">save code</button>' +
+                            '<div class="col-xs-3 code-panel-buttons-grid">' +
+                                '<div class="code-panel-buttons">' +
+                                    '<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">cancel</button>' +
+                                    '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">save code</button>' +
+                                '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>';

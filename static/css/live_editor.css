@@ -12,11 +12,7 @@
     position: absolute;
 }
 
-.code-panel-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
+/* CODE PANEL */
 
 .code-panel {
     left: 0 !important;
@@ -29,11 +25,28 @@
     margin: 0;
 }
 
+.code-panel-buttons-grid {
+    height: 180px;
+    display: block;
+    position: relative;
+}
+
+.code-panel-button {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+}
+
 .code-panel-buttons {
-    top: 200px;
-    right: 20px;
+    bottom: 0;
     position: absolute;
 }
+
+.code-panel-buttons button:first-child {
+    margin-right: 10px;
+}
+
+/* NAV TABS */
 
 .nav-tabs {
     z-index: 10;
