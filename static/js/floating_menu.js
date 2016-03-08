@@ -11,8 +11,9 @@
         this.LEFT_GAP = 10;
         this.TOP_GAP = -10;
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
+        this.$parent = params.appendTo || $('body');
         this.elemId = params.elemId;
-        $('body').append(this.$menu);
+        this.$parent.append(this.$menu);
         this.create(params.data);
         this.bindEvents();
     };
