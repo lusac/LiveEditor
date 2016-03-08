@@ -64,28 +64,32 @@
     };
 
     LiveEditorBase.prototype.buildModals = function (params) {
-        var modals = [
-                {
-                    name: 'edit-html-modal-' + this.id,
-                    title: 'Edit HTML',
-                    field: 'textarea'
-                }, {
-                    name: 'edit-text-modal-' + this.id,
-                    title: 'Edit Text',
-                    field: 'textarea'
-                }, {
-                    name: 'edit-classes-modal-' + this.id,
-                    title: 'Edit Classes',
-                    field: 'input'
-                }
-            ]
+        this.editHtmlModal = new LiveEditorModal({
+            editor: this.id,
+            data: {
+                name: 'edit-html-modal-' + this.id,
+                title: 'Edit HTML',
+                field: 'textarea'
+            }
+        });
 
-        for (var i=0; i<=modals.length-1; i++) {
-            var modal = new LiveEditorModal({
-                editor: this.id,
-                data: modals[i]
-            });
-        }
+        this.$editTextModal = new LiveEditorModal({
+            editor: this.id,
+            data: {
+                name: 'edit-text-modal-' + this.id,
+                title: 'Edit Text',
+                field: 'textarea'
+            }
+        });
+
+        this.$editClassesModal = new LiveEditorModal({
+            editor: this.id,
+            data: {
+                name: 'edit-classes-modal-' + this.id,
+                title: 'Edit Classes',
+                field: 'input'
+            }
+        });
 
         this.$editHtmlModal = $('#edit-html-modal-' + this.id);
         this.$editTextModal = $('#edit-text-modal-' + this.id);
@@ -115,14 +119,14 @@
         this.$editHtmlModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
-            $(this).find('.modal-body textarea').val(html);
+            this.editHtmlModal.setValue(html);
         });
 
         // Edit Text
         this.$editTextModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 text = current_without_cache.textContent;
-            $(this).find('.modal-body textarea').val(text);
+            this.editTextModal.setValue(html);
         });
 
         // Edit Classes

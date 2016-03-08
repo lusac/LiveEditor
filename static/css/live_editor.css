@@ -114,6 +114,6 @@
 /* Ace Editor */
 
 .ace-editor-field { 
-    height: 180px;
     display: block;
+    height: 180px !important;
 }
