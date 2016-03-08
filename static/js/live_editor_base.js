@@ -119,14 +119,14 @@
         this.$editHtmlModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
-            this.editHtmlModal.setValue(html);
+            self.editHtmlModal.setValue(html);
         });
 
         // Edit Text
         this.$editTextModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 text = current_without_cache.textContent;
-            this.editTextModal.setValue(html);
+            self.editTextModal.setValue(html);
         });
 
         // Edit Classes

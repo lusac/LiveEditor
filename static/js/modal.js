@@ -57,7 +57,7 @@
 
     LiveEditorModal.prototype.setValue = function (value) {
         if (this.aceEditor) {
-            this.aceEditor.setValue(value, -1);
+            this.aceEditor.aceEditor.setValue(value, -1);
         }
     };
 
