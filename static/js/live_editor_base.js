@@ -73,7 +73,7 @@
             }
         });
 
-        this.$editTextModal = new LiveEditorModal({
+        this.editTextModal = new LiveEditorModal({
             editor: this.id,
             data: {
                 name: 'edit-text-modal-' + this.id,
@@ -82,7 +82,7 @@
             }
         });
 
-        this.$editClassesModal = new LiveEditorModal({
+        new LiveEditorModal({
             editor: this.id,
             data: {
                 name: 'edit-classes-modal-' + this.id,
@@ -126,7 +126,7 @@
         this.$editTextModal.on('show.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 text = current_without_cache.textContent;
-            self.editTextModal.setValue(html);
+            self.editTextModal.setValue(text);
         });
 
         // Edit Classes
