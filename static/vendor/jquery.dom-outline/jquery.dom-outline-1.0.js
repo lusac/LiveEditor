@@ -133,6 +133,8 @@
                 return;
             }
 
+            self.active = true;
+
             pub.element = e.target;
 
             var scroll_top = getScrollTop(),
@@ -155,7 +157,11 @@
             if (!self.opts.realtime) {
                 draw(e);
             }
-            self.opts.onClick(pub.element);
+
+            if (self.active) {
+                self.opts.onClick(pub.element);
+            }
+
             return false;
         }
 
@@ -163,7 +169,7 @@
             removeOutlineElements();
             initStylesheet();
             if (self.active !== true) {
-                self.active = true;
+                // self.active = true;
                 createOutlineElements();
 
                 self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
