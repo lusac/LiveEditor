@@ -45,7 +45,7 @@
     };
 
     LiveEditorActions.prototype.currentSelectedEditHtml = function () {
-        var html = this.liveEditorBase.$editHtmlModal.find('.modal-body textarea').val(),
+        var html = this.liveEditorBase.editHtmlModal.getValue(),
             str = '$("' + this.liveEditorBase.currentSelected + '").replaceWith("' + html + '");';
 
         this.liveEditorBase.addToScriptList(str);
@@ -56,7 +56,7 @@
     LiveEditorActions.prototype.currentSelectedEditText = function () {
         var undoText = this.liveEditorBase.$currentSelected.text(),
             strUndo = "self.$editorIframe.contents().find" + this._changeText(this.liveEditorBase.currentSelected, undoText),
-            scriptText = this.liveEditorBase.$editTextModal.find('.modal-body textarea').val(),
+            scriptText = this.liveEditorBase.editTextModal.getValue(),
             strScript = '$' + this._changeText(this.liveEditorBase.currentSelected, scriptText);
         
         this.liveEditorBase.addToScriptList(strScript);

@@ -61,5 +61,11 @@
         }
     };
 
+    LiveEditorModal.prototype.getValue = function () {
+        if (this.aceEditor) {
+            return this.aceEditor.aceEditor.getValue();
+        }
+    };
+
     window.LiveEditorModal = LiveEditorModal;
 })(window, document, $);
