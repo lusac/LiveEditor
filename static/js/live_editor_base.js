@@ -69,7 +69,8 @@
             data: {
                 name: 'edit-html-modal-' + this.id,
                 title: 'Edit HTML',
-                field: 'textarea'
+                field: 'textarea',
+                hasAceEditor: true
             }
         });
 
@@ -116,7 +117,7 @@
         var self = this;
 
         // Edit HTML
-        this.$editHtmlModal.on('show.bs.modal', function () {
+        this.$editHtmlModal.on('shown.bs.modal', function () {
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
             self.editHtmlModal.setValue(html);
