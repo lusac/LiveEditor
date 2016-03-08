@@ -48,13 +48,14 @@
     };
 
     LiveEditorBase.prototype.buildIframe = function (params) {
-        this.$editorIframe = $('<iframe style="display: none;">');
+        this.$editorIframe = $('<iframe>');
         this.$spinnerContainer = $('<span class="spinner-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span>');
 
         this.$editorIframe.attr({
             'width': '100%',
             'height': '100%',
-            'frameborder': '0'
+            'frameborder': '0',
+            'allowfullscreen': ''
         });
 
         this.$editor.append(this.$spinnerContainer, this.$editorIframe);
