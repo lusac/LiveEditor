@@ -9,7 +9,7 @@
 
     LiveEditorModal.prototype.init = function (params) {
         this.editor = params.editor;
-        this.editorId = 'modal-ace-editor-' + this.editor;
+        this.aceEditorId = this.getID();
         this.name = params.data.name;
         this.title = params.data.title;
         this.field = params.data.field;
@@ -28,8 +28,13 @@
                             '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>' +
                             '<h4 class="modal-title">' + this.title + '</h4>' +
                         '</div>',
-            $field = $('<' + this.field + ' class="form-control ace-editor-field" id="' + this.editorId + '">'),
-            $section = '<div class="modal-body">' +
+            $field = $('<' + this.field + ' class="form-control" id="' + this.aceEditorId + '">');
+
+        if (this.field === 'div') {
+            $field.addClass('ace-editor-field');
+        }
+
+        var $section = '<div class="modal-body">' +
                             $field[0].outerHTML +
                         '</div>',
             $footer = '<div class="modal-footer">' +
@@ -49,10 +54,20 @@
 
         if (this.field === 'div') {
             this.aceEditor = new LiveEditorAceEditor({
-                id: this.editorId,
+                id: this.aceEditorId,
                 language: 'html'
             });
         }
+    };
+
+    LiveEditorModal.prototype.getID  =function () {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+               s4() + '-' + s4() + s4() + s4();
     };
 
     LiveEditorModal.prototype.setValue = function (value) {
