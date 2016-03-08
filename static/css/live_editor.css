@@ -46,36 +46,6 @@
     margin-right: 10px;
 }
 
-/* NAV TABS */
-
-.nav-tabs {
-    z-index: 10;
-    background: #FFF;
-    position: relative;
-    max-width: 70%;
-    margin: 0 auto;
-}
-
-.nav-tabs li.active a {
-    background: #DDD !important;
-    font-weight: bold;
-}
-
-.nav-tabs li.active a:hover {
-    background: #DDD;
-    cursor: pointer;
-}
-
-.nav-tabs li a {
-    background: #EEE;
-    margin-right: 5px;
-    color: #555;
-}
-
-.tab-content {
-    border: 20px solid #DDD;
-}
-
 /* Loading Spinner */
 
 .spinner-container {
