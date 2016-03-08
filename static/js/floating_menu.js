@@ -109,7 +109,7 @@
             $li.addClass('dropdown-header')
                .text('<' + params.value + '>');
         } else if (params.value) {
-            $li.append('<a tabindex="-1" href="#">' + params.value + '</a>');
+            $li.append('<a tabindex="-1">' + params.value + '</a>');
         }
 
         if (params.items) {
@@ -119,7 +119,7 @@
                 var $_li = $('<li class="container-item-el">');
 
                 $_li.attr(params.items[i].attrs)
-                    .append('<a tabindex="-1" href="#">' + params.items[i].value + '</a>');
+                    .append('<a tabindex="-1">' + params.items[i].value + '</a>');
 
                 $subMenu.append($_li);
             }
