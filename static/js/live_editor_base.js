@@ -200,12 +200,6 @@
                 eval(script);
             }
         });
-
-        this.$editorIframe.on("mouseleave", function(e){
-            if( !(e.toElement.className === "dropdown-menu") && !($(e.toElement).parents("ul.dropdown-menu").length) ){
-                self.unselectElements(e);
-            }
-        });
     };
 
     LiveEditorBase.prototype.unselectElements = function (e) {
@@ -269,6 +263,7 @@
 
             this.floatingMenu = new FloatingMenu({
                 elemId: this.$editor.attr('id'),
+                appendTo: this.$editor.parent(),
                 data: {
                     value: this.$currentSelected.prop('tagName').toLowerCase(),
                     posLeft: {
