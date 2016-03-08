@@ -15,7 +15,7 @@
 
     LiveEditorAceEditor.prototype.buildEditor = function () {
         this.aceEditor = ace.edit(this.id);
-        this.aceEditor.$blockScrolling = Infinity
+        this.aceEditor.$blockScrolling = Infinity;
         this.aceEditor.setShowPrintMargin(false);
         this.aceEditor.setOption('wrap', 'free');
         this.aceEditor.setTheme('ace/theme/chrome');

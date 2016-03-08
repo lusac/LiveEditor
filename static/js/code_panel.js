@@ -9,7 +9,7 @@
 
     LiveEditorCodePanel.prototype.init = function (params) {
         this.editorName = params.editorName;
-        this.editorId = 'code-panel-ace-editor-' + this.editorName
+        this.editorId = 'code-panel-ace-editor-' + this.editorName;
         this.appendTo = params.appendTo || null;
         this.create();
      };

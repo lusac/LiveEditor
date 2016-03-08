@@ -52,7 +52,7 @@
                             '<button type="submit" class="btn btn-primary save-btn">Save</button>' +
                       '</div>';
 
-        this.$modal.attr('id', this.name)
+        this.$modal.attr('id', this.name);
 
         this.$modal.append(
             $div2.append(

@@ -85,6 +85,6 @@ describe("CodePanel", function() {
         it('Should have an editorId attribute', function() {
             expect(codePanel.hasOwnProperty('editorId')).toEqual(true);
             expect(codePanel.editorId).toEqual('code-panel-ace-editor-test-editor');
-        })
+        });
     });
 });

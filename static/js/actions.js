@@ -12,11 +12,11 @@
     };
 
     LiveEditorActions.prototype._changeText = function (selector, text) {
-        return '("' + selector + '").text("' + text + '");'
+        return '("' + selector + '").text("' + text + '");';
     };
 
     LiveEditorActions.prototype._changeClass = function (selector, classes) {
-        return '("' + selector + '").attr("class", "' + classes + '");'
+        return '("' + selector + '").attr("class", "' + classes + '");';
     };
 
     LiveEditorActions.prototype._replaceWithUndo = function () {
@@ -58,7 +58,7 @@
             strUndo = "self.$editorIframe.contents().find" + this._changeText(this.liveEditorBase.currentSelected, undoText),
             scriptText = this.liveEditorBase.editTextModal.getValue(),
             strScript = '$' + this._changeText(this.liveEditorBase.currentSelected, scriptText);
-        
+
         this.liveEditorBase.addToScriptList(strScript);
         this.liveEditorBase.addToUndoList(strUndo);
         this.getIframeCurrentElement().text(scriptText);
@@ -70,7 +70,7 @@
             strUndo = "self.$editorIframe.contents().find" + this._changeClass(this.liveEditorBase.currentSelected, undoClass),
             scriptClasses = this.liveEditorBase.$editClassesModal.find('.modal-body input').val(),
             str = '$' + this._changeClass(this.liveEditorBase.currentSelected, scriptClasses);
-        
+
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.addToUndoList(strUndo);
         this.getIframeCurrentElement().attr('class', scriptClasses);

@@ -19,7 +19,7 @@ describe('LiveEditorBase', function() {
         $('#code-panel').remove();
         $('.code-panel-button').remove();
         $('ul.dropdown-menu[role]').remove();
-    })
+    });
 
     describe('Build Iframe', function() {
         it('Should build iframe', function() {
@@ -89,9 +89,9 @@ describe('LiveEditorBase', function() {
 
         it('Click in any element should call openCurrentMenu method', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
-            
+
             spyOn(liveEditorBase, 'openCurrentMenu');
-            
+
             $p.trigger('mousemove').click();
 
             expect(liveEditorBase.openCurrentMenu).toHaveBeenCalled();
@@ -100,9 +100,9 @@ describe('LiveEditorBase', function() {
         it('Click in floating menu item should call operationInit method', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
-            
+
             spyOn(liveEditorBase, 'operationInit');
-            
+
             $('ul.dropdown-menu[role] li').click();
 
             expect(liveEditorBase.operationInit).toHaveBeenCalled();
@@ -141,8 +141,8 @@ describe('LiveEditorBase', function() {
 
             expect(liveEditorBase.hasOwnProperty('currentSelected')).toBe(false);
             expect(liveEditorBase.hasOwnProperty('$currentSelected')).toBe(false);
-            
-            liveEditorBase.setCurrentElement($p)
+
+            liveEditorBase.setCurrentElement($p);
 
             expect(liveEditorBase.currentSelected).toBe('html>body>p');
             expect(liveEditorBase.$currentSelected).toBe($p);

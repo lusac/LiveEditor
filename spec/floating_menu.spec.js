@@ -197,7 +197,7 @@ describe('Floating Menu', function() {
             expect($click).not.toHaveAttr('target');
         });
     });
-    
+
     describe('Close method', function () {
         it('Should hide menu', function() {
             menu.close();
@@ -223,7 +223,7 @@ describe('Floating Menu', function() {
             }, false);
 
             var $el = $('[data-operation]:first');
-            $el.click()
+            $el.click();
 
             expect(counter).toBe(1);
             expect(_event.detail.operation).toBe('edit-html');

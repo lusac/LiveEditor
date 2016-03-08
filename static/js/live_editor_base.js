@@ -102,7 +102,7 @@
             editorName: this.id,
             appendTo: this.$editor.parent()
         });
-    }
+    };
 
     LiveEditorBase.prototype.domOutlineInit = function () {
         this.domOutline = new DomOutline({
@@ -335,7 +335,7 @@
 
     LiveEditorBase.prototype.addToUndoList = function (str) {
         this.undoList.push(str);
-    }
+    };
 
     LiveEditorBase.prototype.addToScriptList = function (str) {
         this.scriptList.push(str);
