@@ -189,9 +189,6 @@ describe('LiveEditorBase', function() {
     describe('addToScriptList method', function() {
     });
 
-    describe('addToScriptGoal method', function() {
-    });
-
     describe('codePanelUpdate method', function() {
     });
 });

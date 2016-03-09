@@ -33,7 +33,6 @@
         this.$editor = $(params.editor);
         this.domOutline = null;
         this.scriptList = [];
-        this.scriptGoal = [];
         this.undoList = [];
         this.redoList = [];
     };
@@ -324,6 +323,7 @@
 
         if (operation === 'add-event-click') {
             this.actions.currentSelectedAddEvent('click');
+            this.unselectElements();
         }
 
         if (operation === 'edit-html-save') {
@@ -349,18 +349,6 @@
     LiveEditorBase.prototype.addToScriptList = function (str) {
         str = str.replace(new RegExp('\t|\n', 'g'), '');
         this.scriptList.push(str);
-    };
-
-    LiveEditorBase.prototype.addToScriptGoal = function (str) {
-        this.scriptGoal.push(str);
-
-        // workaround... to remove duplicates.
-        var result = [];
-        $.each(this.scriptGoal, function(i, e) {
-            if ($.inArray(e, result) == -1) result.push(e);
-        });
-
-        this.scriptGoal = result;
     };
 
     LiveEditorBase.prototype.codePanelUpdate = function () {

@@ -24,7 +24,6 @@ describe("Actions", function() {
             liveEditorBase.actions.currentSelectedRemove();
 
             expect(liveEditorBase.scriptList.length).toEqual(1);
-            expect(liveEditorBase.scriptGoal.length).toEqual(0);
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").remove();']);
         });
 
@@ -45,15 +44,14 @@ describe("Actions", function() {
             waits(100);
         });
 
-        it("Should add script in scriptGoal", function() {
+        it("Should add script in scriptList", function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
             liveEditorBase.actions.currentSelectedAddEvent('custom-event');
 
-            expect(liveEditorBase.scriptGoal.length).toEqual(1);
-            expect(liveEditorBase.scriptGoal).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
-            expect(liveEditorBase.scriptList.length).toEqual(0);
+            expect(liveEditorBase.scriptList.length).toEqual(1);
+            expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
         });
     });
 
@@ -69,7 +67,6 @@ describe("Actions", function() {
 
         //     expect(liveEditorBase.scriptList.length).toEqual(1);
         //     expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").replaceWith("<small>my custom html</small>");']);
-        //     expect(liveEditorBase.scriptGoal.length).toEqual(0);
         // });
 
         it("Should add script in undoList", function() {
@@ -99,7 +96,6 @@ describe("Actions", function() {
 
             expect(liveEditorBase.scriptList.length).toEqual(1);
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").text("my custom html");']);
-            expect(liveEditorBase.scriptGoal.length).toEqual(0);
         });
 
         it("Should add script in undoList", function() {
@@ -129,7 +125,6 @@ describe("Actions", function() {
 
             expect(liveEditorBase.scriptList.length).toEqual(1);
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").attr("class", "my-class-1 my-class-2");']);
-            expect(liveEditorBase.scriptGoal.length).toEqual(0);
         });
 
         it("Should add script in undoList - with class", function() {
