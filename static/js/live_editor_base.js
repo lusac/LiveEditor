@@ -12,22 +12,23 @@
 
         this.initVars(params);
         this.buildButtons();
-        this.buildIframe(params);
+        this.buildIframe();
         this.buildModals(params);
         this.buildPanel(params);
         this.initActions();
 
-        setTimeout(function() {
+        this.$editorIframe.on('load', function() {
             self.domOutlineInit();
             self.bindEvents();
             self.$editorIframe.show();
             self.$spinnerContainer.hide();
             console.log('*** iframe fully loaded! ***');
-        }, 1000);
+        });
     };
 
     LiveEditorBase.prototype.initVars = function (params) {
         this.id = params.editor.replace('#', '');
+        this.url = params.url
         this.$editor = $(params.editor);
         this.domOutline = null;
         this.scriptList = [];
@@ -49,19 +50,18 @@
 
     LiveEditorBase.prototype.buildIframe = function (params) {
         this.$editorIframe = $('<iframe>');
-        this.$spinnerContainer = $('<span class="spinner-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span>');
+        this.$spinnerContainer = $('<span class="spinner-container"><span class="spinner-content"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span></span>');
 
         this.$editorIframe.attr({
             'width': '100%',
             'height': '100%',
             'frameborder': '0',
-            'allowfullscreen': ''
+            'allowfullscreen': '',
+            'src': this.url
         });
 
         this.$editor.append(this.$spinnerContainer, this.$editorIframe);
         this.$editor.addClass('live-editor');
-
-        this.$editorIframe[0].contentDocument.write(params.content);
     };
 
     LiveEditorBase.prototype.buildModals = function (params) {
@@ -339,10 +339,12 @@
     };
 
     LiveEditorBase.prototype.addToUndoList = function (str) {
+        str = str.replace(new RegExp('\t|\n', 'g'), '');
         this.undoList.push(str);
     };
 
     LiveEditorBase.prototype.addToScriptList = function (str) {
+        str = str.replace(new RegExp('\t|\n', 'g'), '');
         this.scriptList.push(str);
     };
 

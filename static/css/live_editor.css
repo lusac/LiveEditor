@@ -2,6 +2,7 @@
     width: 100%;
     height: 500px;
     overflow: hidden;
+    position: relative;
 }
 
 .live-editor>div {
@@ -49,10 +50,17 @@
 /* Loading Spinner */
 
 .spinner-container {
+    color: #CCC;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    background: #FFF;
+    position: absolute;
+}
+
+.spinner-content {
     top: 50%;
     left: 50%;
-    color: #CCC;
-    font-size: 24px;
     position: absolute;
     transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);

@@ -4,6 +4,7 @@
     'use strict';
 
     var LiveEditor = function LiveEditor (params) {
+        // TO DO: tests
         console.log('Live Editor Init...');
         this.init(params);
         console.log('Live Editor Done...');
@@ -13,25 +14,28 @@
         var self = this;
 
         this.liveEditors = [];
+        this.url = params.url;
+        this.editors = params.editors;
 
-        this.getUrlContent(params);
+        this.initLiveEditors();
+        // this.getUrlContent();
     };
 
-    LiveEditor.prototype.getUrlContent = function (params) {
-        var self = this;
+    // LiveEditor.prototype.getUrlContent = function () {
+    //     var self = this;
 
-        $.get(params.url, function(data) {
-            self.content = data;
-            self.initLiveEditors(params);
-        });
-    };
+    //     $.get(this.url, function(data) {
+    //         self.content = data;
+    //         self.initLiveEditors();
+    //     });
+    // };
 
-    LiveEditor.prototype.initLiveEditors = function (params) {
-        for (var i=0; i<=params.editors.length-1; i++) {
+    LiveEditor.prototype.initLiveEditors = function () {
+        for (var i=0; i<=this.editors.length-1; i++) {
             this.liveEditors.push(
                 new LiveEditorBase({
-                    editor: params.editors[i],
-                    content: this.content
+                    editor: this.editors[i],
+                    url: this.url
                 })
             );
         }

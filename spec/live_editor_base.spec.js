@@ -1,15 +1,6 @@
 describe('LiveEditorBase', function() {
     beforeEach(function() {
-        var html = '<html>' +
-                        '<head>' +
-                            '<title>Teste Jasmine</title>' +
-                        '</head>' +
-                        '<body>' +
-                            '<h1>Teste Jasmine</h1>' +
-                            '<p>Hello World!</p>' +
-                        '</body>' +
-                    '</html>';
-        liveEditorBase = new LiveEditorBase({editor: '#live-editor-test-1', content: html});
+        liveEditorBase = new LiveEditorBase({editor: '#live-editor-test-1', url: 'site.html'});
         $liveEditorBase = $('.live-editor');
     });
 
@@ -44,6 +35,11 @@ describe('LiveEditorBase', function() {
     });
 
     describe('Build Modals', function() {
+        beforeEach(function() {
+            waits(100);
+            liveEditorBase.$editorIframe.load();
+        });
+
         it('Should build Modals', function() {
             var $m1 = $('#edit-html-modal-live-editor-test-1'),
                 $m2 = $('#edit-text-modal-live-editor-test-1'),
@@ -56,6 +52,11 @@ describe('LiveEditorBase', function() {
     });
 
     describe('Build Panel', function() {
+        beforeEach(function() {
+            waits(100);
+            liveEditorBase.$editorIframe.load();
+        });
+
         it('Should build Panel', function() {
             var $p = $('#code-panel[live-editor-test-1]');
             expect($p).toExist();
@@ -63,6 +64,11 @@ describe('LiveEditorBase', function() {
     });
 
     describe('Build DOM outline', function() {
+        beforeEach(function() {
+            waits(100);
+            liveEditorBase.$editorIframe.load();
+        });
+
         it('Should init DOM outline', function() {
             liveEditorBase.$editorIframe.on('load', function() {
                 var $d = liveEditorBase.$editorIframe.contents().find('.DomOutline_box');
@@ -74,7 +80,8 @@ describe('LiveEditorBase', function() {
 
     describe('bindEvents method', function() {
         beforeEach(function() {
-            waits(1100);
+            waits(100);
+            liveEditorBase.$editorIframe.load();
         });
 
         it('Click in any element should call setCurrentElement method', function() {
@@ -134,6 +141,7 @@ describe('LiveEditorBase', function() {
     describe('setCurrentElement method', function() {
         beforeEach(function() {
             waits(100);
+            liveEditorBase.$editorIframe.load();
         });
 
         it('set value to attributes', function() {
@@ -144,7 +152,7 @@ describe('LiveEditorBase', function() {
 
             liveEditorBase.setCurrentElement($p);
 
-            expect(liveEditorBase.currentSelected).toBe('html>body>p');
+            expect(liveEditorBase.currentSelected).toBe('html>body>div>p');
             expect(liveEditorBase.$currentSelected).toBe($p);
         });
     });
@@ -152,13 +160,14 @@ describe('LiveEditorBase', function() {
     describe('getElementPath method', function() {
         beforeEach(function() {
             waits(100);
+            liveEditorBase.$editorIframe.load();
         });
 
         it('return correct path', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p'),
                 path = liveEditorBase.getElementPath($p);
 
-            expect(path).toBe('html>body>p');
+            expect(path).toBe('html>body>div>p');
         });
     });
 
