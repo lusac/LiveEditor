@@ -166,7 +166,6 @@
         this.modalEvents();
 
         document.addEventListener('domOutlineOnClick', function (e) {
-            var _e = e;
             // same event for all editor. Should better this.
             if (self.$editorIframe.contents().find($(e.detail)).length > 0) {
                 self.setCurrentElement(self.domOutline.element);
@@ -175,7 +174,7 @@
                 self.$editorIframe.contents().find("html *").on("click", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self.unselectElements(_e);
+                    self.unselectElements();
                 });
                 console.log('dom clicked!');
             }
@@ -188,12 +187,12 @@
         }, false);
 
         this.$editorIframe.contents().find('html').on('click', function(e) {
-            self.unselectElements(e);
+            self.unselectElements();
         });
 
         this.$editorIframe.contents().keyup(function(e) {
             if (e.keyCode == 27) { // Esc
-                self.unselectElements(e);
+                self.unselectElements();
             }
         });
 
@@ -208,16 +207,14 @@
         });
     };
 
-    LiveEditorBase.prototype.unselectElements = function (e) {
+    LiveEditorBase.prototype.unselectElements = function () {
         if (this.$currentSelected && this.currentSelected) {
-            if (e.toElement != this.$currentSelected[0]) {
                 this.floatingMenu.close();
                 this.domOutline.stop();
                 this.domOutline.start();
                 this.$currentSelected = null;
                 this.currentSelected = null;
                 this.$editorIframe.contents().find('html *').off('click');
-            }
         }
     };
 
@@ -322,8 +319,7 @@
     LiveEditorBase.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
             this.actions.currentSelectedRemove();
-            this.floatingMenu.close();
-            this.domOutline.start();
+            this.unselectElements();
         }
 
         if (operation === 'add-event-click') {
