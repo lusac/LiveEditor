@@ -1,0 +1,195 @@
+<script src="static/vendor/jquery/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+<div class="modal fade in" style="display: block;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Text</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Text</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Color & Background</a></li>
+                    <li><a href="#tab3" data-toggle="tab">Dimensions</a></li>
+                    <li><a href="#tab4" data-toggle="tab">Borders</a></li>
+                    <li><a href="#tab5" data-toggle="tab">Layout</a></li>
+                    <li><a href="#tab6" data-toggle="tab">Other</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <br>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <fieldset class="form-group row">
+                                    <label for="edit-font-family" class="col-sm-5 form-control-label">Font Family</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-font-family">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-font-size" class="col-sm-5 form-control-label">Font Size</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-font-size">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-font-style" class="col-sm-5 form-control-label">Font Style</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-font-style">
+                                            <option></option>
+                                            <option>normal</option>
+                                            <option>italic</option>
+                                            <option>oblique</option>
+                                            <option>inherit</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <!-- <fieldset class="form-group row">
+                                    <label for="edit-font-variant" class="col-sm-5 form-control-label">Font Variant</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-font-variant">
+                                    </div>
+                                </fieldset> -->
+                                <fieldset class="form-group row">
+                                    <label for="edit-line-height" class="col-sm-5 form-control-label">Line Height</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-line-height">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-word-break" class="col-sm-5 form-control-label">Word Break</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-word-break">
+                                            <option></option>
+                                            <option>normal</option>
+                                            <option>break word</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-word-spacing" class="col-sm-5 form-control-label">Word Spacing</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-word-spacing">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-word-wrap" class="col-sm-5 form-control-label">Word Wrap</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-word-wrap">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <fieldset class="form-group row">
+                                    <label for="edit-letter-spacing" class="col-sm-5 form-control-label">Letter Spacing</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-letter-spacing">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-overflow" class="col-sm-5 form-control-label">Overflow</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-overflow">
+                                            <option></option>
+                                            <option>visible</option>
+                                            <option>hidden</option>
+                                            <option>scroll</option>
+                                            <option>auto</option>
+                                            <option>clip</option>
+                                            <option>inherit</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-text-align" class="col-sm-5 form-control-label">Text Alignment</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-text-align">
+                                            <option></option>
+                                            <option>left</option>
+                                            <option>center</option>
+                                            <option>right</option>
+                                            <option>justify</option>
+                                            <option>start</option>
+                                            <option>end</option>
+                                            <option>inherit</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-text-decoration" class="col-sm-5 form-control-label">Text Decoration</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-text-decoration">
+                                            <option></option>
+                                            <option>none</option>
+                                            <option>inherit</option>
+                                            <option>underline</option>
+                                            <option>line through</option>
+                                            <option>overline</option>
+                                            <option>blink</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-text-transform" class="col-sm-5 form-control-label">Text Transform</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="edit-text-transform">
+                                            <option></option>
+                                            <option>none</option>
+                                            <option>capitalize</option>
+                                            <option>upper case</option>
+                                            <option>lower case</option>
+                                            <option>inherit</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-text-shadow" class="col-sm-5 form-control-label">Text Shadow</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-text-shadow">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label for="edit-font-weight" class="col-sm-5 form-control-label">Font Weight</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="edit-font-weight">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        tab 2
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        tab 3
+                    </div>
+                    <div class="tab-pane" id="tab4">
+                        tab 4
+                    </div>
+                    <div class="tab-pane" id="tab5">
+                        tab 5
+                    </div>
+                    <div class="tab-pane" id="tab6">
+                        tab 6
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
