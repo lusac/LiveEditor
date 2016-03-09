@@ -22,6 +22,7 @@
             self.bindEvents();
             self.$editorIframe.show();
             self.$spinnerContainer.hide();
+            self.dispatchLoadEvent();
             console.log('*** iframe fully loaded! ***');
         });
     };
@@ -53,11 +54,11 @@
         this.$spinnerContainer = $('<span class="spinner-container"><span class="spinner-content"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span></span>');
 
         this.$editorIframe.attr({
+            'src': this.url,
             'width': '100%',
             'height': '100%',
             'frameborder': '0',
-            'allowfullscreen': '',
-            'src': this.url
+            'allowfullscreen': ''
         });
 
         this.$editor.append(this.$spinnerContainer, this.$editorIframe);
@@ -103,6 +104,12 @@
             editorName: this.id,
             appendTo: this.$editor.parent()
         });
+    };
+
+    LiveEditorBase.prototype.dispatchLoadEvent = function () {
+        // TO DO - test
+        var _event = new CustomEvent('LiveEditorLoaded', {'detail': {}});
+        document.dispatchEvent(_event);
     };
 
     LiveEditorBase.prototype.domOutlineInit = function () {
