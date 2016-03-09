@@ -141,7 +141,6 @@
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
-
     };
 
     LiveEditorBase.prototype.bindModalSave = function ($modal, label) {
@@ -160,6 +159,7 @@
         this.modalEvents();
 
         document.addEventListener('domOutlineOnClick', function (e) {
+            var _e = e;
             // same event for all editor. Should better this.
             if (self.$editorIframe.contents().find($(e.detail)).length > 0) {
                 self.setCurrentElement(self.domOutline.element);
@@ -168,9 +168,7 @@
                 self.$editorIframe.contents().find("html *").on("click", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self.$editorIframe.contents().find("html *").off("click");
-                    self.domOutline.start();
-                    self.floatingMenu.close();
+                    self.unselectElements(_e);
                 });
                 console.log('dom clicked!');
             }
@@ -204,9 +202,15 @@
     };
 
     LiveEditorBase.prototype.unselectElements = function (e) {
-        if (e.toElement != this.$currentSelected[0]) {
-            this.floatingMenu.close();
-            this.domOutline.start();
+        if (this.$currentSelected && this.currentSelected) {
+            if (e.toElement != this.$currentSelected[0]) {
+                this.floatingMenu.close();
+                this.domOutline.stop();
+                this.domOutline.start();
+                this.$currentSelected = null;
+                this.currentSelected = null;
+                this.$editorIframe.contents().find('html *').off('click');
+            }
         }
     };
 
