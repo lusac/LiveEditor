@@ -172,7 +172,7 @@
                 // self.active = true;
                 createOutlineElements();
 
-                self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
+                // self.opts.$elem.bind('keyup.' + self.opts.namespace, stopOnEscape);
                 if (self.opts.onClick) {
                     setTimeout(function () {
                         self.opts.$elem.bind('click.' + self.opts.namespace, clickHandler);
