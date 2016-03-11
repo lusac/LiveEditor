@@ -17,7 +17,7 @@
         this.url = params.url;
         this.editors = params.editors;
 
-        this.initLiveEditors();
+        this.initLiveEditors(params);
         // this.getUrlContent();
     };
 
@@ -30,12 +30,14 @@
     //     });
     // };
 
-    LiveEditor.prototype.initLiveEditors = function () {
+    LiveEditor.prototype.initLiveEditors = function (params) {
+        var jsList = params.js || [];
         for (var i=0; i<=this.editors.length-1; i++) {
             this.liveEditors.push(
                 new LiveEditorBase({
                     editor: this.editors[i],
-                    url: this.url
+                    url: this.url,
+                    js: jsList[i]
                 })
             );
         }

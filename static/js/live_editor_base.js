@@ -23,18 +23,23 @@
             self.$editorIframe.show();
             self.$spinnerContainer.hide();
             self.dispatchLoadEvent();
+            self.applyJs();
             console.log('*** iframe fully loaded! ***');
         });
     };
 
     LiveEditorBase.prototype.initVars = function (params) {
         this.id = params.editor.replace('#', '');
-        this.url = params.url
+        this.url = params.url;
         this.$editor = $(params.editor);
         this.domOutline = null;
         this.scriptList = [];
         this.undoList = [];
         this.redoList = [];
+
+        if (params.js) {
+            this.scriptList.push(params.js);
+        }
     };
 
     LiveEditorBase.prototype.initActions = function () {
@@ -103,6 +108,14 @@
             editorName: this.id,
             appendTo: this.$editor.parent()
         });
+    };
+
+    LiveEditorBase.prototype.applyJs = function () {
+        // TO DO - test
+        var iframeWindow = this.$editorIframe[0].contentWindow;
+        // We use replace here to guarantee the jquery been used
+        // is from iframe's window.
+        eval(this.scriptList[0].replace(/\$/g, 'iframeWindow.$'));
     };
 
     LiveEditorBase.prototype.dispatchLoadEvent = function () {

@@ -13,6 +13,19 @@
     position: absolute;
 }
 
+/* OVERRIDE BOOTSTRAP */
+.tab-content {
+    position: relative;
+}
+
+.tab-content>.tab-pane {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 /* CODE PANEL */
 
 .code-panel {
@@ -91,7 +104,7 @@
 
 /* Ace Editor */
 
-.ace-editor-field { 
+.ace-editor-field {
     display: block;
     height: 180px !important;
 }
