@@ -12,6 +12,36 @@ describe('LiveEditorBase', function() {
         $('ul.dropdown-menu[role]').remove();
     });
 
+    describe('iframe onload', function() {
+        it('Should call dispatchLoadEvent method', function() {
+            var $iframe = $liveEditorBase.find('iframe');
+            $iframe.on('load', function() {
+                expect(liveEditorBase.dispatchLoadEvent).toHaveBeenCalled();
+            });
+        });
+
+        it('Should call domOutlineInit method', function() {
+            var $iframe = $liveEditorBase.find('iframe');
+            $iframe.on('load', function() {
+                expect(liveEditorBase.domOutlineInit).toHaveBeenCalled();
+            });
+        });
+
+        it('Should call bindEvents method', function() {
+            var $iframe = $liveEditorBase.find('iframe');
+            $iframe.on('load', function() {
+                expect(liveEditorBase.bindEvents).toHaveBeenCalled();
+            });
+        });
+
+        it('Should call applyJs method', function() {
+            var $iframe = $liveEditorBase.find('iframe');
+            $iframe.on('load', function() {
+                expect(liveEditorBase.dispatchapplyJsLoadEvent).toHaveBeenCalled();
+            });
+        });
+    });
+
     describe('Build Iframe', function() {
         it('Should build iframe', function() {
             var $iframe = $liveEditorBase.find('iframe');
@@ -168,6 +198,20 @@ describe('LiveEditorBase', function() {
                 path = liveEditorBase.getElementPath($p);
 
             expect(path).toBe('html>body>div>p');
+        });
+    });
+
+    describe('', function() {
+        it('Should dispatch an event', function() {
+            var counter = 0;
+
+            document.addEventListener('LiveEditorLoaded', function (e) {
+                counter ++;
+            }, false);
+
+            liveEditorBase.dispatchLoadEvent();
+
+            expect(counter).toBe(1);
         });
     });
 

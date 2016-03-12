@@ -115,11 +115,12 @@
         var iframeWindow = this.$editorIframe[0].contentWindow;
         // We use replace here to guarantee the jquery been used
         // is from iframe's window.
-        eval(this.scriptList[0].replace(/\$/g, 'iframeWindow.$'));
+        if (this.scriptList.length > 0) {
+            eval(this.scriptList[0].replace(/\$/g, 'iframeWindow.$'));
+        }
     };
 
     LiveEditorBase.prototype.dispatchLoadEvent = function () {
-        // TO DO - test
         var _event = new CustomEvent('LiveEditorLoaded', {'detail': {}});
         document.dispatchEvent(_event);
     };
