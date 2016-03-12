@@ -20,7 +20,6 @@
     };
 
     LiveEditorActions.prototype._replaceWithUndo = function () {
-        // undo script
         var parentPath = this.liveEditorBase.getElementPath(this.liveEditorBase.$currentSelected.parent()),
             oldHtml = this.liveEditorBase.$currentSelected.parent()[0].outerHTML,
             strUndo = "self.$editorIframe.contents().find('" + parentPath + "').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
@@ -65,7 +64,6 @@
     };
 
     LiveEditorActions.prototype.currentSelectedEditClasses = function () {
-        // undo script
         var undoClass = this.liveEditorBase.$currentSelected.attr('class') || '',
             strUndo = "self.$editorIframe.contents().find" + this._changeClass(this.liveEditorBase.currentSelected, undoClass),
             scriptClasses = this.liveEditorBase.$editClassesModal.find('.modal-body input').val(),
