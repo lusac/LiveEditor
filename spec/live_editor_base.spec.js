@@ -276,6 +276,24 @@ describe('LiveEditorBase', function() {
         });
     });
 
+    describe('addToUndoList method', function() {
+        it('Should append formated string inside undoList var', function() {
+            liveEditorBase.addToUndoList('\nMy test\t with\t tabs\n and\t\n paragraphs');
+
+            expect(liveEditorBase.undoList.length).toBe(1);
+            expect(liveEditorBase.undoList[0]).toBe('My test with tabs and paragraphs');
+        });
+    });
+
+    describe('addToScriptList method', function() {
+        it('Should append formated string inside scriptList var', function() {
+            liveEditorBase.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs');
+
+            expect(liveEditorBase.scriptList.length).toBe(1);
+            expect(liveEditorBase.scriptList[0]).toBe('My test with tabs and paragraphs');
+        });
+    });
+
     describe('openCurrentMenu method', function() {
     });
 
@@ -289,9 +307,6 @@ describe('LiveEditorBase', function() {
     });
 
     describe('getCurrentParentsPath method', function() {
-    });
-
-    describe('addToScriptList method', function() {
     });
 
     describe('codePanelUpdate method', function() {
