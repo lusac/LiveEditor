@@ -6,6 +6,7 @@ describe('LiveEditorBase', function() {
 
     afterEach(function() {
         $liveEditorBase.empty();
+        $('.btn-undo').remove();
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
@@ -156,6 +157,56 @@ describe('LiveEditorBase', function() {
             expect(liveEditorBase.unselectElements).toHaveBeenCalled();
         });
 
+        it('Undo button click should call codePanelUpdate method if undoList is not empty', function() {
+            liveEditorBase.scriptList.push('$("p").remove();');
+            liveEditorBase.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+
+            spyOn(liveEditorBase, 'codePanelUpdate');
+
+            $('.btn-undo').click();
+
+            expect(liveEditorBase.codePanelUpdate).toHaveBeenCalled();
+        });
+
+        it('Undo button click should not call codePanelUpdate method if undoList is empty', function() {
+            spyOn(liveEditorBase, 'codePanelUpdate');
+
+            $('.btn-undo').click();
+
+            expect(liveEditorBase.codePanelUpdate).not.toHaveBeenCalled();
+        });
+
+        it('Undo button click should remove last item from undoList var', function() {
+            liveEditorBase.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditorBase.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+
+            expect(liveEditorBase.undoList.length).toBe(2);
+
+            $('.btn-undo').click();
+
+            expect(liveEditorBase.undoList.length).toBe(1);
+        });
+
+        it('Undo button click should remove last item from scriptList var', function() {
+            liveEditorBase.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditorBase.scriptList.push('$("p").remove();');
+            liveEditorBase.scriptList.push('$("p").remove();');
+
+            expect(liveEditorBase.scriptList.length).toBe(2);
+
+            $('.btn-undo').click();
+            
+            expect(liveEditorBase.scriptList.length).toBe(1);
+        });
+
+        it('Undo button click should run last undoList script', function() {
+            liveEditorBase.undoList.push('self.$editorIframe.contents().find("body div").append("<small>Hello World</small>");');
+
+            $('.btn-undo').click();
+
+            expect(liveEditorBase.$editorIframe.contents().find("small").length).toBe(1);
+        });
+
         // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
         //     var $p = liveEditorBase.$editorIframe.contents().find('p');
         //     $p.trigger('mousemove').click();
@@ -201,7 +252,7 @@ describe('LiveEditorBase', function() {
         });
     });
 
-    describe('', function() {
+    describe('dispatchLoadEvent method', function() {
         it('Should dispatch an event', function() {
             var counter = 0;
 
@@ -212,6 +263,16 @@ describe('LiveEditorBase', function() {
             liveEditorBase.dispatchLoadEvent();
 
             expect(counter).toBe(1);
+        });
+    });
+
+    describe('buildButtons method', function() {
+        it('Should render undo button', function() {
+            var $undoButton = $('.btn-undo');
+            expect($undoButton).toExist();
+
+            liveEditorBase.buildButtons();
+            expect($('.btn-undo').length).toBe(2);
         });
     });
 
