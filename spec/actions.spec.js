@@ -152,4 +152,58 @@ describe("Actions", function() {
             expect(liveEditorBase.undoList).toEqual(expt);
         });
     });
+    
+    describe('_changeClass method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('Should return string', function() {
+            var str = liveEditorBase.actions._changeClass('.test-class', 'new-class');
+            expect(str).toBe('(".test-class").attr("class", "new-class");');
+        });
+    });
+
+    describe('_changeText method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('Should return string', function() {
+            var str = liveEditorBase.actions._changeText('.test-class', 'My new text');
+            expect(str).toBe('(".test-class").text("My new text");');
+        });
+    });
+
+    describe('_replaceWithUndo method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('Should call addToUndoList method', function() {
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
+            liveEditorBase.setCurrentElement($p);
+            
+            var oldHtml = liveEditorBase.$currentSelected.parent()[0].outerHTML,
+                expectString = "self.$editorIframe.contents().find('html>body>div').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
+
+            spyOn(liveEditorBase, 'addToUndoList');
+
+            liveEditorBase.actions._replaceWithUndo();
+            expect(liveEditorBase.addToUndoList).toHaveBeenCalledWith(expectString);
+        });
+    });
+
+    describe('getIframeCurrentElement method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('Should return currentElement inside iframe', function() {
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
+            liveEditorBase.setCurrentElement($p);
+
+            expect(liveEditorBase.actions.getIframeCurrentElement(), $p);
+        });
+    });
 });
