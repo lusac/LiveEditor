@@ -12,12 +12,12 @@ describe("Actions", function() {
         $('ul.dropdown-menu[role]').remove();
     });
 
-    describe("currentSelectedRemove method", function() {
+    describe('currentSelectedRemove method', function() {
         beforeEach(function() {
             waits(100);
         });
 
-        it("Should add script in scriptList", function() {
+        it('Should add script in scriptList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
@@ -27,7 +27,7 @@ describe("Actions", function() {
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").remove();']);
         });
 
-        it("Should add script in undoList", function() {
+        it('Should add script in undoList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
@@ -39,12 +39,12 @@ describe("Actions", function() {
         });
     });
 
-    describe("currentSelectedAddEvent method", function() {
+    describe('currentSelectedAddEvent method', function() {
         beforeEach(function() {
             waits(100);
         });
 
-        it("Should add script in scriptList", function() {
+        it('Should add script in scriptList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
@@ -55,25 +55,25 @@ describe("Actions", function() {
         });
     });
 
-    describe("currentSelectedEditHtml method", function() {
+    describe('currentSelectedEditHtml method', function() {
         beforeEach(function() {
             waits(100);
         });
 
         // Need change to ace editor.
-        // it("Should add script in scriptList", function() {
-        //     liveEditorBase.$editHtmlModal.find('.modal-body textarea').val("<small>my custom html</small>");
+        // it('Should add script in scriptList', function() {
+        //     liveEditorBase.$editHtmlModal.find('.modal-body textarea').val('<small>my custom html</small>');
         //     liveEditorBase.actions.currentSelectedEditHtml();
 
         //     expect(liveEditorBase.scriptList.length).toEqual(1);
         //     expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").replaceWith("<small>my custom html</small>");']);
         // });
 
-        it("Should add script in undoList", function() {
+        it('Should add script in undoList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
-            liveEditorBase.$editHtmlModal.find('.modal-body textarea').val("my custom html");
+            liveEditorBase.$editHtmlModal.find('.modal-body textarea').val('my custom html');
             liveEditorBase.actions.currentSelectedEditHtml();
             var expt = ['self.$editorIframe.contents().find(\'html>body>div\').replaceWith(\'<div><p>Hello World!</p></div>\');'];
 
@@ -82,27 +82,27 @@ describe("Actions", function() {
         });
     });
 
-    describe("currentSelectedEditText method", function() {
+    describe('currentSelectedEditText method', function() {
         beforeEach(function() {
             waits(100);
         });
 
-        it("Should add script in scriptList", function() {
+        it('Should add script in scriptList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
-            liveEditorBase.$editTextModal.find('.modal-body textarea').val("my custom html");
+            liveEditorBase.$editTextModal.find('.modal-body textarea').val('my custom html');
             liveEditorBase.actions.currentSelectedEditText();
 
             expect(liveEditorBase.scriptList.length).toEqual(1);
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").text("my custom html");']);
         });
 
-        it("Should add script in undoList", function() {
+        it('Should add script in undoList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
-            liveEditorBase.$editTextModal.find('.modal-body textarea').val("my custom html");
+            liveEditorBase.$editTextModal.find('.modal-body textarea').val('my custom html');
             liveEditorBase.actions.currentSelectedEditText();
             var expt = ['self.$editorIframe.contents().find("html>body>div>p").text("Hello World!");'];
 
@@ -111,12 +111,12 @@ describe("Actions", function() {
         });
     });
 
-    describe("currentSelectedEditClasses method", function() {
+    describe('currentSelectedEditClasses method', function() {
         beforeEach(function() {
             waits(100);
         });
 
-        it("Should add script in scriptList", function() {
+        it('Should add script in scriptList', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
@@ -127,7 +127,7 @@ describe("Actions", function() {
             expect(liveEditorBase.scriptList).toEqual(['$("html>body>div>p").attr("class", "my-class-1 my-class-2");']);
         });
 
-        it("Should add script in undoList - with class", function() {
+        it('Should add script in undoList - with class', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 
@@ -140,7 +140,7 @@ describe("Actions", function() {
             expect(liveEditorBase.undoList).toEqual(expt);
         });
 
-        it("Should add script in undoList - with no class", function() {
+        it('Should add script in undoList - with no class', function() {
             var $p = liveEditorBase.$editorIframe.contents().find('p');
             liveEditorBase.setCurrentElement($p);
 

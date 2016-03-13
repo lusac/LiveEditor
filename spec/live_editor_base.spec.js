@@ -14,32 +14,29 @@ describe('LiveEditorBase', function() {
     });
 
     describe('iframe onload', function() {
+        beforeEach(function() {
+            $iframe = $liveEditorBase.find('iframe');
+            spyOn(liveEditorBase, 'dispatchLoadEvent');
+            spyOn(liveEditorBase, 'domOutlineInit');
+            spyOn(liveEditorBase, 'bindEvents');
+            spyOn(liveEditorBase, 'applyJs');
+            $iframe.load();
+        });
+
         it('Should call dispatchLoadEvent method', function() {
-            var $iframe = $liveEditorBase.find('iframe');
-            $iframe.on('load', function() {
-                expect(liveEditorBase.dispatchLoadEvent).toHaveBeenCalled();
-            });
+            expect(liveEditorBase.dispatchLoadEvent).toHaveBeenCalled();
         });
 
         it('Should call domOutlineInit method', function() {
-            var $iframe = $liveEditorBase.find('iframe');
-            $iframe.on('load', function() {
-                expect(liveEditorBase.domOutlineInit).toHaveBeenCalled();
-            });
+            expect(liveEditorBase.domOutlineInit).toHaveBeenCalled();
         });
 
         it('Should call bindEvents method', function() {
-            var $iframe = $liveEditorBase.find('iframe');
-            $iframe.on('load', function() {
-                expect(liveEditorBase.bindEvents).toHaveBeenCalled();
-            });
+            expect(liveEditorBase.bindEvents).toHaveBeenCalled();
         });
 
         it('Should call applyJs method', function() {
-            var $iframe = $liveEditorBase.find('iframe');
-            $iframe.on('load', function() {
-                expect(liveEditorBase.dispatchapplyJsLoadEvent).toHaveBeenCalled();
-            });
+            expect(liveEditorBase.applyJs).toHaveBeenCalled();
         });
     });
 
