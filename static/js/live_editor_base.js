@@ -221,12 +221,12 @@
 
     LiveEditorBase.prototype.unselectElements = function () {
         if (this.$currentSelected && this.currentSelected) {
-                this.floatingMenu.close();
-                this.domOutline.stop();
-                this.domOutline.start();
-                this.$currentSelected = null;
-                this.currentSelected = null;
-                this.$editorIframe.contents().find('html *').off('click');
+            this.floatingMenu.close();
+            this.domOutline.stop();
+            this.domOutline.start();
+            this.$currentSelected = null;
+            this.currentSelected = null;
+            this.$editorIframe.contents().find('html *').off('click');
         }
     };
 
