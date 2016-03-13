@@ -294,10 +294,82 @@ describe('LiveEditorBase', function() {
         });
     });
 
-    describe('openCurrentMenu method', function() {
+    describe('codePanelUpdate method', function() {
+        it('Should update aceEditor value with scriptList content', function() {
+            liveEditorBase.scriptList.push('item 1');
+            liveEditorBase.scriptList.push('item 2');
+            liveEditorBase.scriptList.push('item 3');
+
+            liveEditorBase.codePanelUpdate();
+
+            var aceEditorValue = liveEditorBase.codePanel.aceEditor.aceEditor.getValue();
+
+            expect(aceEditorValue).toBe('item 1 item 2 item 3')
+        });
     });
 
     describe('operationInit method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('always call codePanelUpdate method', function() {
+            spyOn(liveEditorBase, 'codePanelUpdate');
+
+            liveEditorBase.operationInit('fake');
+
+            expect(liveEditorBase.codePanelUpdate).toHaveBeenCalled();
+        });
+
+        it('remove operation', function() {
+            var $p = liveEditorBase.$editorIframe.contents().find('p');
+            liveEditorBase.setCurrentElement($p);
+
+            spyOn(liveEditorBase.actions, 'currentSelectedRemove');
+            spyOn(liveEditorBase, 'unselectElements');
+
+            liveEditorBase.operationInit('remove');
+
+            expect(liveEditorBase.actions.currentSelectedRemove).toHaveBeenCalled();
+            expect(liveEditorBase.unselectElements).toHaveBeenCalled();
+        });
+
+        it('add-event-click', function() {
+            spyOn(liveEditorBase, 'unselectElements');
+            spyOn(liveEditorBase.actions, 'currentSelectedAddEvent');
+
+            liveEditorBase.operationInit('add-event-click');
+
+            expect(liveEditorBase.unselectElements).toHaveBeenCalled();
+            expect(liveEditorBase.actions.currentSelectedAddEvent).toHaveBeenCalledWith('click');
+        });
+
+        it('edit-html-save', function() {
+            spyOn(liveEditorBase.actions, 'currentSelectedEditHtml');
+
+            liveEditorBase.operationInit('edit-html-save');
+
+            expect(liveEditorBase.actions.currentSelectedEditHtml).toHaveBeenCalled();
+        });
+
+        it('edit-text-save', function() {
+            spyOn(liveEditorBase.actions, 'currentSelectedEditText');
+
+            liveEditorBase.operationInit('edit-text-save');
+
+            expect(liveEditorBase.actions.currentSelectedEditText).toHaveBeenCalled();
+        });
+
+        it('edit-classes-save', function() {
+            spyOn(liveEditorBase.actions, 'currentSelectedEditClasses');
+
+            liveEditorBase.operationInit('edit-classes-save');
+
+            expect(liveEditorBase.actions.currentSelectedEditClasses).toHaveBeenCalled();
+        });
+    });
+
+    describe('openCurrentMenu method', function() {
     });
 
     describe('unselectElements method', function() {
@@ -307,8 +379,5 @@ describe('LiveEditorBase', function() {
     });
 
     describe('getCurrentParentsPath method', function() {
-    });
-
-    describe('codePanelUpdate method', function() {
     });
 });
