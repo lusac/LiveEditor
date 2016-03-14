@@ -26,6 +26,10 @@
     width: 100%;
 }
 
+.tab-content>.active {
+    z-index: 2;
+}
+
 /* CODE PANEL */
 
 .code-panel {
