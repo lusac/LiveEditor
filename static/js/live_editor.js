@@ -16,6 +16,7 @@
         this.liveEditors = [];
         this.url = params.url;
         this.editors = params.editors;
+        this.device = params.device;
 
         this.initLiveEditors(params);
         // this.getUrlContent();
@@ -40,6 +41,7 @@
                     js: jsList[i]
                 })
             );
+            $(this.editors[i]).parent().addClass('tab-pane__'+this.device);
         }
     };
 

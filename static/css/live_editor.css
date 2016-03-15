@@ -13,21 +13,14 @@
     position: absolute;
 }
 
-/* OVERRIDE BOOTSTRAP */
-.tab-content {
-    position: relative;
+.tab-content>.tab-pane__mobile {
+    width: 360px;
+    margin: 0 auto;
 }
 
-.tab-content>.tab-pane {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.tab-content>.active {
-    z-index: 2;
+.tab-content>.tab-pane__tablet {
+    width: 1024px;
+    margin: 0 auto;
 }
 
 /* CODE PANEL */
