@@ -13,7 +13,7 @@
     position: absolute;
 }
 
-.tab-content>.tab-pane__mobile {
+.tab-content>.tab-pane__smart {
     width: 360px;
     margin: 0 auto;
 }
