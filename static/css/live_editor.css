@@ -15,12 +15,10 @@
 
 .tab-content>.tab-pane__smart {
     width: 360px;
-    margin: 0 auto;
 }
 
 .tab-content>.tab-pane__tablet {
     width: 1024px;
-    margin: 0 auto;
 }
 
 /* CODE PANEL */
