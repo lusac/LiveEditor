@@ -20,6 +20,7 @@ describe('LiveEditorBase', function() {
             spyOn(liveEditorBase, 'domOutlineInit');
             spyOn(liveEditorBase, 'bindEvents');
             spyOn(liveEditorBase, 'applyJs');
+            spyOn(liveEditorBase, 'codePanelUpdate');
             $iframe.load();
         });
 
@@ -37,6 +38,10 @@ describe('LiveEditorBase', function() {
 
         it('Should call applyJs method', function() {
             expect(liveEditorBase.applyJs).toHaveBeenCalled();
+        });
+
+        it('Should call codePanelUpdate method', function() {
+            expect(liveEditorBase.codePanelUpdate).toHaveBeenCalled();
         });
     });
 
