@@ -18,8 +18,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            window.liveEditor = new LiveEditor({
-                editors: ['#live-editor-original', '#live-editor-test'],
+            window.liveEditor = new LiveEditorBase({
+                editor: '#example',
+                tabs: ['Original', 'Test'],
                 url: 'gshow.html',
                 js: ['$("html>body>div:eq(0)>div:eq(1)>div:eq(2)>div>div>div>div>a>h3").text("original");',
                 '$("html>body>div:eq(0)>div:eq(1)>div:eq(2)>div>div>div>div>a>h3").text("teste");'],
@@ -29,20 +30,7 @@
     </script>
 </head>
 <body>
-    <ul class="nav nav-tabs">
-        <li class="active"><a class="original" data-toggle="tab" href="#original">Original</a></li>
-        <li><a class="teste" data-toggle="tab" href="#teste">Teste</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="original" class="tab-pane fade in active">
-            <div id="live-editor-original"></div>
-        </div>
-
-        <div id="teste" class="tab-pane fade">
-            <div id="live-editor-test"></div>
-        </div>
-    </div>
+    <div id="example"></div>
 
     <script src="static/vendor/jquery.dom-outline/jquery.dom-outline-1.0.js"></script>
     <script src="static/vendor/ace_editor/ace.js" charset="utf-8"></script>
@@ -50,6 +38,7 @@
     <script src="static/vendor/ace_editor/modes/mode-javascript.js"></script>
     <script src="static/vendor/ace_editor/modes/mode-html.js"></script>
 
+    <script src="static/js/tabs.js"></script>
     <script src="static/js/modal.js"></script>
     <script src="static/js/code_panel.js"></script>
     <script src="static/js/floating_menu.js"></script>
