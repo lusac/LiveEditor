@@ -24,6 +24,7 @@
             self.$spinnerContainer.hide();
             self.dispatchLoadEvent();
             self.applyJs();
+            self.codePanelUpdate(); // TO DO - tests js
             console.log('*** iframe fully loaded! ***');
         });
     };
@@ -38,7 +39,7 @@
         this.redoList = [];
 
         if (params.js) {
-            this.scriptList.push(params.js);
+            this.addToScriptList(params.js)
         }
     };
 
