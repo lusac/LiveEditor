@@ -58,4 +58,10 @@ describe("Actions", function() {
             expect($liActive).toHaveClass('active');
         });
     });
+
+    describe('formatName method', function() {
+        it('Should format name', function() {
+            expect(tabs.formatName('My beautiful name')).toBe('my_beautiful_name');
+        })
+    });
 });

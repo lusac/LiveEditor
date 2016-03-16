@@ -18,7 +18,7 @@
 
         for(var i=0; i<=this.tabs.length-1; i++) {
             var $li = $('<li>'),
-                name = this.tabs[i].toLowerCase().replace(new RegExp(' ', 'g'), '_');
+                name = this.formatName(this.tabs[i]);
 
             if (i==0) {
                 $li.addClass('active');
@@ -30,6 +30,10 @@
         }
         this.$parent.append($tabs);
     };
+
+    LiveEditorTabs.prototype.formatName = function (str) {
+        return str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
+    }
 
     window.LiveEditorTabs = LiveEditorTabs;
 })(window, document, $);

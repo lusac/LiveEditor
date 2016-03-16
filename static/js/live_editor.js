@@ -37,7 +37,7 @@
 
     LiveEditor.prototype.initVars = function (params) {
         this.device = params.device;
-        this.tabs = params.tabs;
+        this.tabsList = params.tabs;
         this.id = params.editor.replace('#', '');
         this.url = params.url;
         this.js = params.js || [];
@@ -47,15 +47,15 @@
     };
 
     LiveEditor.prototype.buildTabs = function () {
-        this.currentTab = this.tabs[0].toLowerCase().replace(new RegExp(' ', 'g'), '_');
-
-        new LiveEditorTabs({
-            tabs: this.tabs,
+        this.tabs = new LiveEditorTabs({
+            tabs: this.tabsList,
             parent: this.$editor
         });
 
-        for(var i=0; i<=this.tabs.length-1; i++) {
-            var name = this.tabs[i].toLowerCase().replace(new RegExp(' ', 'g'), '_');
+        this.currentTab = this.tabs.formatName(this.tabsList[0]);
+
+        for(var i=0; i<=this.tabsList.length-1; i++) {
+            var name = this.tabs.formatName(this.tabsList[i]);
 
             this.experiments[name] = {
                 'scriptList': this.js.length > 1 ? [this.js[i]] : [],
