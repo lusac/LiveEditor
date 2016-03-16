@@ -13,11 +13,11 @@
     position: absolute;
 }
 
-.tab-content>.tab-pane__smart {
+.tab-pane__smart {
     width: 360px;
 }
 
-.tab-content>.tab-pane__tablet {
+.tab-pane__tablet {
     width: 1024px;
 }
 

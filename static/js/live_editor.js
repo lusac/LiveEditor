@@ -32,7 +32,7 @@
             console.log('*** iframe fully loaded! ***');
         });
 
-        // $(this.editors[i]).parent().addClass('tab-pane__' + this.device);
+        this.$editorIframe.addClass('tab-pane__' + this.device);
     };
 
     LiveEditor.prototype.initVars = function (params) {
