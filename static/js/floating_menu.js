@@ -135,10 +135,17 @@
         if (leftData === 0) {
             return 0;
         }
+
         var next_location = leftData.iframe_left + leftData.box_offset_left + leftData.box_width + this.LEFT_GAP;
+
         if (next_location + menu_width >= leftData.iframe_width) {
             next_location = leftData.iframe_left + leftData.box_offset_left - menu_width - this.LEFT_GAP;
         }
+
+        if (next_location < 0) {
+            return 0
+        }
+
         return next_location;
     };
 
@@ -148,8 +155,13 @@
         }
 
         var next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + this.TOP_GAP;
+
         if (next_location + menu_height >= topData.iframe_height) {
             next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + topData.box_heigh - menu_height + this.TOP_GAP;
+        }
+
+        if (next_location < 0) {
+            return 0
         }
 
         return next_location;
