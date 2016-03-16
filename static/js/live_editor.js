@@ -48,7 +48,7 @@
             var name = this.tabs[i].toLowerCase();
 
             this.experiments[name] = {
-                'scriptList': this.js > 1 ? [this.js[i]] : [],
+                'scriptList': this.js.length > 1 ? [this.js[i]] : [],
                 'undoList': [],
                 'goalList': []
             }
@@ -72,7 +72,7 @@
         this.tabs = params.tabs;
         this.id = params.editor.replace('#', '');
         this.url = params.url;
-        this.js = params.js;
+        this.js = params.js || [];
         this.$editor = $(params.editor);
         this.domOutline = null;
         this.experiments = {};
