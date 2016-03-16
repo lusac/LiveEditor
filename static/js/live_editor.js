@@ -252,9 +252,9 @@
         });
 
         this.$undoButton.off().on('click', function () {
-            if (self.undoList.length) {
-                var script = self.undoList.pop();
-                self.scriptList.pop();
+            if (self.experiments[self.currentTab].undoList.length) {
+                var script = self.experiments[self.currentTab].undoList.pop();
+                self.experiments[self.currentTab].scriptList.pop();
                 self.codePanelUpdate();
                 eval(script);
             }
