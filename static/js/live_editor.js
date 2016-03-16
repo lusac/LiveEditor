@@ -47,7 +47,7 @@
     };
 
     LiveEditor.prototype.buildTabs = function () {
-        this.currentTab = this.tabs[0].toLowerCase();
+        this.currentTab = this.tabs[0].toLowerCase().replace(new RegExp(' ', 'g'), '_');
 
         new LiveEditorTabs({
             tabs: this.tabs,
@@ -55,7 +55,7 @@
         });
 
         for(var i=0; i<=this.tabs.length-1; i++) {
-            var name = this.tabs[i].toLowerCase();
+            var name = this.tabs[i].toLowerCase().replace(new RegExp(' ', 'g'), '_');
 
             this.experiments[name] = {
                 'scriptList': this.js.length > 1 ? [this.js[i]] : [],
@@ -146,7 +146,7 @@
     LiveEditor.prototype.applyJs = function () {
         // TO DO - test
         var iframeWindow = this.$editorIframe[0].contentWindow,
-            scriptList = this.experiments[this.currentTab].scriptList;
+            scriptList = this.currentExperiment().scriptList;
         // We use replace here to guarantee the jquery been used
         // is from iframe's window.
 
@@ -398,17 +398,22 @@
     };
 
     LiveEditor.prototype.addToUndoList = function (str) {
-        str = str.replace(new RegExp('\t|\n', 'g'), '');
-        this.experiments[this.currentTab].undoList.push(str);
+        var str = str.replace(new RegExp('\t|\n', 'g'), '');
+        this.currentExperiment().undoList.push(str);
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {
-        str = str.replace(new RegExp('\t|\n', 'g'), '');
-        this.experiments[this.currentTab].scriptList.push(str);
+        var str = str.replace(new RegExp('\t|\n', 'g'), '');
+        this.currentExperiment().scriptList.push(str);
     };
 
     LiveEditor.prototype.codePanelUpdate = function () {
-        this.codePanel.aceEditor.aceEditor.setValue(this.experiments[this.currentTab].scriptList.join(' '), -1);
+        var str = this.currentExperiment().scriptList.join(' ');
+        this.codePanel.aceEditor.aceEditor.setValue(str, -1);
+    };
+
+    LiveEditor.prototype.currentExperiment = function () {
+        return this.experiments[this.currentTab];
     };
 
     window.LiveEditor = LiveEditor;

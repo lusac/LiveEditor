@@ -41,13 +41,13 @@ describe("Actions", function() {
 
         it('Tab should have correct data name attribute', function() {
             var $a = $('body>.nav-tabs li:eq(0)>a');
-            expect($a.data('name')).toBe('test-1');
+            expect($a.data('name')).toBe('test_1');
 
             var $a = $('body>.nav-tabs li:eq(1)>a');
-            expect($a.data('name')).toBe('test-2');
+            expect($a.data('name')).toBe('test_2');
 
             var $a = $('body>.nav-tabs li:eq(2)>a');
-            expect($a.data('name')).toBe('other-test-3');
+            expect($a.data('name')).toBe('other_test_3');
         });
 
         it('First tab should be active', function() {

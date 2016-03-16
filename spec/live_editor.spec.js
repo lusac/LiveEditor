@@ -1,6 +1,6 @@
 describe('LiveEditor', function() {
     beforeEach(function() {
-        liveEditor = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test'], url: 'site.html'});
+        liveEditor = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
         $liveEditor = $('.live-editor');
     });
 
@@ -174,8 +174,8 @@ describe('LiveEditor', function() {
         });
 
         it('Undo button click should call codePanelUpdate method if undoList is not empty', function() {
-            liveEditor.experiments.test.scriptList.push('$("p").remove();');
-            liveEditor.experiments.test.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
 
             spyOn(liveEditor, 'codePanelUpdate');
 
@@ -193,30 +193,30 @@ describe('LiveEditor', function() {
         });
 
         it('Undo button click should remove last item from undoList var', function() {
-            liveEditor.experiments.test.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
-            liveEditor.experiments.test.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
 
-            expect(liveEditor.experiments.test.undoList.length).toBe(2);
+            expect(liveEditor.experiments.test_1.undoList.length).toBe(2);
 
             $('.btn-undo').click();
 
-            expect(liveEditor.experiments.test.undoList.length).toBe(1);
+            expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
         });
 
         it('Undo button click should remove last item from scriptList var', function() {
-            liveEditor.experiments.test.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
-            liveEditor.experiments.test.scriptList.push('$("p").remove();');
-            liveEditor.experiments.test.scriptList.push('$("p").remove();');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
 
-            expect(liveEditor.experiments.test.scriptList.length).toBe(2);
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(2);
 
             $('.btn-undo').click();
             
-            expect(liveEditor.experiments.test.scriptList.length).toBe(1);
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
         });
 
         it('Undo button click should run last undoList script', function() {
-            liveEditor.experiments.test.undoList.push('self.$editorIframe.contents().find("body div").append("<small>Hello World</small>");');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("body div").append("<small>Hello World</small>");');
 
             $('.btn-undo').click();
 
@@ -296,8 +296,8 @@ describe('LiveEditor', function() {
         it('Should append formated string inside undoList var', function() {
             liveEditor.addToUndoList('\nMy test\t with\t tabs\n and\t\n paragraphs');
 
-            expect(liveEditor.experiments.test.undoList.length).toBe(1);
-            expect(liveEditor.experiments.test.undoList[0]).toBe('My test with tabs and paragraphs');
+            expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
+            expect(liveEditor.experiments.test_1.undoList[0]).toBe('My test with tabs and paragraphs');
         });
     });
 
@@ -305,16 +305,16 @@ describe('LiveEditor', function() {
         it('Should append formated string inside scriptList var', function() {
             liveEditor.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs');
 
-            expect(liveEditor.experiments.test.scriptList.length).toBe(1);
-            expect(liveEditor.experiments.test.scriptList[0]).toBe('My test with tabs and paragraphs');
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
+            expect(liveEditor.experiments.test_1.scriptList[0]).toBe('My test with tabs and paragraphs');
         });
     });
 
     describe('codePanelUpdate method', function() {
         it('Should update aceEditor value with scriptList content', function() {
-            liveEditor.experiments.test.scriptList.push('item 1');
-            liveEditor.experiments.test.scriptList.push('item 2');
-            liveEditor.experiments.test.scriptList.push('item 3');
+            liveEditor.experiments.test_1.scriptList.push('item 1');
+            liveEditor.experiments.test_1.scriptList.push('item 2');
+            liveEditor.experiments.test_1.scriptList.push('item 3');
 
             liveEditor.codePanelUpdate();
 
@@ -382,6 +382,13 @@ describe('LiveEditor', function() {
             liveEditor.operationInit('edit-classes-save');
 
             expect(liveEditor.actions.currentSelectedEditClasses).toHaveBeenCalled();
+        });
+    });
+
+    describe('currentExperiment method', function() {
+        it('Return correct value', function() {
+            var c = liveEditor.currentExperiment();
+            expect(c).toBe(liveEditor.experiments.test_1);
         });
     });
 

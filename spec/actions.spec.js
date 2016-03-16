@@ -1,6 +1,6 @@
 describe("Actions", function() {
     beforeEach(function() {
-        liveEditor = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test'], url: 'site.html'});
+        liveEditor = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
         $liveEditor = $('.live-editor');
     });
 
@@ -22,8 +22,9 @@ describe("Actions", function() {
             liveEditor.setCurrentElement($p);
 
             liveEditor.actions.currentSelectedRemove();
-            expect(liveEditor.experiments.test.scriptList.length).toEqual(1);
-            expect(liveEditor.experiments.test.scriptList).toEqual(['$("html>body>div>p").remove();']);
+
+            expect(liveEditor.experiments.test_1.scriptList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").remove();']);
         });
 
         it('Should add script in undoList', function() {
@@ -33,8 +34,8 @@ describe("Actions", function() {
             liveEditor.actions.currentSelectedRemove();
             var expt = ["self.$editorIframe.contents().find('html>body>div').replaceWith('<div><p>Hello World!</p></div>');"];
 
-            expect(liveEditor.experiments.test.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test.undoList).toEqual(expt);
+            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
         });
     });
 
@@ -49,8 +50,8 @@ describe("Actions", function() {
 
             liveEditor.actions.currentSelectedAddEvent('custom-event');
 
-            expect(liveEditor.experiments.test.scriptList.length).toEqual(1);
-            expect(liveEditor.experiments.test.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
+            expect(liveEditor.experiments.test_1.scriptList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
         });
     });
 
@@ -64,8 +65,8 @@ describe("Actions", function() {
         //     liveEditor.$editHtmlModal.find('.modal-body textarea').val('<small>my custom html</small>');
         //     liveEditor.actions.currentSelectedEditHtml();
 
-        //     expect(liveEditor.experiments.test.scriptList.length).toEqual(1);
-        //     expect(liveEditor.experiments.test.scriptList).toEqual(['$("html>body>div>p").replaceWith("<small>my custom html</small>");']);
+        //     expect(liveEditor.experiments.test_1.scriptList.length).toEqual(1);
+        //     expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").replaceWith("<small>my custom html</small>");']);
         // });
 
         it('Should add script in undoList', function() {
@@ -76,8 +77,8 @@ describe("Actions", function() {
             liveEditor.actions.currentSelectedEditHtml();
             var expt = ['self.$editorIframe.contents().find(\'html>body>div\').replaceWith(\'<div><p>Hello World!</p></div>\');'];
 
-            expect(liveEditor.experiments.test.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test.undoList).toEqual(expt);
+            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
         });
     });
 
@@ -93,8 +94,8 @@ describe("Actions", function() {
             liveEditor.$editTextModal.find('.modal-body textarea').val('my custom html');
             liveEditor.actions.currentSelectedEditText();
 
-            expect(liveEditor.experiments.test.scriptList.length).toEqual(1);
-            expect(liveEditor.experiments.test.scriptList).toEqual(['$("html>body>div>p").text("my custom html");']);
+            expect(liveEditor.experiments.test_1.scriptList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").text("my custom html");']);
         });
 
         it('Should add script in undoList', function() {
@@ -105,8 +106,8 @@ describe("Actions", function() {
             liveEditor.actions.currentSelectedEditText();
             var expt = ['self.$editorIframe.contents().find("html>body>div>p").text("Hello World!");'];
 
-            expect(liveEditor.experiments.test.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test.undoList).toEqual(expt);
+            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
         });
     });
 
@@ -122,8 +123,8 @@ describe("Actions", function() {
             liveEditor.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
             liveEditor.actions.currentSelectedEditClasses();
 
-            expect(liveEditor.experiments.test.scriptList.length).toEqual(1);
-            expect(liveEditor.experiments.test.scriptList).toEqual(['$("html>body>div>p").attr("class", "my-class-1 my-class-2");']);
+            expect(liveEditor.experiments.test_1.scriptList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("class", "my-class-1 my-class-2");']);
         });
 
         it('Should add script in undoList - with class', function() {
@@ -135,8 +136,8 @@ describe("Actions", function() {
             liveEditor.actions.currentSelectedEditClasses();
             var expt = ['self.$editorIframe.contents().find("html>body>div>p").attr("class", "my-class");'];
 
-            expect(liveEditor.experiments.test.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test.undoList).toEqual(expt);
+            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
         });
 
         it('Should add script in undoList - with no class', function() {
@@ -147,8 +148,8 @@ describe("Actions", function() {
             liveEditor.actions.currentSelectedEditClasses();
             var expt = ['self.$editorIframe.contents().find("html>body>div>p").attr("class", "");'];
 
-            expect(liveEditor.experiments.test.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test.undoList).toEqual(expt);
+            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
+            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
         });
     });
     
