@@ -253,7 +253,6 @@
 
         $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             // TO DO - test js
-            self.currentTab = $(e.target).data('name');
             self.changeTab();
             self.applyJs();
             self.codePanelUpdate();
