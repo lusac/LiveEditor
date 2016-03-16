@@ -153,9 +153,13 @@
         var $body = this.$editorIframe.contents().find('body'),
             mode = this.currentMode();
 
+        this.domOutline.stop();
+        this.unselectElements();
+
         try {
             if (mode == 'edit') {
                 $body.replaceWith(this.$iframeBody.clone());
+                this.domOutlineInit();
             } else if (mode == 'view') {
                 $body.replaceWith(this.$iframeBody);
             }
@@ -170,10 +174,7 @@
 
     LiveEditor.prototype.changeTab = function () {
         // TO DO - test js
-        this.domOutline.stop();
-        this.unselectElements();
         this.updateBody();
-        this.domOutlineInit();
         this.codePanelUpdate();
         console.log('Change tab!');
     };
