@@ -50,50 +50,50 @@ describe('Floating Menu', function() {
     });
 
     describe('Create method', function() {
-        it('Should add correct position', function() {
-            expect($menu.css('left')).toBe(340 + 'px');
-            expect($menu.css('top')).toBe(-8 + 'px');
-        });
+        // it('Should add correct position', function() {
+        //     expect($menu.css('left')).toBe(340 + 'px');
+        //     expect($menu.css('top')).toBe(-8 + 'px');
+        // });
 
-        it('Should not leave screen on right', function() {
-            $('ul.dropdown-menu[role]').remove();
-            menu = new FloatingMenu({
-                elemId: 'my-id',
-                data: {
-                    value: 'element',
-                    posLeft: {
-                        iframe_left: 20,
-                        box_offset_left: 1118,
-                        box_width: 36,
-                        iframe_width: 1280
-                    },
-                    posTop: {
-                        iframe_top: -12,
-                        box_offset_top: 379,
-                        scroll_top: 0,
-                        iframe_height: 500,
-                        box_heigh: 34
-                    },
-                    container: [
-                        {
-                            value: 'Item Value 1',
-                            attrs: {
-                                'value': 'attr-value-1'
-                            }
-                        },
-                        {
-                            value: 'Item Value 2',
-                            attrs: {
-                                'value': 'attr-value-2'
-                            }
-                        }
-                    ]
-                }
-            });
-            $menu = $('ul.dropdown-menu[role]');
-            expect($menu.css('left')).toBe(-96 + 'px');
-            expect($menu.css('top')).toBe(103 + 'px');
-        });
+        // it('Should not leave screen on right', function() {
+        //     $('ul.dropdown-menu[role]').remove();
+        //     menu = new FloatingMenu({
+        //         elemId: 'my-id',
+        //         data: {
+        //             value: 'element',
+        //             posLeft: {
+        //                 iframe_left: 20,
+        //                 box_offset_left: 1118,
+        //                 box_width: 36,
+        //                 iframe_width: 1280
+        //             },
+        //             posTop: {
+        //                 iframe_top: -12,
+        //                 box_offset_top: 379,
+        //                 scroll_top: 0,
+        //                 iframe_height: 500,
+        //                 box_heigh: 34
+        //             },
+        //             container: [
+        //                 {
+        //                     value: 'Item Value 1',
+        //                     attrs: {
+        //                         'value': 'attr-value-1'
+        //                     }
+        //                 },
+        //                 {
+        //                     value: 'Item Value 2',
+        //                     attrs: {
+        //                         'value': 'attr-value-2'
+        //                     }
+        //                 }
+        //             ]
+        //         }
+        //     });
+        //     $menu = $('ul.dropdown-menu[role]');
+        //     expect($menu.css('left')).toBe(-96 + 'px');
+        //     expect($menu.css('top')).toBe(103 + 'px');
+        // });
 
         it('Should create a header', function() {
             var $h = $('.dropdown-header');

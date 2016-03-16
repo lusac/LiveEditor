@@ -9,7 +9,7 @@
 
     FloatingMenu.prototype.init = function (params) {
         this.LEFT_GAP = 10;
-        this.TOP_GAP = -10;
+        this.TOP_GAP = -30;
         this.$menu = $('<ul class="dropdown-menu" role="menu">');
         this.$parent = params.appendTo || $('body');
         this.elemId = params.elemId;
@@ -150,14 +150,16 @@
     };
 
     FloatingMenu.prototype.defineTop = function(topData, menu_height) {
+        // TO DO - test js
         if (topData === 0) {
             return 0;
         }
 
-        var next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + this.TOP_GAP;
+        var next_location = topData.box_offset_top - topData.scroll_top;
 
         if (next_location + menu_height >= topData.iframe_height) {
-            next_location = topData.iframe_top + topData.box_offset_top - topData.scroll_top + topData.box_heigh - menu_height + this.TOP_GAP;
+            var diff = (next_location + menu_height) - topData.iframe_height
+            next_location -= diff - this.TOP_GAP;
         }
 
         if (next_location < 0) {

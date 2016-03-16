@@ -76,11 +76,11 @@
         });
 
         // ----- TO DO - test js -----
-        var $editorIframeContainer = $('<div class="live-editor-iframe-container">');
-        $editorIframeContainer.append(this.$spinnerContainer, this.$editorIframe);
+        this.$editorIframeContainer = $('<div class="live-editor-iframe-container">');
+        this.$editorIframeContainer.append(this.$spinnerContainer, this.$editorIframe);
         // ----- TO DO - test js -----
 
-        this.$editor.append($editorIframeContainer);
+        this.$editor.append(this.$editorIframeContainer);
         this.$editor.addClass('live-editor');
     };
 
@@ -331,7 +331,7 @@
 
             this.floatingMenu = new FloatingMenu({
                 elemId: this.$editor.attr('id'),
-                appendTo: this.$editor.parent(),
+                appendTo: this.$editorIframeContainer,
                 data: {
                     value: this.$currentSelected.prop('tagName').toLowerCase(),
                     posLeft: {
