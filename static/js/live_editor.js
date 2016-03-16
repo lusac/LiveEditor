@@ -35,6 +35,17 @@
         // $(this.editors[i]).parent().addClass('tab-pane__' + this.device);
     };
 
+    LiveEditor.prototype.initVars = function (params) {
+        this.device = params.device;
+        this.tabs = params.tabs;
+        this.id = params.editor.replace('#', '');
+        this.url = params.url;
+        this.js = params.js || [];
+        this.$editor = $(params.editor);
+        this.domOutline = null;
+        this.experiments = {};
+    };
+
     LiveEditor.prototype.buildTabs = function () {
         this.currentTab = this.tabs[0].toLowerCase();
 
@@ -55,33 +66,6 @@
         }
     };
 
-    LiveEditor.prototype.saveBody = function () {
-        this.$iframeBody = this.$editorIframe.contents().find('body').clone();
-    };
-
-    LiveEditor.prototype.changeTab = function () {
-        var $body = this.$editorIframe.contents().find('body');
-        this.domOutline.stop();
-        $body.empty();
-        $body.replaceWith(this.$iframeBody.clone());
-        this.domOutlineInit();
-    };
-
-    LiveEditor.prototype.initVars = function (params) {
-        this.device = params.device;
-        this.tabs = params.tabs;
-        this.id = params.editor.replace('#', '');
-        this.url = params.url;
-        this.js = params.js || [];
-        this.$editor = $(params.editor);
-        this.domOutline = null;
-        this.experiments = {};
-
-        // if (params.js) {
-        //     this.addToScriptList(params.js)
-        // }
-    };
-
     LiveEditor.prototype.buildIframe = function (params) {
         this.$editorIframe = $('<iframe id="live-editor-iframe">');
         this.$spinnerContainer = $('<span class="spinner-container"><span class="spinner-content"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span></span>');
@@ -98,15 +82,9 @@
         this.$editor.addClass('live-editor');
     };
 
-    LiveEditor.prototype.initActions = function () {
-        this.actions = new LiveEditorActions(this);
-    };
-
     LiveEditor.prototype.buildButtons = function () {
         this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
-        // this.$redoButton = $('<button type="button" class="btn btn-default btn-redo">Redo</button>');
-
-        this.$editor.parent().append(this.$undoButton); //, this.$redoButton);
+        this.$editor.parent().append(this.$undoButton);
     };
 
     LiveEditor.prototype.buildModals = function (params) {
@@ -148,6 +126,22 @@
             editorName: this.id,
             appendTo: this.$editor.parent()
         });
+    };
+
+    LiveEditor.prototype.saveBody = function () {
+        this.$iframeBody = this.$editorIframe.contents().find('body').clone();
+    };
+
+    LiveEditor.prototype.changeTab = function () {
+        var $body = this.$editorIframe.contents().find('body');
+        this.domOutline.stop();
+        $body.empty();
+        $body.replaceWith(this.$iframeBody.clone());
+        this.domOutlineInit();
+    };
+
+    LiveEditor.prototype.initActions = function () {
+        this.actions = new LiveEditorActions(this);
     };
 
     LiveEditor.prototype.applyJs = function () {
