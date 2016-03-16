@@ -9,7 +9,7 @@
 
     LiveEditorTabs.prototype.init = function (params) {
         this.$parent = params.parent;
-        this.tabs = params.tabs
+        this.tabs = params.tabs;
         this.create();
     };
 
@@ -20,7 +20,7 @@
             var $li = $('<li>'),
                 name = this.formatName(this.tabs[i]);
 
-            if (i==0) {
+            if (i === 0) {
                 $li.addClass('active');
             }
 
@@ -33,7 +33,7 @@
 
     LiveEditorTabs.prototype.formatName = function (str) {
         return str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
-    }
+    };
 
     LiveEditorTabs.prototype.current = function () {
         return this.$tabs.find('li.active a');

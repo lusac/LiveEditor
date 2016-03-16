@@ -59,7 +59,7 @@
                 'scriptList': this.js.length > 1 ? [this.js[i]] : [],
                 'undoList': [],
                 'goalList': []
-            }
+            };
         }
     };
 
