@@ -1,4 +1,4 @@
-describe("Actions", function() {
+describe("Tabs", function() {
     beforeEach(function() {
         tabs = new LiveEditorTabs({parent: $('body'), tabs: ["Test 1", "Test 2", "Other Test 3"]});
     });
@@ -62,6 +62,13 @@ describe("Actions", function() {
     describe('formatName method', function() {
         it('Should format name', function() {
             expect(tabs.formatName('My beautiful name')).toBe('my_beautiful_name');
+        })
+    });
+
+    describe('current method', function() {
+        it('Should return current tab', function() {
+            var $li = $('li.active a');
+            expect(tabs.current()).toBe($li);
         })
     });
 });

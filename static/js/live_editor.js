@@ -52,8 +52,6 @@
             parent: this.$editor
         });
 
-        this.currentTab = this.tabs.formatName(this.tabsList[0]);
-
         for(var i=0; i<=this.tabsList.length-1; i++) {
             var name = this.tabs.formatName(this.tabsList[i]);
 
@@ -245,15 +243,16 @@
         });
 
         this.$undoButton.off().on('click', function () {
-            if (self.experiments[self.currentTab].undoList.length) {
-                var script = self.experiments[self.currentTab].undoList.pop();
-                self.experiments[self.currentTab].scriptList.pop();
+            if (self.currentExperiment().undoList.length) {
+                var script = self.currentExperiment().undoList.pop();
+                self.currentExperiment().scriptList.pop();
                 self.codePanelUpdate();
                 eval(script);
             }
         });
 
         $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            // TO DO - test js
             self.currentTab = $(e.target).data('name');
             self.changeTab();
             self.applyJs();
@@ -413,7 +412,8 @@
     };
 
     LiveEditor.prototype.currentExperiment = function () {
-        return this.experiments[this.currentTab];
+        var currentTab = this.tabs.current();
+        return this.experiments[currentTab.data('name')];
     };
 
     window.LiveEditor = LiveEditor;

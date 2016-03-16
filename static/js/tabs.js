@@ -14,7 +14,7 @@
     };
 
     LiveEditorTabs.prototype.create = function () {
-        var $tabs = $('<ul class="nav nav-tabs">');
+        this.$tabs = $('<ul class="nav nav-tabs">');
 
         for(var i=0; i<=this.tabs.length-1; i++) {
             var $li = $('<li>'),
@@ -26,14 +26,18 @@
 
             $li.append('<a data-toggle="tab" data-name="' + name + '">' + this.tabs[i] + '</a>');
 
-            $tabs.append($li);
+            this.$tabs.append($li);
         }
-        this.$parent.append($tabs);
+        this.$parent.append(this.$tabs);
     };
 
     LiveEditorTabs.prototype.formatName = function (str) {
         return str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
     }
+
+    LiveEditorTabs.prototype.current = function () {
+        return this.$tabs.find('li.active a');
+    };
 
     window.LiveEditorTabs = LiveEditorTabs;
 })(window, document, $);
