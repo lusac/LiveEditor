@@ -4,7 +4,6 @@
     'use strict';
 
     var LiveEditorTabs = function LiveEditorTabs (params) {
-        // TO DO - test js
         this.init(params);
     };
 
