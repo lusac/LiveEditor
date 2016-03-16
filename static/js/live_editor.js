@@ -28,7 +28,7 @@
             self.saveBody(); // before applyJs
             self.dispatchLoadEvent();
             self.applyJs();
-            self.codePanelUpdate(); // TO DO - tests js
+            self.codePanelUpdate();
             console.log('*** iframe fully loaded! ***');
         });
 
@@ -130,6 +130,7 @@
     };
 
     LiveEditor.prototype.changeTab = function () {
+        // TO DO - test js
         var $body = this.$editorIframe.contents().find('body');
         this.domOutline.stop();
         $body.empty();
@@ -251,8 +252,7 @@
             }
         });
 
-        $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            // TO DO - test js
+        $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function () {
             self.changeTab();
             self.applyJs();
             self.codePanelUpdate();
@@ -406,6 +406,7 @@
     };
 
     LiveEditor.prototype.codePanelUpdate = function () {
+        // TO DO - tests js
         var str = this.currentExperiment().scriptList.join(' ');
         this.codePanel.aceEditor.aceEditor.setValue(str, -1);
     };

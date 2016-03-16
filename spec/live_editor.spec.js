@@ -233,6 +233,24 @@ describe('LiveEditor', function() {
 
         //     expect(liveEditor.unselectElements).toHaveBeenCalled();
         // });
+
+        it('tab click should call changeTab method', function() {
+            spyOn(liveEditor, 'changeTab');
+            $('.nav-tabs a[data-toggle="tab"]:last').click();
+            expect(liveEditor.changeTab).toHaveBeenCalled();
+        });
+
+        it('tab click should call applyJs method', function() {
+            spyOn(liveEditor, 'applyJs');
+            $('.nav-tabs a[data-toggle="tab"]:last').click();
+            expect(liveEditor.applyJs).toHaveBeenCalled();
+        });
+
+        it('tab click should call codePanelUpdate method', function() {
+            spyOn(liveEditor, 'codePanelUpdate');
+            $('.nav-tabs a[data-toggle="tab"]:last').click();
+            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {
