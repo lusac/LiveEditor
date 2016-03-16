@@ -1,3 +1,6 @@
+.dropdown-menu {
+    z-index: 10 !important;
+}
 .dropdown-submenu {
     position:relative;
 }
