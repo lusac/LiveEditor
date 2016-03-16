@@ -133,6 +133,7 @@
         // TO DO - test js
         var $body = this.$editorIframe.contents().find('body');
         this.domOutline.stop();
+        this.unselectElements();
         $body.empty();
         $body.replaceWith(this.$iframeBody.clone());
         this.domOutlineInit();
