@@ -163,7 +163,6 @@
         this.domOutline.stop();
         this.unselectElements();
 
-        debugger;
         try {
             if (mode == 'edit') {
                 $body.replaceWith(this.$iframeBody.clone());
