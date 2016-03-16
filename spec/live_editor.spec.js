@@ -19,9 +19,9 @@ describe('LiveEditor', function() {
             spyOn(liveEditor, 'domOutlineInit');
             spyOn(liveEditor, 'bindEvents');
             spyOn(liveEditor, 'saveBody');
-            spyOn(liveEditor, 'dispatchLoadEvent');
-            spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'updateBody');
             spyOn(liveEditor, 'codePanelUpdate');
+            spyOn(liveEditor, 'dispatchLoadEvent');
             $iframe.load();
         });
 
@@ -38,16 +38,16 @@ describe('LiveEditor', function() {
             expect(liveEditor.saveBody).toHaveBeenCalled();
         });
 
-        it('Should call dispatchLoadEvent method', function() {
-            expect(liveEditor.dispatchLoadEvent).toHaveBeenCalled();
-        });
-
-        it('Should call applyJs method', function() {
-            expect(liveEditor.applyJs).toHaveBeenCalled();
+        it('Should call updateBody method', function() {
+            expect(liveEditor.updateBody).toHaveBeenCalled();
         });
 
         it('Should call codePanelUpdate method', function() {
             expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
+
+        it('Should call dispatchLoadEvent method', function() {
+            expect(liveEditor.dispatchLoadEvent).toHaveBeenCalled();
         });
     });
 

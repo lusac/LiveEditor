@@ -26,10 +26,10 @@
             self.bindEvents();
             self.$editorIframe.show();
             self.$spinnerContainer.hide();
-            self.saveBody(); // before applyJs
-            self.dispatchLoadEvent();
+            self.saveBody();
             self.updateBody();
             self.codePanelUpdate();
+            self.dispatchLoadEvent();
             console.log('*** iframe fully loaded! ***');
         });
 
