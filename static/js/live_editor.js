@@ -18,6 +18,7 @@
         this.buildButtons();
         this.buildModals(params);
         this.buildPanel(params);
+        this.buildToolbar();
         this.initActions();
 
         this.$editorIframe.on('load', function() {
@@ -27,7 +28,7 @@
             self.$spinnerContainer.hide();
             self.saveBody(); // before applyJs
             self.dispatchLoadEvent();
-            self.applyJs();
+            self.updateBody();
             self.codePanelUpdate();
             console.log('*** iframe fully loaded! ***');
         });
@@ -130,18 +131,45 @@
         });
     };
 
+    LiveEditor.prototype.buildToolbar = function() {
+        // TO DO - test js
+        this.$modeSelect = $('<select class="form-control">').append('<option value="edit">Edit mode</option>')
+                                                             .append('<option value="view">View mode</option>');
+        this.$toolbar = $('<div class="toolbar">').append(this.$modeSelect),
+        this.$editorIframeContainer.prepend(this.$toolbar);
+    };
+
+    LiveEditor.prototype.currentMode = function() {
+        return this.$modeSelect.val();
+    };
+
     LiveEditor.prototype.saveBody = function () {
-        this.$iframeBody = this.$editorIframe.contents().find('body').clone();
+        // TO DO - test js
+        this.$iframeBody = this.$editorIframe.contents().find('body');
+    };
+
+    LiveEditor.prototype.updateBody = function () {
+        // TO DO - test js
+        var $body = this.$editorIframe.contents().find('body'),
+            mode = this.currentMode();
+
+        if (mode == 'edit') {
+            $body.replaceWith(this.$iframeBody.clone());
+        } else if (mode == 'view') {
+            $body.replaceWith(this.$iframeBody);
+        }
+
+        this.applyJs();
     };
 
     LiveEditor.prototype.changeTab = function () {
         // TO DO - test js
-        var $body = this.$editorIframe.contents().find('body');
         this.domOutline.stop();
         this.unselectElements();
-        $body.empty();
-        $body.replaceWith(this.$iframeBody.clone());
+        this.updateBody();
         this.domOutlineInit();
+        this.codePanelUpdate();
+        console.log('Change tab!');
     };
 
     LiveEditor.prototype.initActions = function () {
@@ -260,9 +288,11 @@
 
         $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function () {
             self.changeTab();
-            self.applyJs();
-            self.codePanelUpdate();
-            console.log('tab!');
+        });
+
+        // TO DO - test js
+        this.$modeSelect.on('change', function() {
+            self.updateBody();
         });
     };
 
