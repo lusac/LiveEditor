@@ -159,7 +159,6 @@
         try {
             if (mode == 'edit') {
                 $body.replaceWith(this.$iframeBody.clone());
-                this.domOutlineInit();
             } else if (mode == 'view') {
                 $body.replaceWith(this.$iframeBody);
             }
@@ -169,6 +168,10 @@
         } 
         finally {
             this.applyJs();
+
+            if (mode == 'edit') {
+                this.domOutlineInit();
+            }
         }
     };
 
