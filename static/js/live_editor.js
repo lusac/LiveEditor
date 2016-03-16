@@ -13,7 +13,7 @@
         var self = this;
 
         this.initVars(params);
-        this.buildTabs(params);
+        this.buildTabs();
         this.buildIframe(params);
         this.buildButtons();
         this.buildModals(params);
@@ -53,14 +53,20 @@
             parent: this.$editor
         });
 
+        this.createExperiments();
+    };
+
+    LiveEditor.prototype.createExperiments = function() {
         for(var i=0; i<=this.tabsList.length-1; i++) {
             var name = this.tabs.formatName(this.tabsList[i]);
 
-            this.experiments[name] = {
-                'scriptList': this.js.length > 1 ? [this.js[i]] : [],
-                'undoList': [],
-                'goalList': []
-            };
+            if (this.experiments[name] === undefined) {
+                this.experiments[name] = {
+                    'scriptList': this.js[i] ? [this.js[i]] : [],
+                    'undoList': [],
+                    'goalList': []
+                };
+            }
         }
     };
 
@@ -135,7 +141,8 @@
         // TO DO - test js
         this.$modeSelect = $('<select class="form-control">').append('<option value="edit">Edit mode</option>')
                                                              .append('<option value="view">View mode</option>');
-        this.$toolbar = $('<div class="toolbar">').append(this.$modeSelect),
+        this.$buttonAddOption = $('<button class="add-option" type="button">+ add option</button>');
+        this.$toolbar = $('<div class="toolbar">').append(this.$modeSelect, this.$buttonAddOption);
         this.$editorIframeContainer.prepend(this.$toolbar);
     };
 
@@ -156,6 +163,7 @@
         this.domOutline.stop();
         this.unselectElements();
 
+        debugger;
         try {
             if (mode == 'edit') {
                 $body.replaceWith(this.$iframeBody.clone());
@@ -165,7 +173,7 @@
         }
         catch(err) {
             console.log('Update body error - Mode: ' + mode + ' - error: ' + err);
-        } 
+        }
         finally {
             this.applyJs();
 
@@ -192,7 +200,6 @@
             scriptList = this.currentExperiment().scriptList;
         // We use replace here to guarantee the jquery been used
         // is from iframe's window.
-
         for (var i=0, len=scriptList.length; i<=len-1; i++) {
             eval(scriptList[i].replace(/\$/g, 'iframeWindow.$'));
         }
@@ -304,6 +311,20 @@
         this.$modeSelect.on('change', function() {
             self.updateBody();
         });
+
+        // TO DO - test js
+        this.$buttonAddOption.on('click', function() {
+            self.addNewOption();
+        });
+    };
+
+    LiveEditor.prototype.addNewOption = function () {
+        // TO DO - test js
+        var name = 'Test ' + this.tabsList.length;
+        this.tabsList.push(name);
+        this.tabs.createTabs([name]);
+        this.createExperiments();
+        this.updateBody();
     };
 
     LiveEditor.prototype.unselectElements = function () {

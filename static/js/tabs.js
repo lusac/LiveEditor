@@ -15,20 +15,25 @@
 
     LiveEditorTabs.prototype.create = function () {
         this.$tabs = $('<ul class="nav nav-tabs">');
+        this.createTabs(this.tabs);
+        this.$parent.append(this.$tabs);
+    };
 
-        for(var i=0; i<=this.tabs.length-1; i++) {
+    LiveEditorTabs.prototype.createTabs = function (tabsList) {
+        this.$tabs.find('li.active').removeClass('active');
+
+        for(var i=0; i<=tabsList.length-1; i++) {
             var $li = $('<li>'),
-                name = this.formatName(this.tabs[i]);
+                name = this.formatName(tabsList[i]);
 
             if (i === 0) {
                 $li.addClass('active');
             }
 
-            $li.append('<a data-toggle="tab" data-name="' + name + '">' + this.tabs[i] + '</a>');
+            $li.append('<a data-toggle="tab" data-name="' + name + '">' + tabsList[i] + '</a>');
 
             this.$tabs.append($li);
         }
-        this.$parent.append(this.$tabs);
     };
 
     LiveEditorTabs.prototype.formatName = function (str) {
