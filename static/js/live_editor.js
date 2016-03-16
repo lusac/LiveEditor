@@ -153,13 +153,19 @@
         var $body = this.$editorIframe.contents().find('body'),
             mode = this.currentMode();
 
-        if (mode == 'edit') {
-            $body.replaceWith(this.$iframeBody.clone());
-        } else if (mode == 'view') {
-            $body.replaceWith(this.$iframeBody);
+        try {
+            if (mode == 'edit') {
+                $body.replaceWith(this.$iframeBody.clone());
+            } else if (mode == 'view') {
+                $body.replaceWith(this.$iframeBody);
+            }
         }
-
-        this.applyJs();
+        catch(err) {
+            console.log('Update body error - Mode: ' + mode + ' - error: ' + err);
+        } 
+        finally {
+            this.applyJs();
+        }
     };
 
     LiveEditor.prototype.changeTab = function () {
