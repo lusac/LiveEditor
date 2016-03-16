@@ -75,7 +75,12 @@
             'allowfullscreen': ''
         });
 
-        this.$editor.append(this.$spinnerContainer, this.$editorIframe);
+        // ----- TO DO - test js -----
+        var $editorIframeContainer = $('<div class="live-editor-iframe-container">');
+        $editorIframeContainer.append(this.$spinnerContainer, this.$editorIframe);
+        // ----- TO DO - test js -----
+
+        this.$editor.append($editorIframeContainer);
         this.$editor.addClass('live-editor');
     };
 
