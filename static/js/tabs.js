@@ -17,13 +17,14 @@
         var $tabs = $('<ul class="nav nav-tabs">');
 
         for(var i=0; i<=this.tabs.length-1; i++) {
-            var $li = $('<li>');
+            var $li = $('<li>'),
+                name = this.tabs[i].toLowerCase().replace(new RegExp(' ', 'g'), '-');
 
             if (i==0) {
                 $li.addClass('active');
             }
 
-            $li.append('<a data-toggle="tab" data-name="' + this.tabs[i].toLowerCase() + '">' + this.tabs[i] + '</a>');
+            $li.append('<a data-toggle="tab" data-name="' + name + '">' + this.tabs[i] + '</a>');
 
             $tabs.append($li);
         }

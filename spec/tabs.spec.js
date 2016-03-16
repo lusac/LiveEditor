@@ -1,6 +1,6 @@
 describe("Actions", function() {
     beforeEach(function() {
-        tabs = new LiveEditorTabs({parent: $('body'), tabs: ["Test 1", "Test 2", "Test 3"]});
+        tabs = new LiveEditorTabs({parent: $('body'), tabs: ["Test 1", "Test 2", "Other Test 3"]});
     });
 
     afterEach(function() {
@@ -15,7 +15,7 @@ describe("Actions", function() {
 
         it('Should have tabs attributes', function() {
             expect(tabs.hasOwnProperty('tabs')).toBe(true);
-            expect(tabs.tabs.toString()).toBe(["Test 1", "Test 2", "Test 3"].toString());
+            expect(tabs.tabs.toString()).toBe(["Test 1", "Test 2", "Other Test 3"].toString());
         });
     });
 
@@ -31,7 +31,7 @@ describe("Actions", function() {
             expect($nav.find('li').length).toBe(3);
             expect($nav.find('li:eq(0) a').text()).toBe('Test 1');
             expect($nav.find('li:eq(1) a').text()).toBe('Test 2');
-            expect($nav.find('li:eq(2) a').text()).toBe('Test 3');
+            expect($nav.find('li:eq(2) a').text()).toBe('Other Test 3');
         });
 
         it('Tab should have correct data toggle attribute', function() {
@@ -39,10 +39,15 @@ describe("Actions", function() {
             expect($a.data('toggle')).toBe('tab');
         });
 
-        // data-name should be 'test-1'
         it('Tab should have correct data name attribute', function() {
-            var $a = $('body>.nav-tabs>li>a');
-            expect($a.data('name')).toBe('test 1');
+            var $a = $('body>.nav-tabs li:eq(0)>a');
+            expect($a.data('name')).toBe('test-1');
+
+            var $a = $('body>.nav-tabs li:eq(1)>a');
+            expect($a.data('name')).toBe('test-2');
+
+            var $a = $('body>.nav-tabs li:eq(2)>a');
+            expect($a.data('name')).toBe('other-test-3');
         });
 
         it('First tab should be active', function() {
