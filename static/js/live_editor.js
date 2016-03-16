@@ -49,7 +49,6 @@
     LiveEditor.prototype.buildTabs = function () {
         this.currentTab = this.tabs[0].toLowerCase();
 
-        // TO DO - test js
         new LiveEditorTabs({
             tabs: this.tabs,
             parent: this.$editor

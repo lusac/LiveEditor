@@ -16,17 +16,15 @@ describe('LiveEditor', function() {
     describe('iframe onload', function() {
         beforeEach(function() {
             $iframe = $liveEditor.find('iframe');
-            spyOn(liveEditor, 'dispatchLoadEvent');
             spyOn(liveEditor, 'domOutlineInit');
             spyOn(liveEditor, 'bindEvents');
+            spyOn(liveEditor, 'saveBody');
+            spyOn(liveEditor, 'dispatchLoadEvent');
             spyOn(liveEditor, 'applyJs');
             spyOn(liveEditor, 'codePanelUpdate');
             $iframe.load();
         });
 
-        it('Should call dispatchLoadEvent method', function() {
-            expect(liveEditor.dispatchLoadEvent).toHaveBeenCalled();
-        });
 
         it('Should call domOutlineInit method', function() {
             expect(liveEditor.domOutlineInit).toHaveBeenCalled();
@@ -36,12 +34,28 @@ describe('LiveEditor', function() {
             expect(liveEditor.bindEvents).toHaveBeenCalled();
         });
 
+        it('Should call saveBody method', function() {
+            expect(liveEditor.saveBody).toHaveBeenCalled();
+        });
+
+        it('Should call dispatchLoadEvent method', function() {
+            expect(liveEditor.dispatchLoadEvent).toHaveBeenCalled();
+        });
+
         it('Should call applyJs method', function() {
             expect(liveEditor.applyJs).toHaveBeenCalled();
         });
 
         it('Should call codePanelUpdate method', function() {
             expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
+    });
+
+    describe('Build Tabs', function() {
+        it('Should build tabs', function() {
+            var $tabs = $liveEditor.find('.nav.nav-tabs');
+            expect($tabs).toExist();
+            expect($tabs.length).toBe(1);
         });
     });
 
