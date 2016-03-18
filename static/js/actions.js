@@ -45,7 +45,7 @@
 
     LiveEditorActions.prototype.currentSelectedEditHtml = function () {
         var html = this.liveEditorBase.editHtmlModal.getValue(),
-            str = '$("' + this.liveEditorBase.currentSelected + '").replaceWith("' + html + '");';
+            str = "$('" + this.liveEditorBase.currentSelected + "').replaceWith('" + html + "');";
 
         this.liveEditorBase.addToScriptList(str);
         this._replaceWithUndo();
