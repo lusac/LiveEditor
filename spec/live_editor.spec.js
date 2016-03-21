@@ -428,6 +428,24 @@ describe('LiveEditor', function() {
         });
     });
 
+    describe('currentMode method', function() {
+        it('Should return default edition mode', function() {
+            var v = liveEditor.$modeSelect.val();
+            expect(v).toBe(liveEditor.currentMode());
+            expect('edit').toBe(liveEditor.currentMode());
+        });
+
+        it('Should return new value after select change', function() {
+            liveEditor.$modeSelect.val('view');
+            var v = liveEditor.$modeSelect.val();
+            expect(v).toBe(liveEditor.currentMode());
+            expect('view').toBe(liveEditor.currentMode());
+        })
+    });
+
+    describe('updateBody method', function() { 
+    });
+
     describe('openCurrentMenu method', function() {
     });
 
