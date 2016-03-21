@@ -418,6 +418,16 @@ describe('LiveEditor', function() {
         });
     });
 
+    describe('saveBody method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
+        it('Should save jquery body', function() {
+            expect(liveEditor.$iframeBody.prop('tagName')).toBe('BODY');
+        });
+    });
+
     describe('openCurrentMenu method', function() {
     });
 
