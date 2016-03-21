@@ -65,6 +65,14 @@ describe('LiveEditor', function() {
             expect($iframe).toExist();
         });
 
+        it('Should create a container element', function() {
+            var $iframe = $liveEditor.find('iframe'),
+                $container = $iframe.parent(),
+                $spinner = $container.find('.spinner-container');
+            expect($container).toHaveClass('live-editor-iframe-container');
+            expect($spinner).toExist();
+        });
+
         it('Initial Loading Spinner', function() {
             var $s = $('.spinner-container');
 

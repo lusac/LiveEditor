@@ -82,10 +82,8 @@
             'allowfullscreen': ''
         });
 
-        // ----- TO DO - test js -----
         this.$editorIframeContainer = $('<div class="live-editor-iframe-container">');
         this.$editorIframeContainer.append(this.$spinnerContainer, this.$editorIframe);
-        // ----- TO DO - test js -----
 
         this.$editor.append(this.$editorIframeContainer);
         this.$editor.addClass('live-editor');
