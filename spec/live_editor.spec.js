@@ -443,6 +443,22 @@ describe('LiveEditor', function() {
         })
     });
 
+    describe('changeTab method', function() {
+        beforeEach(function() {
+            spyOn(liveEditor, 'updateBody');
+            spyOn(liveEditor, 'codePanelUpdate');
+            liveEditor.changeTab();
+        });
+
+        it('Should call updateBody method', function() {
+            expect(liveEditor.updateBody).toHaveBeenCalled();
+        });
+
+        it('Should call codePanelUpdate method', function() {
+            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
+    });
+
     describe('updateBody method', function() { 
     });
 

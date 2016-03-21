@@ -180,7 +180,6 @@
     };
 
     LiveEditor.prototype.changeTab = function () {
-        // TO DO - test js
         this.updateBody();
         this.codePanelUpdate();
         console.log('Change tab!');
