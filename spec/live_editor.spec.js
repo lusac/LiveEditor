@@ -469,8 +469,12 @@ describe('LiveEditor', function() {
     });
 
     describe('getIframeBody method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
+
         it('Should return iframe body', function() {
-            $body = liveEditor.getIframeBody();
+            var $body = liveEditor.getIframeBody();
             expect($body).toBe(liveEditor.$editorIframe.contents().find('body'));
         });
     });
