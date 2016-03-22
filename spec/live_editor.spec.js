@@ -22,6 +22,7 @@ describe('LiveEditor', function() {
             spyOn(liveEditor, 'updateBody');
             spyOn(liveEditor, 'codePanelUpdate');
             spyOn(liveEditor, 'dispatchLoadEvent');
+            spyOn(liveEditor, 'applyJs');
             $iframe.load();
         });
 
@@ -212,7 +213,9 @@ describe('LiveEditor', function() {
         });
 
         it('Undo button click should remove last item from scriptList var', function() {
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            spyOn(liveEditor, 'applyJs');
+
+            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
             liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
             liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
 
@@ -223,12 +226,13 @@ describe('LiveEditor', function() {
             expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
         });
 
-        it('Undo button click should run last undoList script', function() {
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("body div").append("<small>Hello World</small>");');
+        it('Undo button call updateBody method', function() {
+            spyOn(liveEditor, 'updateBody');
 
+            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
             $('.btn-undo').click();
 
-            expect(liveEditor.$editorIframe.contents().find("small").length).toBe(1);
+            expect(liveEditor.updateBody).toHaveBeenCalled();
         });
 
         // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
@@ -319,11 +323,16 @@ describe('LiveEditor', function() {
     });
 
     describe('addToUndoList method', function() {
-        it('Should append formated string inside undoList var', function() {
-            liveEditor.addToUndoList('\nMy test\t with\t tabs\n and\t\n paragraphs');
+        beforeEach(function() {
+            $iframe.load();
+            waits(100);
+        });
 
+        it('Should append a clone from body', function() {
+            liveEditor.addToUndoList();
+            var $item = liveEditor.experiments.test_1.undoList[0];
             expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
-            expect(liveEditor.experiments.test_1.undoList[0]).toBe('My test with tabs and paragraphs');
+            expect($item.prop('tagName')).toBe('BODY');
         });
     });
 
@@ -456,6 +465,13 @@ describe('LiveEditor', function() {
 
         it('Should call codePanelUpdate method', function() {
             expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
+    });
+
+    describe('getIframeBody method', function() {
+        it('Should return iframe body', function() {
+            $body = liveEditor.getIframeBody();
+            expect($body).toBe(liveEditor.$editorIframe.contents().find('body'));
         });
     });
 

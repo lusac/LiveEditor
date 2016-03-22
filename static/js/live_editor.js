@@ -152,9 +152,14 @@
         this.$iframeBody = this.$editorIframe.contents().find('body');
     };
 
-    LiveEditor.prototype.updateBody = function () {
+    LiveEditor.prototype.getIframeBody = function () {
+        return this.$editorIframe.contents().find('body');
+    }
+
+    LiveEditor.prototype.updateBody = function ($iframeBody) {
         // TO DO - test js
-        var $body = this.$editorIframe.contents().find('body'),
+        var $body = this.getIframeBody(),
+            $iframeBody = $iframeBody || this.$iframeBody,
             mode = this.currentMode();
 
         this.domOutline.stop();
@@ -162,9 +167,9 @@
 
         try {
             if (mode == 'edit') {
-                $body.replaceWith(this.$iframeBody.clone());
+                $body.replaceWith($iframeBody.clone());
             } else if (mode == 'view') {
-                $body.replaceWith(this.$iframeBody);
+                $body.replaceWith($iframeBody);
             }
         }
         catch(err) {
@@ -296,10 +301,10 @@
 
         this.$undoButton.off().on('click', function () {
             if (self.currentExperiment().undoList.length) {
-                var script = self.currentExperiment().undoList.pop();
+                var object = self.currentExperiment().undoList.pop();
                 self.currentExperiment().scriptList.pop();
+                self.updateBody(object);
                 self.codePanelUpdate();
-                eval(script);
             }
         });
 
@@ -462,9 +467,8 @@
         this.codePanelUpdate();
     };
 
-    LiveEditor.prototype.addToUndoList = function (str) {
-        var str = str.replace(new RegExp('\t|\n', 'g'), '');
-        this.currentExperiment().undoList.push(str);
+    LiveEditor.prototype.addToUndoList = function () {
+        this.currentExperiment().undoList.push(this.$iframeBody.clone());
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {

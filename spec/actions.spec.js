@@ -40,17 +40,16 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith('$("html>body>div>p").remove();');
         });
 
-        it('Should add script in undoList', function() {
+        it('Should call addToUndoList method', function() {
             spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'addToUndoList');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
             liveEditor.actions.currentSelectedRemove();
-            var expt = ["self.$editorIframe.contents().find('html>body>div').replaceWith('<div><p>Hello World!</p></div>');"];
 
-            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
+            expect(liveEditor.addToUndoList).toHaveBeenCalled();
         });
     });
 
@@ -87,18 +86,17 @@ describe("Actions", function() {
         // it('Should call applyJs method with params', function() {
         // });
 
-        it('Should add script in undoList', function() {
+        it('Should call addToUndoList method', function() {
             spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'addToUndoList');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
             liveEditor.$editHtmlModal.find('.modal-body textarea').val('my custom html');
             liveEditor.actions.currentSelectedEditHtml();
-            var expt = ['self.$editorIframe.contents().find(\'html>body>div\').replaceWith(\'<div><p>Hello World!</p></div>\');'];
 
-            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
+            expect(liveEditor.addToUndoList).toHaveBeenCalled();
         });
     });
 
@@ -133,18 +131,17 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
         });
 
-        it('Should add script in undoList', function() {
+        it('Should call addToUndoList method', function() {
             spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'addToUndoList');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
             liveEditor.$editTextModal.find('.modal-body textarea').val('my custom html');
             liveEditor.actions.currentSelectedEditText();
-            var expt = ['self.$editorIframe.contents().find("html>body>div>p").text("Hello World!");'];
 
-            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
+            expect(liveEditor.addToUndoList).toHaveBeenCalled();
         });
     });
 
@@ -179,8 +176,9 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
         });
 
-        it('Should add script in undoList - with class', function() {
+        it('Should call addToUndoList method', function() {
             spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'addToUndoList');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
@@ -188,24 +186,8 @@ describe("Actions", function() {
             liveEditor.$currentSelected.addClass('my-class');
             liveEditor.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
             liveEditor.actions.currentSelectedEditClasses();
-            var expt = ['self.$editorIframe.contents().find("html>body>div>p").attr("class", "my-class");'];
 
-            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
-        });
-
-        it('Should add script in undoList - with no class', function() {
-            spyOn(liveEditor, 'applyJs');
-
-            var $p = liveEditor.$editorIframe.contents().find('p');
-            liveEditor.setCurrentElement($p);
-
-            liveEditor.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
-            liveEditor.actions.currentSelectedEditClasses();
-            var expt = ['self.$editorIframe.contents().find("html>body>div>p").attr("class", "");'];
-
-            expect(liveEditor.experiments.test_1.undoList.length).toEqual(1);
-            expect(liveEditor.experiments.test_1.undoList).toEqual(expt);
+            expect(liveEditor.addToUndoList).toHaveBeenCalled();
         });
     });
     
@@ -228,25 +210,6 @@ describe("Actions", function() {
         it('Should return string', function() {
             var str = liveEditor.actions._changeText('.test-class', 'My new text');
             expect(str).toBe('(".test-class").text("My new text");');
-        });
-    });
-
-    describe('_replaceWithUndo method', function() {
-        beforeEach(function() {
-            waits(100);
-        });
-
-        it('Should call addToUndoList method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
-            liveEditor.setCurrentElement($p);
-            
-            var oldHtml = liveEditor.$currentSelected.parent()[0].outerHTML,
-                expectString = "self.$editorIframe.contents().find('html>body>div').replaceWith('" + oldHtml.replace(new RegExp("'", 'g'), '&#39;') + "');";
-
-            spyOn(liveEditor, 'addToUndoList');
-
-            liveEditor.actions._replaceWithUndo();
-            expect(liveEditor.addToUndoList).toHaveBeenCalledWith(expectString);
         });
     });
 
