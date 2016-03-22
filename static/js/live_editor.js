@@ -176,9 +176,8 @@
             console.log('Update body error - Mode: ' + mode + ' - error: ' + err);
         }
         finally {
-            this.applyJs();
-
             if (mode == 'edit') {
+                this.applyJs();
                 this.domOutlineInit();
             }
         }
