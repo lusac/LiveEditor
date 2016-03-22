@@ -143,7 +143,7 @@
         }
 
         if (next_location < 0) {
-            return 0
+            return 0;
         }
 
         return next_location;
@@ -158,12 +158,12 @@
         var next_location = topData.box_offset_top - topData.scroll_top;
 
         if (next_location + menu_height >= topData.iframe_height) {
-            var diff = (next_location + menu_height) - topData.iframe_height
+            var diff = (next_location + menu_height) - topData.iframe_height;
             next_location -= diff - this.TOP_GAP;
         }
 
         if (next_location < 0) {
-            return 0
+            return 0;
         }
 
         return next_location;

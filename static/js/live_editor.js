@@ -154,7 +154,7 @@
 
     LiveEditor.prototype.getIframeBody = function () {
         return this.$editorIframe.contents().find('body');
-    }
+    };
 
     LiveEditor.prototype.updateBody = function ($iframeBody) {
         // TO DO - test js
