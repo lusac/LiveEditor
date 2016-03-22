@@ -33,9 +33,9 @@
     LiveEditorActions.prototype.currentSelectedRemove = function () {
         var str = '$("' + this.liveEditorBase.currentSelected + '").remove();';
 
-        this.liveEditorBase.addToScriptList(str);
         this._replaceWithUndo();
-        this.getIframeCurrentElement().remove();
+        this.liveEditorBase.addToScriptList(str);
+        this.liveEditorBase.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
@@ -47,9 +47,9 @@
         var html = this.liveEditorBase.editHtmlModal.getValue(),
             str = "$('" + this.liveEditorBase.currentSelected + "').replaceWith('" + html + "');";
 
-        this.liveEditorBase.addToScriptList(str);
         this._replaceWithUndo();
-        this.getIframeCurrentElement().replaceWith(html);
+        this.liveEditorBase.addToScriptList(str);
+        this.liveEditorBase.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedEditText = function () {
@@ -60,7 +60,7 @@
 
         this.liveEditorBase.addToScriptList(strScript);
         this.liveEditorBase.addToUndoList(strUndo);
-        this.getIframeCurrentElement().text(scriptText);
+        this.liveEditorBase.applyJs(strScript);
     };
 
     LiveEditorActions.prototype.currentSelectedEditClasses = function () {
@@ -71,7 +71,7 @@
 
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.addToUndoList(strUndo);
-        this.getIframeCurrentElement().attr('class', scriptClasses);
+        this.liveEditorBase.applyJs(str);
     };
 
     window.LiveEditorActions = LiveEditorActions;

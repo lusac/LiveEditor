@@ -189,14 +189,19 @@
         this.actions = new LiveEditorActions(this);
     };
 
-    LiveEditor.prototype.applyJs = function () {
+    LiveEditor.prototype.applyJs = function (str) {
         // TO DO - test
         var iframeWindow = this.$editorIframe[0].contentWindow,
             scriptList = this.currentExperiment().scriptList;
         // We use replace here to guarantee the jquery been used
         // is from iframe's window.
-        for (var i=0, len=scriptList.length; i<=len-1; i++) {
-            eval(scriptList[i].replace(/\$/g, 'iframeWindow.$'));
+
+        if (str !== undefined) {
+            eval(str.replace(/\$/g, 'iframeWindow.$'));
+        } else {
+            for (var i=0, len=scriptList.length; i<=len-1; i++) {
+                eval(scriptList[i].replace(/\$/g, 'iframeWindow.$'));
+            }
         }
     };
 

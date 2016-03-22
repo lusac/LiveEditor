@@ -18,6 +18,8 @@ describe("Actions", function() {
         });
 
         it('Should add script in scriptList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -27,7 +29,20 @@ describe("Actions", function() {
             expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").remove();']);
         });
 
+        it('Should call applyJs method with params', function() {
+            spyOn(liveEditor, 'applyJs');
+
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            liveEditor.setCurrentElement($p);
+
+            liveEditor.actions.currentSelectedRemove();
+
+            expect(liveEditor.applyJs).toHaveBeenCalledWith('$("html>body>div>p").remove();');
+        });
+
         it('Should add script in undoList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -69,7 +84,12 @@ describe("Actions", function() {
         //     expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").replaceWith("<small>my custom html</small>");']);
         // });
 
+        // it('Should call applyJs method with params', function() {
+        // });
+
         it('Should add script in undoList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -88,6 +108,8 @@ describe("Actions", function() {
         });
 
         it('Should add script in scriptList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -98,7 +120,22 @@ describe("Actions", function() {
             expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").text("my custom html");']);
         });
 
+        it('Should call applyJs method with params', function() {
+            spyOn(liveEditor, 'applyJs');
+
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            liveEditor.setCurrentElement($p);
+
+            liveEditor.$editTextModal.find('.modal-body textarea').val('my custom html');
+            liveEditor.actions.currentSelectedEditText();
+
+            var str = '$' + liveEditor.actions._changeText('html>body>div>p', 'my custom html');
+            expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
+        });
+
         it('Should add script in undoList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -117,6 +154,8 @@ describe("Actions", function() {
         });
 
         it('Should add script in scriptList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -127,7 +166,22 @@ describe("Actions", function() {
             expect(liveEditor.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("class", "my-class-1 my-class-2");']);
         });
 
+        it('Should call applyJs method with params', function() {
+            spyOn(liveEditor, 'applyJs');
+
+            var $p = liveEditor.$editorIframe.contents().find('p');
+            liveEditor.setCurrentElement($p);
+
+            liveEditor.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
+            liveEditor.actions.currentSelectedEditClasses();
+
+            var str = '$' + liveEditor.actions._changeClass('html>body>div>p', 'my-class-1 my-class-2');
+            expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
+        });
+
         it('Should add script in undoList - with class', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
@@ -141,6 +195,8 @@ describe("Actions", function() {
         });
 
         it('Should add script in undoList - with no class', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
