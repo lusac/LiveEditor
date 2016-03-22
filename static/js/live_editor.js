@@ -467,7 +467,7 @@
         this.codePanelUpdate();
     };
 
-    LiveEditor.prototype.addToUndoList = function () {
+    LiveEditor.prototype.undoListUpdate = function () {
         this.currentExperiment().undoList.push(this.$iframeBody.clone());
     };
 

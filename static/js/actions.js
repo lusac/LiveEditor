@@ -26,7 +26,7 @@
     LiveEditorActions.prototype.currentSelectedRemove = function () {
         var str = '$("' + this.liveEditorBase.currentSelected + '").remove();';
 
-        this.liveEditorBase.addToUndoList();
+        this.liveEditorBase.undoListUpdate();
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.applyJs(str);
     };
@@ -41,7 +41,7 @@
         var html = this.liveEditorBase.editHtmlModal.getValue(),
             str = "$('" + this.liveEditorBase.currentSelected + "').replaceWith('" + html + "');";
 
-        this.liveEditorBase.addToUndoList();
+        this.liveEditorBase.undoListUpdate();
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.applyJs(str);
     };
@@ -50,7 +50,7 @@
         var scriptText = this.liveEditorBase.editTextModal.getValue(),
             strScript = '$' + this._changeText(this.liveEditorBase.currentSelected, scriptText);
 
-        this.liveEditorBase.addToUndoList();
+        this.liveEditorBase.undoListUpdate();
         this.liveEditorBase.addToScriptList(strScript);
         this.liveEditorBase.applyJs(strScript);
     };
@@ -59,7 +59,7 @@
         var scriptClasses = this.liveEditorBase.$editClassesModal.find('.modal-body input').val(),
             str = '$' + this._changeClass(this.liveEditorBase.currentSelected, scriptClasses);
 
-        this.liveEditorBase.addToUndoList();
+        this.liveEditorBase.undoListUpdate();
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.applyJs(str);
     };

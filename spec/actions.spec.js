@@ -40,16 +40,16 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith('$("html>body>div>p").remove();');
         });
 
-        it('Should call addToUndoList method', function() {
+        it('Should call undoListUpdate method', function() {
             spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'addToUndoList');
+            spyOn(liveEditor, 'undoListUpdate');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
             liveEditor.actions.currentSelectedRemove();
 
-            expect(liveEditor.addToUndoList).toHaveBeenCalled();
+            expect(liveEditor.undoListUpdate).toHaveBeenCalled();
         });
     });
 
@@ -86,9 +86,9 @@ describe("Actions", function() {
         // it('Should call applyJs method with params', function() {
         // });
 
-        it('Should call addToUndoList method', function() {
+        it('Should call undoListUpdate method', function() {
             spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'addToUndoList');
+            spyOn(liveEditor, 'undoListUpdate');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
@@ -96,7 +96,7 @@ describe("Actions", function() {
             liveEditor.$editHtmlModal.find('.modal-body textarea').val('my custom html');
             liveEditor.actions.currentSelectedEditHtml();
 
-            expect(liveEditor.addToUndoList).toHaveBeenCalled();
+            expect(liveEditor.undoListUpdate).toHaveBeenCalled();
         });
     });
 
@@ -131,9 +131,9 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
         });
 
-        it('Should call addToUndoList method', function() {
+        it('Should call undoListUpdate method', function() {
             spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'addToUndoList');
+            spyOn(liveEditor, 'undoListUpdate');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
@@ -141,7 +141,7 @@ describe("Actions", function() {
             liveEditor.$editTextModal.find('.modal-body textarea').val('my custom html');
             liveEditor.actions.currentSelectedEditText();
 
-            expect(liveEditor.addToUndoList).toHaveBeenCalled();
+            expect(liveEditor.undoListUpdate).toHaveBeenCalled();
         });
     });
 
@@ -176,9 +176,9 @@ describe("Actions", function() {
             expect(liveEditor.applyJs).toHaveBeenCalledWith(str);
         });
 
-        it('Should call addToUndoList method', function() {
+        it('Should call undoListUpdate method', function() {
             spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'addToUndoList');
+            spyOn(liveEditor, 'undoListUpdate');
 
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
@@ -187,7 +187,7 @@ describe("Actions", function() {
             liveEditor.$editClassesModal.find('.modal-body input').val('my-class-1 my-class-2');
             liveEditor.actions.currentSelectedEditClasses();
 
-            expect(liveEditor.addToUndoList).toHaveBeenCalled();
+            expect(liveEditor.undoListUpdate).toHaveBeenCalled();
         });
     });
     

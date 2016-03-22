@@ -322,14 +322,14 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('addToUndoList method', function() {
+    describe('undoListUpdate method', function() {
         beforeEach(function() {
             $iframe.load();
             waits(100);
         });
 
         it('Should append a clone from body', function() {
-            liveEditor.addToUndoList();
+            liveEditor.undoListUpdate();
             var $item = liveEditor.experiments.test_1.undoList[0];
             expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
             expect($item.prop('tagName')).toBe('BODY');
