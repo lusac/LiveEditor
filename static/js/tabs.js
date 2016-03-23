@@ -68,10 +68,6 @@
                 value: 'Delete option'
             },
             {
-                attrs: { 'data-operation': 'pause-option' },
-                value: 'Pause option'
-            },
-            {
                 attrs: {
                     'data-operation': 'rename-option',
                     'data-toggle': 'modal',
