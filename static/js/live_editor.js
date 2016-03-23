@@ -324,6 +324,7 @@
         this.tabs.createTabs([name]);
         this.createExperiments();
         this.updateBody();
+        this.$toolbar.trigger('add-new-option');
     };
 
     LiveEditor.prototype.unselectElements = function () {
