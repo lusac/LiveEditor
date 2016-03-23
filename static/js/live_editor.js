@@ -156,7 +156,6 @@
     };
 
     LiveEditor.prototype.updateBody = function ($iframeBody) {
-        // TO DO - test js
         var $body = this.getIframeBody(),
             $iframeBody = $iframeBody || this.$iframeBody,
             mode = this.currentMode();

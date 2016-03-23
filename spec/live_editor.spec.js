@@ -541,6 +541,112 @@ describe('LiveEditor', function() {
     });
 
     describe('updateBody method', function() { 
+        beforeEach(function() {
+            $iframe = $liveEditor.find('iframe').load();
+            spyOn(liveEditor.domOutline, 'stop');
+            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'domOutlineInit');
+        });
+
+        it('Should call domoutline stop method', function() {
+            liveEditor.updateBody();
+            expect(liveEditor.domOutline.stop).toHaveBeenCalled();
+        });
+
+        it('Should call unselectElements method', function() {
+            liveEditor.updateBody();
+            expect(liveEditor.unselectElements).toHaveBeenCalled();
+        });
+
+        it('When in view mode, should not call applyJs method', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('view');
+            liveEditor.updateBody();
+            expect(liveEditor.applyJs).not.toHaveBeenCalled();
+        });
+
+        it('When in view mode, should not call domOutlineInit method', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('view');
+            liveEditor.updateBody();
+            expect(liveEditor.domOutlineInit).not.toHaveBeenCalled();
+        });
+
+        it('When in edit mode, should call applyJs method', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('edit');
+            liveEditor.updateBody();
+            expect(liveEditor.applyJs).toHaveBeenCalled();
+        });
+
+        it('When in edit mode, should call domOutlineInit method', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('edit');
+            liveEditor.updateBody();
+            expect(liveEditor.domOutlineInit).toHaveBeenCalled();
+        });
+    });
+
+    describe('updateBody method with waits', function() {
+        beforeEach(function() {
+            $iframe = $liveEditor.find('iframe').load();
+            spyOn(liveEditor.domOutline, 'stop');
+            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditor, 'domOutlineInit');
+            waits(100);
+        });
+
+        it('When in edit mode should clone body element', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('edit');
+
+            var $body = liveEditor.$editorIframe.contents().find('body');
+
+            liveEditor.updateBody();
+
+            var $newBody = liveEditor.$editorIframe.contents().find('body');
+
+            expect($newBody).toExist();
+            expect($newBody).not.toBe($body);
+        });
+
+        it('When in view mode should use original body element', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('view');
+
+            var $body = liveEditor.$editorIframe.contents().find('body');
+
+            liveEditor.updateBody();
+
+            var $newBody = liveEditor.$editorIframe.contents().find('body');
+
+            expect($newBody).toBe(liveEditor.$iframeBody);
+            expect($body).not.toBe($newBody);
+        });
+
+        it('has $iframeBody parameter with edit mode (clone body param)', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('edit');
+            var $fake = $('<div class="fake-body">');
+
+            liveEditor.updateBody($fake);
+
+            var $fakeBody = liveEditor.$editorIframe.contents().find('div.fake-body'),
+                $body = liveEditor.$editorIframe.contents().find('body');
+
+            expect($body).not.toExist();
+            expect($fakeBody).toExist();
+            expect($fakeBody).not.toBe($fake);
+        });
+
+        it('has $iframeBody parameter with view mode (dont clone body param)', function() {
+            spyOn(liveEditor, 'currentMode').andReturn('view');
+            var $fake = $('<div class="fake-body">');
+
+            liveEditor.updateBody($fake);
+
+            var $fakeBody = liveEditor.$editorIframe.contents().find('div.fake-body'),
+                $body = liveEditor.$editorIframe.contents().find('body');
+
+            expect($body).not.toExist();
+            expect($fakeBody).toExist();
+            expect($fakeBody).toBe($fake);
+        });
     });
 
     describe('openCurrentMenu method', function() {
