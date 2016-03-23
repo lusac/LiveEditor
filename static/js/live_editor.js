@@ -13,8 +13,8 @@
         var self = this;
 
         this.initVars(params);
-        this.buildTabs();
         this.buildIframe(params);
+        this.buildTabs();
         this.buildModals(params);
         this.buildPanel(params);
         this.buildToolbar();
@@ -49,7 +49,7 @@
     LiveEditor.prototype.buildTabs = function () {
         this.tabs = new LiveEditorTabs({
             tabs: this.tabsList,
-            parent: this.$editor
+            parent: this.$header
         });
 
         this.createExperiments();
@@ -81,10 +81,11 @@
             'allowfullscreen': ''
         });
 
+        this.$header = $('<header class="live-editor-header">');
         this.$editorIframeContainer = $('<div class="live-editor-iframe-container">');
         this.$editorIframeContainer.append(this.$spinnerContainer, this.$editorIframe);
 
-        this.$editor.append(this.$editorIframeContainer);
+        this.$editor.append(this.$header, this.$editorIframeContainer);
         this.$editor.addClass('live-editor');
     };
 
@@ -140,7 +141,7 @@
         this.$toolbar.append($('<li>').append(this.$modeSelect));
         this.$toolbar.append($('<li>').append(this.$undoButton));
 
-        this.$editorIframeContainer.before(this.$toolbar);
+        this.$header.append(this.$toolbar);
     };
 
     LiveEditor.prototype.currentMode = function() {

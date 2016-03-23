@@ -70,11 +70,22 @@ describe('LiveEditor', function() {
             expect($iframe).toExist();
         });
 
+        it('Should create a header element', function() {
+            var $header = $('header.live-editor-header');
+            expect($header).toExist();
+        });
+
         it('Should create a container element', function() {
             var $container = $iframe.parent(),
                 $spinner = $container.find('.spinner-container');
             expect($container).toHaveClass('live-editor-iframe-container');
             expect($spinner).toExist();
+        });
+
+        it('Header and container elements should be siblings', function() {
+            var $header = $('header.live-editor-header'),
+                $container = $('.live-editor-iframe-container');
+            expect($header.siblings()).toBe($container);
         });
 
         it('Initial Loading Spinner', function() {
