@@ -5,6 +5,7 @@ describe("Tabs", function() {
 
     afterEach(function() {
         $('.nav-tabs').remove();
+        $('#rename-modal').remove();
     });
 
     describe('init method', function() {
@@ -27,11 +28,11 @@ describe("Tabs", function() {
 
         it('Tab should have correct structure', function() {
             var $nav = $('body>.nav-tabs');
-            expect($nav.find('li')).toExist();
-            expect($nav.find('li').length).toBe(3);
-            expect($nav.find('li:eq(0) a').text()).toBe('Test 1');
-            expect($nav.find('li:eq(1) a').text()).toBe('Test 2');
-            expect($nav.find('li:eq(2) a').text()).toBe('Other Test 3');
+            expect($nav.find('>li')).toExist();
+            expect($nav.find('>li').length).toBe(3);
+            expect($nav.find('>li:eq(0)>a').text()).toBe('Test 1');
+            expect($nav.find('>li:eq(1)>a').text()).toBe('Test 2');
+            expect($nav.find('>li:eq(2)>a').text()).toBe('Other Test 3');
         });
 
         it('Tab should have correct data toggle attribute', function() {
@@ -40,13 +41,13 @@ describe("Tabs", function() {
         });
 
         it('Tab should have correct data name attribute', function() {
-            var $a = $('body>.nav-tabs li:eq(0)>a');
+            var $a = $('body>.nav-tabs>li:eq(0)>a');
             expect($a.data('name')).toBe('test_1');
 
-            var $a = $('body>.nav-tabs li:eq(1)>a');
+            var $a = $('body>.nav-tabs>li:eq(1)>a');
             expect($a.data('name')).toBe('test_2');
 
-            var $a = $('body>.nav-tabs li:eq(2)>a');
+            var $a = $('body>.nav-tabs>li:eq(2)>a');
             expect($a.data('name')).toBe('other_test_3');
         });
 
