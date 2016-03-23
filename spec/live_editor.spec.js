@@ -298,6 +298,12 @@ describe('LiveEditor', function() {
             $('.add-option').click();
             expect(liveEditor.addNewOption).toHaveBeenCalled();
         });
+
+        it('mode select button should call updateBody method', function() {
+            spyOn(liveEditor, 'updateBody');
+            $('select.form-control').trigger('change');
+            expect(liveEditor.updateBody).toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {

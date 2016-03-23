@@ -310,7 +310,6 @@
             self.changeTab();
         });
 
-        // TO DO - test js
         this.$modeSelect.on('change', function() {
             self.updateBody();
         });
