@@ -6,7 +6,7 @@ describe('LiveEditor', function() {
 
     afterEach(function() {
         $liveEditor.empty();
-        $('.btn-undo').remove();
+        $('.toolbar').remove();
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
@@ -116,6 +116,35 @@ describe('LiveEditor', function() {
         it('Should build Panel', function() {
             var $p = $('#code-panel[live-editor-test-1]');
             expect($p).toExist();
+        });
+    });
+
+    describe('Build buildToolbar', function() {
+        it('Should render a toolbar ul', function() {
+            var $t = $('ul.toolbar');
+            expect($t).toExist();
+        });
+
+        it('Should render an add option button', function() {
+            var $b = $('ul.toolbar li .add-option');
+            expect($b).toExist();
+            expect($b.text()).toBe('+ add option');
+        });
+
+        it('Should render an edit/view mode button', function() {
+            var $s = $('ul.toolbar li select.form-control'),
+                $opts = $s.find('option');
+
+            expect($s).toExist();
+            expect($opts.length).toBe(2);
+            expect($opts[0].textContent).toBe('Edit mode');
+            expect($opts[1].textContent).toBe('View mode');
+        });
+
+        it('Should render an undo button', function() {
+            var $b = $('ul.toolbar li .btn-undo');
+            expect($b).toExist();
+            expect($b.text()).toBe('Undo');
         });
     });
 
