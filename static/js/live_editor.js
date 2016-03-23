@@ -293,6 +293,14 @@
             }
         }, false);
 
+        this.tabs.$tabs.on('click', 'li', function(e) {
+            var op = $(this).data('operation');
+            if (op) {
+                self.operationInit(op);
+                console.log(op);
+            }
+        });
+
         this.$editorIframe.contents().keyup(function(e) {
             if (e.keyCode == 27) { // Esc
                 self.unselectElements();
@@ -468,6 +476,10 @@
         if (operation === 'edit-rename-modal-save') {
             // TODO - test js
             this.actions.currentOptionRename();
+        }
+
+        if (operation === 'delete-option') {
+            this.actions.currentOptionDelete();
         }
 
         this.codePanelUpdate();

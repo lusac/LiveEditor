@@ -87,8 +87,21 @@
                         .text(newName)
                         .append('<span class="caret"></span>');
 
-            delete this.liveEditorBase.experiments[currentName];
+            delete this.liveEditorBase.experiments[currentNameFormated];
         }
+    };
+
+    LiveEditorActions.prototype.currentOptionDelete = function () {
+        // TODO - test js
+        var currentName = this.liveEditorBase.tabs.current().text(),
+            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName),
+            index = this.liveEditorBase.tabsList.indexOf(currentName);
+
+        this.liveEditorBase.tabsList.splice(index, 1);
+        this.liveEditorBase.tabs.current().parent().remove();
+        this.liveEditorBase.tabs.$tabs.find('>li:first>a').click();
+
+        delete this.liveEditorBase.experiments[currentNameFormated];
     };
 
     window.LiveEditorActions = LiveEditorActions;

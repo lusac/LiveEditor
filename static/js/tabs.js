@@ -53,13 +53,6 @@
                 });
             }, 50);
         });
-
-        this.$tabs.on('click', 'li', function(e) {
-            var op = $(this).data('operation');
-            if (op) {
-                console.log(op);
-            }
-        });
     };
 
     LiveEditorTabs.prototype.createTabs = function (tabsList) {
