@@ -649,6 +649,19 @@ describe('LiveEditor', function() {
         });
     });
 
+    describe('codePanelUpdate method', function() {
+        it('Should call aceEditor setValue method', function() {
+            var aceEditor = liveEditor.codePanel.aceEditor.aceEditor;
+            spyOn(aceEditor, 'setValue');
+
+            liveEditor.experiments['test_1'].scriptList.push('my_script_1');
+            liveEditor.experiments['test_1'].scriptList.push('my_script_2');
+            liveEditor.codePanelUpdate();
+
+            expect(aceEditor.setValue).toHaveBeenCalledWith('my_script_1 my_script_2', -1);
+        });
+    });
+
     describe('openCurrentMenu method', function() {
     });
 

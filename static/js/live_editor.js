@@ -471,7 +471,6 @@
     };
 
     LiveEditor.prototype.codePanelUpdate = function () {
-        // TO DO - tests js
         var str = this.currentExperiment().scriptList.join(' ');
         this.codePanel.aceEditor.aceEditor.setValue(str, -1);
     };
