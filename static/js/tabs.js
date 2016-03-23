@@ -37,7 +37,16 @@
     };
 
     LiveEditorTabs.prototype.formatName = function (str) {
-        return str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
+        str = str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
+
+        var with_accents    = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/-,:;'";
+        var without_accents = "aaaaaeeeeeiiiiooooouuuunc_______";
+
+        for (var i = 0, l = with_accents.length ; i < l ; i++) {
+            str = str.replace(new RegExp(with_accents.charAt(i), 'g'), without_accents.charAt(i));
+        }
+
+        return str;
     };
 
     LiveEditorTabs.prototype.current = function () {

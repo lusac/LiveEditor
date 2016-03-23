@@ -62,13 +62,14 @@ describe("Tabs", function() {
     describe('formatName method', function() {
         it('Should format name', function() {
             expect(tabs.formatName('My beautiful name')).toBe('my_beautiful_name');
-        })
+            expect(tabs.formatName('Açafrão-da-terra ou cúrcuma')).toBe('acafrao_da_terra_ou_curcuma');
+        });
     });
 
     describe('current method', function() {
         it('Should return current tab', function() {
             var $li = $('li.active a');
             expect(tabs.current()).toBe($li);
-        })
+        });
     });
 });
