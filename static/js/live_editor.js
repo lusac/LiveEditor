@@ -479,7 +479,12 @@
         }
 
         if (operation === 'delete-option') {
+            // TODO - test js
             this.actions.currentOptionDelete();
+        }
+
+        if (operation === 'duplicate-option') {
+            this.actions.currentOptionDuplicate();
         }
 
         this.codePanelUpdate();

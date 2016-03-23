@@ -3,13 +3,13 @@
 (function (window, document, $) {
     // 'use strict';
 
-    var LiveEditorActions = function LiveEditorActions (liveEditorbase) {
-        this.init(liveEditorbase);
+    var LiveEditorActions = function LiveEditorActions (liveEditorBase) {
+        this.init(liveEditorBase);
     };
 
-    LiveEditorActions.prototype.init = function (liveEditorbase) {
-        // rename liveEditorbase to liveEditor
-        this.liveEditorBase = liveEditorbase;
+    LiveEditorActions.prototype.init = function (liveEditorBase) {
+        // rename liveEditorBase to liveEditor
+        this.liveEditorBase = liveEditorBase;
     };
 
     LiveEditorActions.prototype._changeText = function (selector, text) {
@@ -102,6 +102,20 @@
         this.liveEditorBase.tabs.$tabs.find('>li:first>a').click();
 
         delete this.liveEditorBase.experiments[currentNameFormated];
+    };
+
+    LiveEditorActions.prototype.currentOptionDuplicate = function () {
+        // TODO - test js
+        var oldExperiment = this.liveEditorBase.currentExperiment();
+
+        this.liveEditorBase.addNewOption();
+
+        var currentName = this.liveEditorBase.tabs.current().text(),
+            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName);
+        
+        this.liveEditorBase.experiments[currentNameFormated] = oldExperiment;
+
+        this.liveEditorBase.changeTab();
     };
 
     window.LiveEditorActions = LiveEditorActions;
