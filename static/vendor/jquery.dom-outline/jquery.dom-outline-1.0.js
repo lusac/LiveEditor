@@ -68,25 +68,14 @@
                     '.' + self.opts.namespace + ' {' +
                     '    background: rgba(0, 153, 204, 0.05);' +
                     '    position: fixed;' +
-                    '    z-index: 1000000;' +
+                    '    z-index: 9999999999;' +
                     '    pointer-events: none;' +
                     '    outline: 3px solid rgb(0, 153, 204);' +
-                    '}' +
-                    '.' + self.opts.namespace + '_label {' +
-                    '    background: #09c;' +
-                    '    boroutlineder-radius: 2px;' +
-                    '    color: #fff;' +
-                    '    font: bold 12px/12px Helvetica, sans-serif;' +
-                    '    padding: 4px 6px;' +
-                    '    position: fixed;' +
-                    '    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);' +
-                    '    z-index: 1000001;' +
-                    '    pointer-events: none;' +
                     '}' +
                     '.' + self.opts.namespace + '_box {' +
                     '    background: rgba(0, 153, 204, 0.05);' +
                     '    position: absolute;' +
-                    '    z-index: 1000000;' +
+                    '    z-index: 9999999999;' +
                     '    pointer-events: none;' +
                     '    outline: 3px solid rgb(0, 153, 204);' +
                     '    box-shadow: 6px 6px 2px rgba(0, 0, 0, 0.2);' +
