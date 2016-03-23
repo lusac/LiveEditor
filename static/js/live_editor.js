@@ -506,7 +506,7 @@
 
     LiveEditor.prototype.currentExperiment = function () {
         var currentTab = this.tabs.current();
-        return this.experiments[currentTab.data('name')];
+        return this.experiments[currentTab.attr('data-name')];
     };
 
     window.LiveEditor = LiveEditor;
