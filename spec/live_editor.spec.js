@@ -61,32 +61,31 @@ describe('LiveEditor', function() {
     });
 
     describe('Build Iframe', function() {
+        beforeEach(function() {
+            $s = $('.spinner-container');
+            $iframe = $liveEditor.find('iframe');
+        });
+
         it('Should build iframe', function() {
-            var $iframe = $liveEditor.find('iframe');
             expect($iframe).toExist();
         });
 
         it('Should create a container element', function() {
-            var $iframe = $liveEditor.find('iframe'),
-                $container = $iframe.parent(),
+            var $container = $iframe.parent(),
                 $spinner = $container.find('.spinner-container');
             expect($container).toHaveClass('live-editor-iframe-container');
             expect($spinner).toExist();
         });
 
         it('Initial Loading Spinner', function() {
-            var $s = $('.spinner-container');
-
             expect($s.text()).toBe(' Loading...');
             expect($s.css('display')).toBe('inline');
         });
 
         it ('Loading Spinner disappears when iframe is fully loaded', function() {
-            var $s = $('.spinner-container');
-
-            liveEditor.$editorIframe.on('load', function() {
-                expect($s.css('display')).toBe('none');
-            });
+            $iframe = $liveEditor.find('iframe');
+            $iframe.load();
+            expect($s.css('display')).toBe('none');
         });
     });
 
