@@ -270,11 +270,13 @@
             self.setCurrentElement(self.domOutline.element);
             self.openCurrentMenu();
             self.domOutline.pause();
-            self.$editorIframe.contents().find("html *").on("click", function(e) {
+
+            self.$editorIframe.contents().find('html *').on('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 self.unselectElements();
             });
+
             console.log('dom clicked!');
         }, false);
 
@@ -283,10 +285,6 @@
                 self.operationInit(e.detail.operation);
             }
         }, false);
-
-        this.$editorIframe.contents().find('html').on('click', function(e) {
-            self.unselectElements();
-        });
 
         this.$editorIframe.contents().keyup(function(e) {
             if (e.keyCode == 27) { // Esc
