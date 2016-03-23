@@ -1,13 +1,14 @@
 /* global $ */
 
 (function (window, document, $) {
-    'use strict';
+    // 'use strict';
 
     var LiveEditorActions = function LiveEditorActions (liveEditorbase) {
         this.init(liveEditorbase);
     };
 
     LiveEditorActions.prototype.init = function (liveEditorbase) {
+        // rename liveEditorbase to liveEditor
         this.liveEditorBase = liveEditorbase;
     };
 
@@ -62,6 +63,32 @@
         this.liveEditorBase.undoListUpdate();
         this.liveEditorBase.addToScriptList(str);
         this.liveEditorBase.applyJs(str);
+    };
+
+    LiveEditorActions.prototype.currentOptionRename = function () {
+        // TODO - test js
+        var newName = $('#rename-modal').find('.modal-body input').val();
+
+        if (newName.length < 1) return 0;
+
+        var newNameFormated = this.liveEditorBase.tabs.formatName(newName),
+            currentName = this.liveEditorBase.tabs.current().text(),
+            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName),
+            currentExperiment = this.liveEditorBase.experiments[currentNameFormated];
+
+        if (this.liveEditorBase.experiments[newName] == undefined) {
+            this.liveEditorBase.experiments[newNameFormated] = currentExperiment;
+
+            var index = this.liveEditorBase.tabsList.indexOf(currentName);
+            this.liveEditorBase.tabsList[index] = newName;
+
+            var $currentTab = this.liveEditorBase.tabs.current();
+            $currentTab.attr('data-name', newNameFormated)
+                        .text(newName)
+                        .append('<span class="caret"></span>');
+
+            delete this.liveEditorBase.experiments[currentName];
+        }
     };
 
     window.LiveEditorActions = LiveEditorActions;

@@ -246,9 +246,15 @@
             $(this).find('.modal-body input').val(classes);
         });
 
+        // Rename Modal
+        $('#rename-modal').on('show.bs.modal', function () {
+            $(this).find('.modal-body input').val('');
+        });
+
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
+        this.bindModalSave($('#rename-modal'), 'rename-modal');
     };
 
     LiveEditor.prototype.bindModalSave = function ($modal, label) {
@@ -281,6 +287,7 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
+            // Verify if this logic is already necessary
             if (self.$editor.attr('id') == e.detail.liveEditor) {
                 self.operationInit(e.detail.operation);
             }
@@ -456,6 +463,11 @@
 
         if (operation === 'edit-classes-save') {
             this.actions.currentSelectedEditClasses();
+        }
+
+        if (operation === 'edit-rename-modal-save') {
+            // TODO - test js
+            this.actions.currentOptionRename();
         }
 
         this.codePanelUpdate();
