@@ -292,6 +292,12 @@ describe('LiveEditor', function() {
             $('.nav-tabs a[data-toggle="tab"]:last').click();
             expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
         });
+
+        it('add option button should call addNewOption method', function() {
+            spyOn(liveEditor, 'addNewOption');
+            $('.add-option').click();
+            expect(liveEditor.addNewOption).toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {
@@ -495,6 +501,37 @@ describe('LiveEditor', function() {
         it('Should return iframe body', function() {
             var $body = liveEditor.getIframeBody();
             expect($body).toBe(liveEditor.$editorIframe.contents().find('body'));
+        });
+    });
+
+    describe('addNewOption method', function() {
+        beforeEach(function() {
+            spyOn(liveEditor.tabs, 'createTabs');
+            spyOn(liveEditor, 'updateBody');
+            spyOn(liveEditor, 'createExperiments');
+            liveEditor.addNewOption();
+        });
+
+        it('Should append tab name inside tabsList', function() {
+            expect(liveEditor.tabsList.length).toBe(3);
+            expect(liveEditor.tabsList[2]).toBe('Test 2');
+
+            liveEditor.addNewOption();
+
+            expect(liveEditor.tabsList.length).toBe(4);
+            expect(liveEditor.tabsList[3]).toBe('Test 3');
+        });
+
+        it('Should call createTabs method', function() {
+            expect(liveEditor.tabs.createTabs).toHaveBeenCalledWith(['Test 2']);
+        });
+
+        it('Should call createExperiments method', function() {
+            expect(liveEditor.createExperiments).toHaveBeenCalled();
+        });
+
+        it('Should call updateBody method', function() {
+            expect(liveEditor.updateBody).toHaveBeenCalled();
         });
     });
 

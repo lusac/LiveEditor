@@ -315,14 +315,12 @@
             self.updateBody();
         });
 
-        // TO DO - test js
         this.$buttonAddOption.on('click', function() {
             self.addNewOption();
         });
     };
 
     LiveEditor.prototype.addNewOption = function () {
-        // TO DO - test js
         var name = 'Test ' + this.tabsList.length;
         this.tabsList.push(name);
         this.tabs.createTabs([name]);
