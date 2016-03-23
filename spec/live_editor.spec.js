@@ -303,6 +303,12 @@ describe('LiveEditor', function() {
             $('select.form-control').trigger('change');
             expect(liveEditor.updateBody).toHaveBeenCalled();
         });
+
+        it('open code panel should call codePanelUpdate method', function() {
+            spyOn(liveEditor, 'codePanelUpdate');
+            $('#code-panel').trigger('show.bs.collapse');
+            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {

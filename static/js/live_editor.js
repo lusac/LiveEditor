@@ -309,6 +309,10 @@
             self.changeTab();
         });
 
+        $('#code-panel').on('show.bs.collapse', function () {
+            self.codePanelUpdate();
+        });
+
         this.$modeSelect.on('change', function() {
             self.updateBody();
         });
