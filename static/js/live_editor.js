@@ -15,7 +15,6 @@
         this.initVars(params);
         this.buildTabs();
         this.buildIframe(params);
-        this.buildButtons();
         this.buildModals(params);
         this.buildPanel(params);
         this.buildToolbar();
@@ -89,11 +88,6 @@
         this.$editor.addClass('live-editor');
     };
 
-    LiveEditor.prototype.buildButtons = function () {
-        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
-        this.$editor.parent().append(this.$undoButton);
-    };
-
     LiveEditor.prototype.buildModals = function (params) {
         this.editHtmlModal = new LiveEditorModal({
             editor: this.id,
@@ -140,8 +134,14 @@
         this.$modeSelect = $('<select class="form-control">').append('<option value="edit">Edit mode</option>')
                                                              .append('<option value="view">View mode</option>');
         this.$buttonAddOption = $('<button class="add-option" type="button">+ add option</button>');
-        this.$toolbar = $('<div class="toolbar">').append(this.$modeSelect, this.$buttonAddOption);
-        this.$editorIframeContainer.prepend(this.$toolbar);
+        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
+        this.$toolbar = $('<ul class="toolbar">');
+
+        this.$toolbar.append($('<li>').append(this.$buttonAddOption));
+        this.$toolbar.append($('<li>').append(this.$modeSelect));
+        this.$toolbar.append($('<li>').append(this.$undoButton));
+
+        this.$editorIframeContainer.before(this.$toolbar);
     };
 
     LiveEditor.prototype.currentMode = function() {

@@ -312,16 +312,6 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('buildButtons method', function() {
-        it('Should render undo button', function() {
-            var $undoButton = $('.btn-undo');
-            expect($undoButton).toExist();
-
-            liveEditor.buildButtons();
-            expect($('.btn-undo').length).toBe(2);
-        });
-    });
-
     describe('undoListUpdate method', function() {
         beforeEach(function() {
             $iframe.load();

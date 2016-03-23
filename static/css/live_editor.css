@@ -15,6 +15,21 @@
     position: relative;
 }
 
+/* TOOLBAR */
+
+.nav-tabs,
+.toolbar {
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.toolbar li {
+    list-style: none;
+    margin-right: 10px;
+    display: inline-block;
+}
+
 /* CODE PANEL */
 
 .code-panel {
