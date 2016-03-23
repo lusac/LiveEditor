@@ -266,19 +266,16 @@
 
         this.modalEvents();
 
-        document.addEventListener('domOutlineOnClick', function (e) {
-            // same event for all editor. Should better this.
-            if (self.$editorIframe.contents().find($(e.detail)).length > 0) {
-                self.setCurrentElement(self.domOutline.element);
-                self.openCurrentMenu();
-                self.domOutline.pause();
-                self.$editorIframe.contents().find("html *").on("click", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    self.unselectElements();
-                });
-                console.log('dom clicked!');
-            }
+        document.addEventListener('domOutlineOnClick', function () {
+            self.setCurrentElement(self.domOutline.element);
+            self.openCurrentMenu();
+            self.domOutline.pause();
+            self.$editorIframe.contents().find("html *").on("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                self.unselectElements();
+            });
+            console.log('dom clicked!');
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
