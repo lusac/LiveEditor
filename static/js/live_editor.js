@@ -246,9 +246,15 @@
             $(this).find('.modal-body input').val(classes);
         });
 
+        // Rename Modal
+        $('#rename-modal').on('show.bs.modal', function () {
+            $(this).find('.modal-body input').val('');
+        });
+
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
+        this.bindModalSave($('#rename-modal'), 'rename-modal');
     };
 
     LiveEditor.prototype.bindModalSave = function ($modal, label) {
@@ -281,10 +287,19 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
+            // Verify if this logic is already necessary
             if (self.$editor.attr('id') == e.detail.liveEditor) {
                 self.operationInit(e.detail.operation);
             }
         }, false);
+
+        this.tabs.$tabs.on('click', 'li', function(e) {
+            var op = $(this).data('operation');
+            if (op) {
+                self.operationInit(op);
+                console.log(op);
+            }
+        });
 
         this.$editorIframe.contents().keyup(function(e) {
             if (e.keyCode == 27) { // Esc
@@ -459,6 +474,20 @@
             this.actions.currentSelectedEditClasses();
         }
 
+        if (operation === 'edit-rename-modal-save') {
+            // TODO - test js
+            this.actions.currentOptionRename();
+        }
+
+        if (operation === 'delete-option') {
+            // TODO - test js
+            this.actions.currentOptionDelete();
+        }
+
+        if (operation === 'duplicate-option') {
+            this.actions.currentOptionDuplicate();
+        }
+
         this.codePanelUpdate();
     };
 
@@ -478,7 +507,7 @@
 
     LiveEditor.prototype.currentExperiment = function () {
         var currentTab = this.tabs.current();
-        return this.experiments[currentTab.data('name')];
+        return this.experiments[currentTab.attr('data-name')];
     };
 
     window.LiveEditor = LiveEditor;

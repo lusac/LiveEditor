@@ -15,6 +15,20 @@
     position: relative;
 }
 
+/* TAB */
+
+.live-editor-tabs .caret {
+    display: none;
+}
+
+.live-editor-tabs li {
+    cursor: pointer;
+}
+
+.live-editor-tabs li.active .caret {
+    display: inline-block;
+}
+
 /* TOOLBAR */
 
 .nav-tabs,
