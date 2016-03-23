@@ -301,7 +301,7 @@
             }
         });
 
-        $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        this.tabs.$tabs.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
             self.changeTab();
         });
 
