@@ -57,7 +57,7 @@
 
     LiveEditor.prototype.createExperiments = function() {
         for(var i=0; i<=this.tabsList.length-1; i++) {
-            var name = this.tabs.formatName(this.tabsList[i]);
+            var name = this.tabs.slugify(this.tabsList[i]);
 
             if (this.experiments[name] === undefined) {
                 this.experiments[name] = {

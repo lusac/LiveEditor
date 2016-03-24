@@ -84,7 +84,7 @@
 
         for(var i=0; i<=tabsList.length-1; i++) {
             var $li = $('<li>'),
-                name = this.formatName(tabsList[i]);
+                name = this.slugify(tabsList[i]);
 
             if (i === 0) {
                 $li.addClass('active');
@@ -109,7 +109,7 @@
         return $li;
     };
 
-    LiveEditorTabs.prototype.formatName = function (str) {
+    LiveEditorTabs.prototype.slugify = function (str) {
         str = str.toLowerCase().replace(new RegExp(' ', 'g'), '_');
 
         var with_accents    = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/-,:;'";

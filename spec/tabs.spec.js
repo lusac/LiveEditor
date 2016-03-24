@@ -60,10 +60,10 @@ describe("Tabs", function() {
         });
     });
 
-    describe('formatName method', function() {
+    describe('slugify method', function() {
         it('Should format name', function() {
-            expect(tabs.formatName('My beautiful name')).toBe('my_beautiful_name');
-            expect(tabs.formatName('Açafrão-da-terra ou cúrcuma')).toBe('acafrao_da_terra_ou_curcuma');
+            expect(tabs.slugify('My beautiful name')).toBe('my_beautiful_name');
+            expect(tabs.slugify('Açafrão-da-terra ou cúrcuma')).toBe('acafrao_da_terra_ou_curcuma');
         });
     });
 

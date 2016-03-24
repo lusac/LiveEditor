@@ -71,12 +71,12 @@
 
         if (newName.length < 1) return 0;
 
-        var newNameFormated = this.liveEditorBase.tabs.formatName(newName),
+        var newNameFormated = this.liveEditorBase.tabs.slugify(newName),
             currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName),
+            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName),
             currentExperiment = this.liveEditorBase.experiments[currentNameFormated];
 
-        if (this.liveEditorBase.experiments[newName] == undefined) {
+        if (this.liveEditorBase.experiments[newName] === undefined) {
             this.liveEditorBase.experiments[newNameFormated] = currentExperiment;
 
             var index = this.liveEditorBase.tabsList.indexOf(currentName);
@@ -94,7 +94,7 @@
     LiveEditorActions.prototype.currentOptionDelete = function () {
         // TODO - test js
         var currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName),
+            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName),
             index = this.liveEditorBase.tabsList.indexOf(currentName);
 
         this.liveEditorBase.tabsList.splice(index, 1);
@@ -111,8 +111,8 @@
         this.liveEditorBase.addNewOption();
 
         var currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.formatName(currentName);
-        
+            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName);
+
         this.liveEditorBase.experiments[currentNameFormated] = oldExperiment;
 
         this.liveEditorBase.changeTab();
