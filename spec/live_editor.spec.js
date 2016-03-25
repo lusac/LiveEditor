@@ -561,16 +561,16 @@ describe('LiveEditor', function() {
 
         it('Should append tab name inside tabsList', function() {
             expect(liveEditor.tabsList.length).toBe(3);
-            expect(liveEditor.tabsList[2]).toBe('Test 2');
+            expect(liveEditor.tabsList[2]).toBe('Test 3');
 
             liveEditor.addNewOption();
 
             expect(liveEditor.tabsList.length).toBe(4);
-            expect(liveEditor.tabsList[3]).toBe('Test 3');
+            expect(liveEditor.tabsList[3]).toBe('Test 4');
         });
 
         it('Should call createTabs method', function() {
-            expect(liveEditor.tabs.createTabs).toHaveBeenCalledWith(['Test 2']);
+            expect(liveEditor.tabs.createTabs).toHaveBeenCalledWith(['Test 3']);
         });
 
         it('Should call createExperiments method', function() {

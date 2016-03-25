@@ -334,7 +334,8 @@
     };
 
     LiveEditor.prototype.addNewOption = function () {
-        var name = 'Test ' + this.tabsList.length;
+        // TODO - CHECK IF THIS NAME DONT EXIST
+        var name = 'Test ' + (this.tabsList.length + 1);
         this.tabsList.push(name);
         this.tabs.createTabs([name]);
         this.createExperiments();
