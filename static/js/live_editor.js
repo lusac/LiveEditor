@@ -475,12 +475,10 @@
         }
 
         if (operation === 'edit-rename-modal-save') {
-            // TODO - test js
             this.actions.currentOptionRename();
         }
 
         if (operation === 'delete-option') {
-            // TODO - test js
             this.actions.currentOptionDelete();
         }
 

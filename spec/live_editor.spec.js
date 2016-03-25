@@ -465,6 +465,30 @@ describe('LiveEditor', function() {
 
             expect(liveEditor.actions.currentSelectedEditClasses).toHaveBeenCalled();
         });
+
+        it('edit-rename-modal-save', function() {
+            spyOn(liveEditor.actions, 'currentOptionRename');
+
+            liveEditor.operationInit('edit-rename-modal-save');
+
+            expect(liveEditor.actions.currentOptionRename).toHaveBeenCalled();
+        });
+
+        it('delete-option', function() {
+            spyOn(liveEditor.actions, 'currentOptionDelete');
+
+            liveEditor.operationInit('delete-option');
+
+            expect(liveEditor.actions.currentOptionDelete).toHaveBeenCalled();
+        });
+
+        it('duplicate-option', function() {
+            spyOn(liveEditor.actions, 'currentOptionDuplicate');
+
+            liveEditor.operationInit('duplicate-option');
+
+            expect(liveEditor.actions.currentOptionDuplicate).toHaveBeenCalled();
+        });
     });
 
     describe('currentExperiment method', function() {
