@@ -3,13 +3,12 @@
 (function (window, document, $) {
     // 'use strict';
 
-    var LiveEditorActions = function LiveEditorActions (liveEditorBase) {
-        this.init(liveEditorBase);
+    var LiveEditorActions = function LiveEditorActions (liveEditor) {
+        this.init(liveEditor);
     };
 
-    LiveEditorActions.prototype.init = function (liveEditorBase) {
-        // rename liveEditorBase to liveEditor
-        this.liveEditorBase = liveEditorBase;
+    LiveEditorActions.prototype.init = function (liveEditor) {
+        this.liveEditor = liveEditor;
     };
 
     LiveEditorActions.prototype._changeText = function (selector, text) {
@@ -21,48 +20,47 @@
     };
 
     LiveEditorActions.prototype.getIframeCurrentElement = function () {
-        return this.liveEditorBase.$editorIframe.contents().find(this.liveEditorBase.currentSelected);
+        return this.liveEditor.$editorIframe.contents().find(this.liveEditor.currentSelected);
     };
 
     LiveEditorActions.prototype.currentSelectedRemove = function () {
-        var str = '$("' + this.liveEditorBase.currentSelected + '").remove();';
+        var str = '$("' + this.liveEditor.currentSelected + '").remove();';
 
-        this.liveEditorBase.undoListUpdate();
-        this.liveEditorBase.addToScriptList(str);
-        this.liveEditorBase.applyJs(str);
+        this.liveEditor.undoListUpdate();
+        this.liveEditor.addToScriptList(str);
+        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
-        // TO DO - undo
-        var str = '$("' + this.liveEditorBase.currentSelected + '").attr("easyab-track-' + e + '", 1);';
-        this.liveEditorBase.addToScriptList(str);
+        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+        this.liveEditor.addToScriptList(str);
     };
 
     LiveEditorActions.prototype.currentSelectedEditHtml = function () {
-        var html = this.liveEditorBase.editHtmlModal.getValue(),
-            str = "$('" + this.liveEditorBase.currentSelected + "').replaceWith('" + html + "');";
+        var html = this.liveEditor.editHtmlModal.getValue(),
+            str = "$('" + this.liveEditor.currentSelected + "').replaceWith('" + html + "');";
 
-        this.liveEditorBase.undoListUpdate();
-        this.liveEditorBase.addToScriptList(str);
-        this.liveEditorBase.applyJs(str);
+        this.liveEditor.undoListUpdate();
+        this.liveEditor.addToScriptList(str);
+        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedEditText = function () {
-        var scriptText = this.liveEditorBase.editTextModal.getValue(),
-            strScript = '$' + this._changeText(this.liveEditorBase.currentSelected, scriptText);
+        var scriptText = this.liveEditor.editTextModal.getValue(),
+            strScript = '$' + this._changeText(this.liveEditor.currentSelected, scriptText);
 
-        this.liveEditorBase.undoListUpdate();
-        this.liveEditorBase.addToScriptList(strScript);
-        this.liveEditorBase.applyJs(strScript);
+        this.liveEditor.undoListUpdate();
+        this.liveEditor.addToScriptList(strScript);
+        this.liveEditor.applyJs(strScript);
     };
 
     LiveEditorActions.prototype.currentSelectedEditClasses = function () {
-        var scriptClasses = this.liveEditorBase.$editClassesModal.find('.modal-body input').val(),
-            str = '$' + this._changeClass(this.liveEditorBase.currentSelected, scriptClasses);
+        var scriptClasses = this.liveEditor.$editClassesModal.find('.modal-body input').val(),
+            str = '$' + this._changeClass(this.liveEditor.currentSelected, scriptClasses);
 
-        this.liveEditorBase.undoListUpdate();
-        this.liveEditorBase.addToScriptList(str);
-        this.liveEditorBase.applyJs(str);
+        this.liveEditor.undoListUpdate();
+        this.liveEditor.addToScriptList(str);
+        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {
@@ -71,51 +69,51 @@
 
         if (newName.length < 1) return 0;
 
-        var newNameFormated = this.liveEditorBase.tabs.slugify(newName),
-            currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName),
-            currentExperiment = this.liveEditorBase.experiments[currentNameFormated];
+        var newNameFormated = this.liveEditor.tabs.slugify(newName),
+            currentName = this.liveEditor.tabs.current().text(),
+            currentNameFormated = this.liveEditor.tabs.slugify(currentName),
+            currentExperiment = this.liveEditor.experiments[currentNameFormated];
 
-        if (this.liveEditorBase.experiments[newName] === undefined) {
-            this.liveEditorBase.experiments[newNameFormated] = currentExperiment;
+        if (this.liveEditor.experiments[newName] === undefined) {
+            this.liveEditor.experiments[newNameFormated] = currentExperiment;
 
-            var index = this.liveEditorBase.tabsList.indexOf(currentName);
-            this.liveEditorBase.tabsList[index] = newName;
+            var index = this.liveEditor.tabsList.indexOf(currentName);
+            this.liveEditor.tabsList[index] = newName;
 
-            var $currentTab = this.liveEditorBase.tabs.current();
+            var $currentTab = this.liveEditor.tabs.current();
             $currentTab.attr('data-name', newNameFormated)
                         .text(newName)
                         .append('<span class="caret"></span>');
 
-            delete this.liveEditorBase.experiments[currentNameFormated];
+            delete this.liveEditor.experiments[currentNameFormated];
         }
     };
 
     LiveEditorActions.prototype.currentOptionDelete = function () {
         // TODO - test js
-        var currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName),
-            index = this.liveEditorBase.tabsList.indexOf(currentName);
+        var currentName = this.liveEditor.tabs.current().text(),
+            currentNameFormated = this.liveEditor.tabs.slugify(currentName),
+            index = this.liveEditor.tabsList.indexOf(currentName);
 
-        this.liveEditorBase.tabsList.splice(index, 1);
-        this.liveEditorBase.tabs.current().parent().remove();
-        this.liveEditorBase.tabs.$tabs.find('>li:first>a').click();
+        this.liveEditor.tabsList.splice(index, 1);
+        this.liveEditor.tabs.current().parent().remove();
+        this.liveEditor.tabs.$tabs.find('>li:first>a').click();
 
-        delete this.liveEditorBase.experiments[currentNameFormated];
+        delete this.liveEditor.experiments[currentNameFormated];
     };
 
     LiveEditorActions.prototype.currentOptionDuplicate = function () {
         // TODO - test js
-        var oldExperiment = this.liveEditorBase.currentExperiment();
+        var oldExperiment = this.liveEditor.currentExperiment();
 
-        this.liveEditorBase.addNewOption();
+        this.liveEditor.addNewOption();
 
-        var currentName = this.liveEditorBase.tabs.current().text(),
-            currentNameFormated = this.liveEditorBase.tabs.slugify(currentName);
+        var currentName = this.liveEditor.tabs.current().text(),
+            currentNameFormated = this.liveEditor.tabs.slugify(currentName);
 
-        this.liveEditorBase.experiments[currentNameFormated] = oldExperiment;
+        this.liveEditor.experiments[currentNameFormated] = oldExperiment;
 
-        this.liveEditorBase.changeTab();
+        this.liveEditor.changeTab();
     };
 
     window.LiveEditorActions = LiveEditorActions;
