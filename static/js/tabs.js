@@ -22,7 +22,6 @@
     };
 
     LiveEditorTabs.prototype.buildModals = function () {
-        // TODO - test js
         this.renameModal = new LiveEditorModal({
             editor: this.id,
             data: {

@@ -99,6 +99,23 @@ describe("Tabs", function() {
         });
     });
 
+    describe('buildModals method', function() {
+        it('Should create a instance of LiveEditorModal', function() {
+            var spy = spyOn(window, 'LiveEditorModal'),
+                data = {
+                    name: 'rename-modal',
+                    title: 'Rename Option',
+                    field: 'input'
+                };
+            tabs.buildModals();
+            expect(spy).wasCalledWith({editor:tabs.id, data: data});
+        });
+
+        it('Create a attribute instanceof LiveEditorModal', function() {
+            expect(tabs.renameModal instanceof LiveEditorModal).toBe(true);
+        });
+    });
+
     describe('slugify method', function() {
         it('Should format name', function() {
             expect(tabs.slugify('My beautiful name')).toBe('my_beautiful_name');
