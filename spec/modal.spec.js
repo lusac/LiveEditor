@@ -22,6 +22,7 @@ describe("Modal", function() {
     });
 
     afterEach(function() {
+        $('.modal-backdrop').remove();
         $('#edit-html-modal').remove();
         $('#edit-text-modal').remove();
     });
