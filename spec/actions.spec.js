@@ -226,4 +226,44 @@ describe("Actions", function() {
             expect(liveEditor.actions.getIframeCurrentElement(), $p);
         });
     });
+
+    describe('currentOptionRename method', function() {
+        beforeEach(function() {
+            $('#rename-modal').find('.modal-body input').val('New Tab');
+        });
+
+        it('Should rename tab name', function() {
+            liveEditor.actions.currentOptionRename();
+            var label = $('.nav-tabs>li.active>a').text();
+            expect(label).toBe('New Tab');
+        });
+
+        it('Should rename tab data-name attribute', function() {
+            liveEditor.actions.currentOptionRename();
+            var $tab = $('.nav-tabs>li.active>a');
+            expect($tab).toHaveAttr('data-name', 'new_tab');
+        });
+
+        it('Should append caret inside tab', function() {
+            liveEditor.actions.currentOptionRename();
+            var $caret = $('.nav-tabs>li.active>a span.caret');
+            expect($caret).toExist();
+        });
+
+        it('Should update liveEditor experiments', function() {
+            expect(liveEditor.experiments.hasOwnProperty('test_1')).toBe(true);
+            expect(liveEditor.experiments.hasOwnProperty('new_tab')).toBe(false);
+            liveEditor.actions.currentOptionRename();
+            expect(liveEditor.experiments.hasOwnProperty('test_1')).toBe(false);
+            expect(liveEditor.experiments.hasOwnProperty('new_tab')).toBe(true);
+        });
+
+        it('Experiments data should not change', function() {
+            var oldData = liveEditor.experiments.test_1;
+            liveEditor.actions.currentOptionRename();
+            var newData = liveEditor.experiments.new_tab;
+
+            expect(oldData).toBe(newData);
+        });
+    });
 });

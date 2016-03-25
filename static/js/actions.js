@@ -64,7 +64,6 @@
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {
-        // TODO - test js
         var newName = $('#rename-modal').find('.modal-body input').val();
 
         if (newName.length < 1) return 0;
