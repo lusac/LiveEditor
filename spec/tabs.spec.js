@@ -1,6 +1,7 @@
 describe("Tabs", function() {
     beforeEach(function() {
-        tabs = new LiveEditorTabs({parent: $('body'), tabs: ["Test 1", "Test 2", "Other Test 3"]});
+        params = {parent: $('body'), tabs: ["Test 1", "Test 2", "Other Test 3"]};
+        tabs = new LiveEditorTabs(params);
     });
 
     afterEach(function() {
@@ -9,6 +10,10 @@ describe("Tabs", function() {
     });
 
     describe('init method', function() {
+        afterEach(function() {
+            $('#rename-modal').remove();
+        });
+
         it('Should have parent attributes', function() {
             expect(tabs.hasOwnProperty('$parent')).toBe(true);
             expect(tabs.$parent).toBe($('body'));
@@ -18,14 +23,48 @@ describe("Tabs", function() {
             expect(tabs.hasOwnProperty('tabs')).toBe(true);
             expect(tabs.tabs.toString()).toBe(["Test 1", "Test 2", "Other Test 3"].toString());
         });
+
+        it('Should call create method', function() {
+            spyOn(tabs, 'create');
+            tabs.init(params);
+            expect(tabs.create).toHaveBeenCalled();
+        });
+
+        it('Should call bindEvents method', function() {
+            spyOn(tabs, 'bindEvents');
+            tabs.init(params);
+            expect(tabs.bindEvents).toHaveBeenCalled();
+        });
     });
 
     describe('create method', function() {
+        afterEach(function() {
+            $('#rename-modal').remove();
+        });
+
+        it('Should have a nav-tabs object', function() {
+            expect(tabs.$tabs).toExist();
+        });
+
+        it('Should call createTabs method', function() {
+            spyOn(tabs, 'createTabs');
+            tabs.create();
+            expect(tabs.createTabs).toHaveBeenCalledWith(tabs.tabs);
+        });
+
+        it('Should call buildModals method', function() {
+            spyOn(tabs, 'buildModals');
+            tabs.create();
+            expect(tabs.buildModals).toHaveBeenCalled();
+        });
+
         it('Should append tabs inside parent', function() {
             var $tab = $('body>.nav-tabs');
             expect($tab).toExist();
         });
+    });
 
+    describe('createTabs method', function() {
         it('Tab should have correct structure', function() {
             var $nav = $('body>.nav-tabs');
             expect($nav.find('>li')).toExist();
