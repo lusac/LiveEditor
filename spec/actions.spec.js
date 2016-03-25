@@ -266,4 +266,38 @@ describe("Actions", function() {
             expect(oldData).toBe(newData);
         });
     });
+
+    describe('currentOptionDelete method', function() {
+        it('Should remove tab element', function() {
+            var $tab = $('.nav-tabs>li.active');
+            liveEditor.actions.currentOptionDelete();
+            expect($tab.parent()).not.toExist();
+        });
+
+        it('Should set next tab as active', function() {
+            var $tab1 = $('.nav-tabs>li.active'),
+                $tab2 = $('.nav-tabs>li:eq(1)');
+
+            liveEditor.actions.currentOptionDelete();
+
+            var $newTab2 = $('.nav-tabs>li:eq(0)');
+            expect($tab1.parent()).not.toExist();
+            expect($tab2).toBe($newTab2);
+            expect($newTab2.hasClass('active')).toBe(true);
+        });
+
+        it('Should remove liveEditor experiment from dict', function() {
+            expect(liveEditor.experiments.hasOwnProperty('test_1')).toBe(true);
+            liveEditor.actions.currentOptionDelete();
+            expect(liveEditor.experiments.hasOwnProperty('test_1')).toBe(false);
+        });
+
+        it('Do not remove tab if it is the last one', function() {
+            // TODO
+        });
+    });
+
+    describe('currentOptionDuplicate method', function() {
+
+    });
 });

@@ -89,7 +89,6 @@
     };
 
     LiveEditorActions.prototype.currentOptionDelete = function () {
-        // TODO - test js
         var currentName = this.liveEditor.tabs.current().text(),
             currentNameFormated = this.liveEditor.tabs.slugify(currentName),
             index = this.liveEditor.tabsList.indexOf(currentName);
