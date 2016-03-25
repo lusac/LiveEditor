@@ -298,6 +298,47 @@ describe("Actions", function() {
     });
 
     describe('currentOptionDuplicate method', function() {
+        beforeEach(function() {
+            waits(100);
+        });
 
+        it('Should create a new tab', function() {
+            spyOn(liveEditor.domOutline, 'stop');
+
+            expect($('.nav-tabs>li').length).toBe(2);
+
+            liveEditor.actions.currentOptionDuplicate();
+
+            expect($('.nav-tabs>li').length).toBe(3);
+        });
+
+        it('Should add a new experiment in liveEditor equals to the active', function() {
+            spyOn(liveEditor.domOutline, 'stop');
+
+            expect(Object.keys(liveEditor.experiments).length).toBe(2);
+
+            liveEditor.actions.currentOptionDuplicate();
+
+            expect(Object.keys(liveEditor.experiments).length).toBe(3);
+            expect(liveEditor.experiments.test_1).toBe(liveEditor.experiments.test_3);
+        });
+
+        it('Should call addNewOption method', function() {
+            spyOn(liveEditor.domOutline, 'stop');
+            spyOn(liveEditor, 'addNewOption');
+
+            liveEditor.actions.currentOptionDuplicate();
+
+            expect(liveEditor.addNewOption).toHaveBeenCalled();
+        });
+
+        it('Should call changeTab method', function() {
+            spyOn(liveEditor.domOutline, 'stop');
+            spyOn(liveEditor, 'changeTab');
+
+            liveEditor.actions.currentOptionDuplicate();
+
+            expect(liveEditor.changeTab).toHaveBeenCalled();
+        });
     });
 });

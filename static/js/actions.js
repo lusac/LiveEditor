@@ -101,7 +101,6 @@
     };
 
     LiveEditorActions.prototype.currentOptionDuplicate = function () {
-        // TODO - test js
         var oldExperiment = this.liveEditor.currentExperiment();
 
         this.liveEditor.addNewOption();
