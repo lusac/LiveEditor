@@ -116,6 +116,22 @@ describe("Tabs", function() {
         });
     });
 
+    describe('bindEvents method', function() {
+        it('Click on active tab should open and close dropdown menu', function() {
+            var $activeTab = tabs.$tabs.find('>li.active'),
+                $dropdown = $activeTab.find('.dropdown-menu');
+
+            expect($dropdown.css('display')).toBe('none');
+            $activeTab.click();
+            expect($dropdown.css('display')).toBe('block');
+            $activeTab.click();
+            expect($dropdown.css('display')).toBe('none');
+        });
+
+        // it('Hide tab menu when click on another tab', function() {
+        // });
+    });
+
     describe('slugify method', function() {
         it('Should format name', function() {
             expect(tabs.slugify('My beautiful name')).toBe('my_beautiful_name');

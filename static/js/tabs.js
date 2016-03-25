@@ -33,7 +33,6 @@
     };
 
     LiveEditorTabs.prototype.bindEvents = function () {
-        // TODO - test js
         var self = this;
 
         this.$tabs.on('click', 'li.active', function() {
