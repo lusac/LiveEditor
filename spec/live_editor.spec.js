@@ -633,7 +633,7 @@ describe('LiveEditor', function() {
             spyOn(liveEditor, 'unselectElements');
             spyOn(liveEditor, 'applyJs');
             spyOn(liveEditor, 'domOutlineInit');
-            waits(100);
+            waits(200);
         });
 
         it('When in edit mode should clone body element', function() {
