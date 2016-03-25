@@ -186,4 +186,28 @@ describe("Tabs", function() {
             expect(tabs.current()).toBe($li);
         });
     });
+
+    describe('newItem method', function() {
+        it('return a corret li without params', function() {
+            var $li = tabs.newItem({value: 'Test option without params'});
+            expect($li.find('a').text()).toBe('Test option without params');
+        });
+
+        it('return a correct li element with params', function() {
+            var data = {
+                    attrs: {
+                        'data-operation': 'test-operation',
+                        'data-test': 'some data here',
+                        'other-test': 'other test data'
+                    },
+                    value: 'Test option'
+                },
+                $li = tabs.newItem(data);
+
+            expect($li).toHaveAttr('data-operation', 'test-operation');
+            expect($li).toHaveAttr('data-test', 'some data here');
+            expect($li).toHaveAttr('other-test', 'other test data');
+            expect($li.find('a').text()).toBe('Test option');
+        });
+    });
 });

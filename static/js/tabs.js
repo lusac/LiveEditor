@@ -93,7 +93,6 @@
     };
 
     LiveEditorTabs.prototype.newItem = function (param) {
-        // TODO - test js
         var $a = $('<a>').text(param.value),
             $li = $('<li>').append($a);
 
