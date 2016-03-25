@@ -72,6 +72,9 @@ describe("Tabs", function() {
             expect($nav.find('>li:eq(0)>a').text()).toBe('Test 1');
             expect($nav.find('>li:eq(1)>a').text()).toBe('Test 2');
             expect($nav.find('>li:eq(2)>a').text()).toBe('Other Test 3');
+            expect($nav.find('>li:eq(0)>a span.caret')).toExist();
+            expect($nav.find('>li:eq(1)>a span.caret')).toExist();
+            expect($nav.find('>li:eq(2)>a span.caret')).toExist();
         });
 
         it('Tab should have correct data toggle attribute', function() {
@@ -96,6 +99,44 @@ describe("Tabs", function() {
 
             expect($active.length).toBe(1);
             expect($liActive).toHaveClass('active');
+        });
+
+        it('Create a dropdown menu for each tab', function() {
+            var $tabs = tabs.$tabs.find('>li');
+
+            $tabs.each(function() {
+                var $d = $(this).find('ul.dropdown-menu');
+                expect($d).toExist();
+            });
+        });
+
+        it('Dropdown menu should have duplicate option', function() {
+            var $tab = tabs.$tabs.find('>li:last'),
+                $dropdown = $tab.find('.dropdown-menu'),
+                $option = $dropdown.find('li:eq(0)');
+            
+            expect($option).toHaveAttr('data-operation', 'duplicate-option');
+            expect($option.find('a').text()).toBe('Duplicate option');
+        });
+
+        it('Dropdown menu should have delete option', function() {
+            var $tab = tabs.$tabs.find('>li:last'),
+                $dropdown = $tab.find('.dropdown-menu'),
+                $option = $dropdown.find('li:eq(1)');
+            
+            expect($option).toHaveAttr('data-operation', 'delete-option');
+            expect($option.find('a').text()).toBe('Delete option');
+        });
+
+        it('Dropdown menu should have rename option', function() {
+            var $tab = tabs.$tabs.find('>li:last'),
+                $dropdown = $tab.find('.dropdown-menu'),
+                $option = $dropdown.find('li:eq(2)');
+            
+            expect($option).toHaveAttr('data-operation', 'rename-option');
+            expect($option).toHaveAttr('data-toggle', 'modal');
+            expect($option).toHaveAttr('data-target', '#rename-modal');
+            expect($option.find('a').text()).toBe('Rename option');
         });
     });
 

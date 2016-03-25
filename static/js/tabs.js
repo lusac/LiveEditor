@@ -55,7 +55,6 @@
 
     LiveEditorTabs.prototype.createTabs = function (tabsList) {
         this.$tabs.find('li.active').removeClass('active');
-        // TODO - test js
         var $ul = $('<ul class="dropdown-menu">'),
             params = [{
                 attrs: { 'data-operation': 'duplicate-option' },
@@ -75,7 +74,6 @@
             }
         ];
 
-        // TODO - test js
         for(var i=0; i<=params.length-1; i++) {
             $ul.append(this.newItem(params[i]));
         }
@@ -88,7 +86,6 @@
                 $li.addClass('active');
             }
 
-            // TODO - test js
             $li.append('<a data-toggle="tab" data-name="' + name + '">' + tabsList[i] + '<span class="caret"></span></a>');
             $li.append($ul.clone());
             this.$tabs.append($li);
