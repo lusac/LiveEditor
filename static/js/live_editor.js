@@ -287,10 +287,7 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
-            // Verify if this logic is already necessary
-            if (self.$editor.attr('id') == e.detail.liveEditor) {
-                self.operationInit(e.detail.operation);
-            }
+            self.operationInit(e.detail.operation);
         }, false);
 
         this.tabs.$tabs.on('click', 'li', function(e) {
