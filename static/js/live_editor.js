@@ -398,7 +398,7 @@
 
     LiveEditor.prototype.openCurrentMenu = function () {
         if (this.currentSelected) {
-            var $DomOutlineBox = this.$editorIframe.contents().find('.DomOutline_box'),
+            var $domOutlineBox = this.$editorIframe.contents().find('.DomOutline_box'),
                 top = this.$editorIframe.offset().top,
                 left = this.$editorIframe.offset().left,
                 scrollTop = this.$editorIframe.contents().scrollTop();
@@ -410,16 +410,16 @@
                     value: this.$currentSelected.prop('tagName').toLowerCase(),
                     posLeft: {
                         "iframe_left":left,
-                        "box_offset_left": $DomOutlineBox.offset().left,
-                        "box_width": $DomOutlineBox.width(),
+                        "box_offset_left": $domOutlineBox.offset().left,
+                        "box_width": $domOutlineBox.width(),
                         "iframe_width": this.$editorIframe.width(),
                     },
                     posTop: {
                         "iframe_top": top,
-                        "box_offset_top": $DomOutlineBox.offset().top,
+                        "box_offset_top": $domOutlineBox.offset().top,
                         "scroll_top": scrollTop,
                         "iframe_height": this.$editorIframe.height(),
-                        "box_heigh": $DomOutlineBox.height(),
+                        "box_heigh": $domOutlineBox.height(),
                     },
                     container: this.containerFormat()
                 }
