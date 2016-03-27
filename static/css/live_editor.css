@@ -63,12 +63,6 @@
     position: relative;
 }
 
-.code-panel-button {
-    position: absolute;
-    bottom: 0px;
-    right: 10px;
-}
-
 .code-panel-buttons {
     bottom: 0;
     position: absolute;

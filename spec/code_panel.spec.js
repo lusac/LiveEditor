@@ -15,24 +15,9 @@ describe("CodePanel", function() {
     });
 
     describe("Create method", function() {
-        it("Should append button in the DOM", function() {
-            var $btn = $('.code-panel-button');
-            expect($btn.length).toEqual(1);
-        });
-
         it("Should append panel in the DOM", function() {
             var $panel = $('#code-panel');
             expect($panel.length).toEqual(1);
-        });
-
-        it("Should append button in container element", function() {
-            codePanelCustom = new window.LiveEditorCodePanel({
-                editorName: 'test-editor-custom',
-                appendTo: $container
-            });
-
-            var $btn = $('.container .code-panel-button');
-            expect($btn.length).toEqual(1);
         });
 
         it("Should append panel in container element", function() {
@@ -43,11 +28,6 @@ describe("CodePanel", function() {
 
             var $panel = $('.container #code-panel');
             expect($panel.length).toEqual(1);
-        });
-
-        it("Button should have data-target attribute", function() {
-            var $attr = $('.code-panel-button').attr('data-target');
-            expect($attr).toEqual('#code-panel');
         });
 
         it("Panel should have correct structure", function() {

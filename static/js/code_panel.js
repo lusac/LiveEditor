@@ -15,8 +15,7 @@
      };
 
     LiveEditorCodePanel.prototype.create = function () {
-        var $button = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >'),
-            $panel = $('<div id="code-panel" class="code-panel collapse">'),
+        var $panel = $('<div id="code-panel" class="code-panel collapse">'),
             html = '<div class="well">' +
                         '<div class="row">' +
                             '<div class="col-xs-9">' +
@@ -34,9 +33,9 @@
         $panel.append(html);
 
         if (this.appendTo) {
-            this.appendTo.append($button, $panel);
+            this.appendTo.append($panel);
         } else {
-            $('body').append($button, $panel);
+            $('body').append($panel);
         }
 
         this.aceEditor = new LiveEditorAceEditor({

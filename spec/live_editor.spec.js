@@ -130,7 +130,7 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('Build buildToolbar', function() {
+    describe('Build Toolbar', function() {
         it('Should render a toolbar ul', function() {
             var $t = $('ul.toolbar');
             expect($t).toExist();
@@ -156,6 +156,17 @@ describe('LiveEditor', function() {
             var $b = $('ul.toolbar li .btn-undo');
             expect($b).toExist();
             expect($b.text()).toBe('Undo');
+        });
+
+        it("Should render codePanel button", function() {
+            var $btn = $('ul.toolbar li .code-panel-button');
+            expect($btn.length).toEqual(1);
+            expect($btn.text()).toEqual('< edit code >');
+        });
+
+        it("codePanel button should have data-target attribute", function() {
+            var $attr = $('ul.toolbar li  .code-panel-button').attr('data-target');
+            expect($attr).toEqual('#code-panel');
         });
     });
 
