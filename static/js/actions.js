@@ -113,5 +113,12 @@
         this.liveEditor.changeTab();
     };
 
+    LiveEditorActions.prototype.undo = function () {
+        var object = liveEditor.currentExperiment().undoList.pop();
+        liveEditor.currentExperiment().scriptList.pop();
+        liveEditor.updateBody(object);
+        liveEditor.codePanelUpdate();
+    };
+
     window.LiveEditorActions = LiveEditorActions;
 })(window, document, $);

@@ -298,10 +298,7 @@
 
         this.toolbar.$undoButton.off().on('click', function () {
             if (self.currentExperiment().undoList.length) {
-                var object = self.currentExperiment().undoList.pop();
-                self.currentExperiment().scriptList.pop();
-                self.updateBody(object);
-                self.codePanelUpdate();
+                self.actions.undo();
             }
         });
 

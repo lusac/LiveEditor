@@ -205,59 +205,6 @@ describe('LiveEditor', function() {
             expect(liveEditor.unselectElements).toHaveBeenCalled();
         });
 
-        it('Undo button click should call codePanelUpdate method if undoList is not empty', function() {
-            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
-
-            spyOn(liveEditor, 'codePanelUpdate');
-
-            $('.btn-undo').click();
-
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
-        });
-
-        it('Undo button click should not call codePanelUpdate method if undoList is empty', function() {
-            spyOn(liveEditor, 'codePanelUpdate');
-
-            $('.btn-undo').click();
-
-            expect(liveEditor.codePanelUpdate).not.toHaveBeenCalled();
-        });
-
-        it('Undo button click should remove last item from undoList var', function() {
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
-
-            expect(liveEditor.experiments.test_1.undoList.length).toBe(2);
-
-            $('.btn-undo').click();
-
-            expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
-        });
-
-        it('Undo button click should remove last item from scriptList var', function() {
-            spyOn(liveEditor, 'applyJs');
-
-            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
-            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
-            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
-
-            expect(liveEditor.experiments.test_1.scriptList.length).toBe(2);
-
-            $('.btn-undo').click();
-            
-            expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
-        });
-
-        it('Undo button call updateBody method', function() {
-            spyOn(liveEditor, 'updateBody');
-
-            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
-            $('.btn-undo').click();
-
-            expect(liveEditor.updateBody).toHaveBeenCalled();
-        });
-
         // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
         //     var $p = liveEditor.$editorIframe.contents().find('p');
         //     $p.trigger('mousemove').click();

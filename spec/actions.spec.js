@@ -341,4 +341,53 @@ describe("Actions", function() {
             expect(liveEditor.changeTab).toHaveBeenCalled();
         });
     });
+
+    describe('undo method', function() {
+        beforeEach(function() {
+            waits(200);
+        });
+
+        it('Should remove last item from undoList var', function() {
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+
+            expect(liveEditor.experiments.test_1.undoList.length).toBe(2);
+
+            liveEditor.actions.undo();
+
+            expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
+        });
+
+        it('Should remove last item from scriptList var', function() {
+            spyOn(liveEditor, 'applyJs');
+
+            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
+
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(2);
+
+            liveEditor.actions.undo();
+            
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
+        });
+
+        it('Should call codePanelUpdate method', function() {
+            spyOn(liveEditor, 'codePanelUpdate');
+
+            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
+            liveEditor.actions.undo();
+
+            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+        });
+
+        it('Should call updateBody method', function() {
+            spyOn(liveEditor, 'updateBody');
+
+            liveEditor.experiments.test_1.undoList.push(liveEditor.getIframeBody().clone());
+            liveEditor.actions.undo();
+
+            expect(liveEditor.updateBody).toHaveBeenCalled();
+        });
+    });
 });
