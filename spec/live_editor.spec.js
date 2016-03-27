@@ -131,42 +131,14 @@ describe('LiveEditor', function() {
     });
 
     describe('Build Toolbar', function() {
-        it('Should render a toolbar ul', function() {
+        beforeEach(function() {
+            waits(100);
+            liveEditor.$editorIframe.load();
+        });
+
+        it('Should build Panel', function() {
             var $t = $('ul.toolbar');
             expect($t).toExist();
-        });
-
-        it('Should render an add option button', function() {
-            var $b = $('ul.toolbar li .add-option');
-            expect($b).toExist();
-            expect($b.text()).toBe('+ add option');
-        });
-
-        it('Should render an edit/view mode button', function() {
-            var $s = $('ul.toolbar li select.form-control'),
-                $opts = $s.find('option');
-
-            expect($s).toExist();
-            expect($opts.length).toBe(2);
-            expect($opts[0].textContent).toBe('Edit mode');
-            expect($opts[1].textContent).toBe('View mode');
-        });
-
-        it('Should render an undo button', function() {
-            var $b = $('ul.toolbar li .btn-undo');
-            expect($b).toExist();
-            expect($b.text()).toBe('Undo');
-        });
-
-        it("Should render codePanel button", function() {
-            var $btn = $('ul.toolbar li .code-panel-button');
-            expect($btn.length).toEqual(1);
-            expect($btn.text()).toEqual('< edit code >');
-        });
-
-        it("codePanel button should have data-target attribute", function() {
-            var $attr = $('ul.toolbar li  .code-panel-button').attr('data-target');
-            expect($attr).toEqual('#code-panel');
         });
     });
 
@@ -522,14 +494,14 @@ describe('LiveEditor', function() {
 
     describe('currentMode method', function() {
         it('Should return default edition mode', function() {
-            var v = liveEditor.$modeSelect.val();
+            var v = liveEditor.toolbar.$modeSelect.val();
             expect(v).toBe(liveEditor.currentMode());
             expect('edit').toBe(liveEditor.currentMode());
         });
 
         it('Should return new value after select change', function() {
-            liveEditor.$modeSelect.val('view');
-            var v = liveEditor.$modeSelect.val();
+            liveEditor.toolbar.$modeSelect.val('view');
+            var v = liveEditor.toolbar.$modeSelect.val();
             expect(v).toBe(liveEditor.currentMode());
             expect('view').toBe(liveEditor.currentMode());
         })

@@ -131,23 +131,13 @@
     };
 
     LiveEditor.prototype.buildToolbar = function() {
-        this.$modeSelect = $('<select class="form-control" disabled="disabled">').append('<option value="edit">Edit mode</option>')
-                                                             .append('<option value="view">View mode</option>');
-        this.$buttonAddOption = $('<button class="add-option" type="button">+ add option</button>');
-        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
-        this.$codePanelButton = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >');
-        this.$toolbar = $('<ul class="toolbar">');
-
-        this.$toolbar.append($('<li>').append(this.$buttonAddOption));
-        this.$toolbar.append($('<li>').append(this.$modeSelect));
-        this.$toolbar.append($('<li>').append(this.$undoButton));
-        this.$toolbar.append($('<li>').append(this.$codePanelButton));
-
-        this.$header.append(this.$toolbar);
+        this.toolbar = new LiveEditorToolbar({
+            $appendTo: this.$header
+        });
     };
 
     LiveEditor.prototype.currentMode = function() {
-        return this.$modeSelect.val();
+        return this.toolbar.$modeSelect.val();
     };
 
     LiveEditor.prototype.saveBody = function () {
@@ -306,7 +296,7 @@
             }
         });
 
-        this.$undoButton.off().on('click', function () {
+        this.toolbar.$undoButton.off().on('click', function () {
             if (self.currentExperiment().undoList.length) {
                 var object = self.currentExperiment().undoList.pop();
                 self.currentExperiment().scriptList.pop();
@@ -323,11 +313,11 @@
             self.codePanelUpdate();
         });
 
-        this.$modeSelect.on('change', function() {
+        this.toolbar.$modeSelect.on('change', function() {
             self.updateBody();
         });
 
-        this.$buttonAddOption.on('click', function() {
+        this.toolbar.$buttonAddOption.on('click', function() {
             self.addNewOption();
         });
     };
@@ -339,7 +329,7 @@
         this.tabs.createTabs([name]);
         this.createExperiments();
         this.updateBody();
-        this.$toolbar.trigger('add-new-option');
+        this.toolbar.$toolbar.trigger('add-new-option');
     };
 
     LiveEditor.prototype.unselectElements = function () {
