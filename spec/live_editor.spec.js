@@ -95,7 +95,6 @@ describe('LiveEditor', function() {
         });
 
         it ('Loading Spinner disappears when iframe is fully loaded', function() {
-            $iframe = $liveEditor.find('iframe');
             $iframe.load();
             expect($s.css('display')).toBe('none');
         });
@@ -335,18 +334,23 @@ describe('LiveEditor', function() {
 
     describe('addToScriptList method', function() {
         it('Should append formated string inside scriptList var', function() {
-            liveEditor.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs');
+            liveEditor.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs;');
 
             expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
-            expect(liveEditor.experiments.test_1.scriptList[0]).toBe('My test with tabs and paragraphs');
+            expect(liveEditor.experiments.test_1.scriptList[0]).toBe('My test with tabs and paragraphs;');
+
+            liveEditor.addToScriptList('My new script');
+
+            expect(liveEditor.experiments.test_1.scriptList.length).toBe(2);
+            expect(liveEditor.experiments.test_1.scriptList[1]).toBe('My test with tabs and paragraphs;My new script');
         });
     });
 
     describe('codePanelUpdate method', function() {
         it('Should update aceEditor value with scriptList content', function() {
             liveEditor.experiments.test_1.scriptList.push('item 1');
-            liveEditor.experiments.test_1.scriptList.push('item 2');
-            liveEditor.experiments.test_1.scriptList.push('item 3');
+            liveEditor.experiments.test_1.scriptList.push('item 1 item 2');
+            liveEditor.experiments.test_1.scriptList.push('item 1 item 2 item 3');
 
             liveEditor.codePanelUpdate();
 
@@ -646,7 +650,7 @@ describe('LiveEditor', function() {
             spyOn(aceEditor, 'setValue');
 
             liveEditor.experiments['test_1'].scriptList.push('my_script_1');
-            liveEditor.experiments['test_1'].scriptList.push('my_script_2');
+            liveEditor.experiments['test_1'].scriptList.push('my_script_1 my_script_2');
             liveEditor.codePanelUpdate();
 
             expect(aceEditor.setValue).toHaveBeenCalledWith('my_script_1 my_script_2', -1);

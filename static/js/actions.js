@@ -113,5 +113,13 @@
         liveEditor.codePanelUpdate();
     };
 
+    LiveEditorActions.prototype.saveCodePanel = function () {
+        var oldScript = liveEditor.currentExperimentScriptList(),
+            newScript = liveEditor.codePanel.aceEditor.aceEditor.getValue(),
+            str = newScript.slice(oldScript.length, newScript.length);
+
+        this.saveChanges(str);
+    };
+
     window.LiveEditorActions = LiveEditorActions;
 })(window, document, $);

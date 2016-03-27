@@ -318,4 +318,19 @@ describe("Actions", function() {
             expect(liveEditor.updateBody).toHaveBeenCalled();
         });
     });
+
+    describe('saveCodePanel method', function() {
+        beforeEach(function() {
+            spyOn(liveEditor.actions, 'saveChanges');
+        });
+
+        it('Should call saveChanges method', function() {
+            liveEditor.experiments.test_1.scriptList.push('alert(1);');
+            liveEditor.codePanel.aceEditor.aceEditor.setValue('alert(1);alert(2);');
+
+            liveEditor.actions.saveCodePanel();
+
+            expect(liveEditor.actions.saveChanges).toHaveBeenCalledWith('alert(2);')
+        });
+    });
 });

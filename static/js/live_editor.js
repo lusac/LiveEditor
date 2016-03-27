@@ -319,11 +319,7 @@
         });
 
         this.codePanel.$saveButton.on('click', function() {
-            console.log('Save!');
-        });
-
-        this.codePanel.$cancelButton.on('click', function() {
-            console.log('Cancel!');
+            self.actions.saveCodePanel();
         });
     };
 
@@ -489,18 +485,29 @@
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {
-        var str = str.replace(new RegExp('\t|\n', 'g'), '');
-        this.currentExperiment().scriptList.push(str);
+        // TODO - test js
+        var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
+            oldScript = this.currentExperimentScriptList(),
+            finalScript = oldScript == undefined ? newScript : oldScript + newScript;
+
+        this.currentExperiment().scriptList.push(finalScript);
     };
 
     LiveEditor.prototype.codePanelUpdate = function () {
-        var str = this.currentExperiment().scriptList.join(' ');
-        this.codePanel.aceEditor.aceEditor.setValue(str, -1);
+        var str = this.currentExperimentScriptList();
+        if (str) {
+            this.codePanel.aceEditor.aceEditor.setValue(str, -1);
+        }
     };
 
     LiveEditor.prototype.currentExperiment = function () {
         var currentTab = this.tabs.current();
         return this.experiments[currentTab.attr('data-name')];
+    };
+
+    LiveEditor.prototype.currentExperimentScriptList = function() {
+        // TODO - test js
+        return this.currentExperiment().scriptList.slice(-1)[0];
     };
 
     window.LiveEditor = LiveEditor;
