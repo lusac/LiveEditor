@@ -320,6 +320,14 @@
         this.toolbar.$buttonAddOption.on('click', function() {
             self.addNewOption();
         });
+
+        this.codePanel.$saveButton.on('click', function() {
+            console.log('Save!');
+        });
+
+        this.codePanel.$cancelButton.on('click', function() {
+            console.log('Cancel!');
+        });
     };
 
     LiveEditor.prototype.addNewOption = function () {
