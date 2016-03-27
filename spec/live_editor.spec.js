@@ -103,7 +103,7 @@ describe('LiveEditor', function() {
 
     describe('Build Modals', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -120,7 +120,7 @@ describe('LiveEditor', function() {
 
     describe('Build Panel', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -132,7 +132,7 @@ describe('LiveEditor', function() {
 
     describe('Build Toolbar', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -144,7 +144,7 @@ describe('LiveEditor', function() {
 
     describe('Build DOM outline', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -159,7 +159,7 @@ describe('LiveEditor', function() {
 
     describe('bindEvents method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -251,11 +251,30 @@ describe('LiveEditor', function() {
             $('#code-panel').trigger('show.bs.collapse');
             expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
         });
+
+        it('Undo button click should call undo method if undoList is not empty', function() {
+            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
+            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+
+            spyOn(liveEditor.actions, 'undo');
+
+            $('.btn-undo').click();
+
+            expect(liveEditor.actions.undo).toHaveBeenCalled();
+        });
+
+        it('Undo button click should not call undo method if undoList is empty', function() {
+            spyOn(liveEditor.actions, 'undo');
+
+            $('.btn-undo').click();
+
+            expect(liveEditor.actions.undo).not.toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -274,7 +293,7 @@ describe('LiveEditor', function() {
 
     describe('getElementPath method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
             liveEditor.$editorIframe.load();
         });
 
@@ -303,7 +322,7 @@ describe('LiveEditor', function() {
     describe('undoListUpdate method', function() {
         beforeEach(function() {
             $iframe.load();
-            waits(100);
+            waits(150);
         });
 
         it('Should append a clone from body', function() {
@@ -339,7 +358,7 @@ describe('LiveEditor', function() {
 
     describe('operationInit method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
         });
 
         it('always call codePanelUpdate method', function() {
@@ -431,7 +450,7 @@ describe('LiveEditor', function() {
 
     describe('saveBody method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
         });
 
         it('Should save jquery body', function() {
@@ -472,7 +491,7 @@ describe('LiveEditor', function() {
 
     describe('getIframeBody method', function() {
         beforeEach(function() {
-            waits(100);
+            waits(150);
         });
 
         it('Should return iframe body', function() {
