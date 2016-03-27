@@ -19,30 +19,32 @@
         return '("' + selector + '").attr("class", "' + classes + '");';
     };
 
-    LiveEditorActions.prototype.getIframeCurrentElement = function () {
-        return this.liveEditor.$editorIframe.contents().find(this.liveEditor.currentSelected);
+    LiveEditorActions.prototype.saveChanges = function (str) {
+        this.liveEditor.undoListUpdate();
+        this.liveEditor.addToScriptList(str);
+        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedRemove = function () {
         var str = '$("' + this.liveEditor.currentSelected + '").remove();';
+        this.saveChanges(str);
+    };
 
-        this.liveEditor.undoListUpdate();
-        this.liveEditor.addToScriptList(str);
-        this.liveEditor.applyJs(str);
+    LiveEditorActions.prototype.currentSelectedEditHtml = function () {
+        var html = this.liveEditor.editHtmlModal.getValue(),
+            str = '$("' + this.liveEditor.currentSelected + '").replaceWith("' + html + '");';
+        this.saveChanges(str);
+    };
+
+    LiveEditorActions.prototype.currentSelectedEditClasses = function () {
+        var scriptClasses = this.liveEditor.$editClassesModal.find('.modal-body input').val(),
+            str = '$' + this._changeClass(this.liveEditor.currentSelected, scriptClasses);
+        this.saveChanges(str);
     };
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
         var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
         this.liveEditor.addToScriptList(str);
-    };
-
-    LiveEditorActions.prototype.currentSelectedEditHtml = function () {
-        var html = this.liveEditor.editHtmlModal.getValue(),
-            str = "$('" + this.liveEditor.currentSelected + "').replaceWith('" + html + "');";
-
-        this.liveEditor.undoListUpdate();
-        this.liveEditor.addToScriptList(str);
-        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentSelectedEditText = function () {
@@ -52,15 +54,6 @@
         this.liveEditor.undoListUpdate();
         this.liveEditor.addToScriptList(strScript);
         this.liveEditor.applyJs(strScript);
-    };
-
-    LiveEditorActions.prototype.currentSelectedEditClasses = function () {
-        var scriptClasses = this.liveEditor.$editClassesModal.find('.modal-body input').val(),
-            str = '$' + this._changeClass(this.liveEditor.currentSelected, scriptClasses);
-
-        this.liveEditor.undoListUpdate();
-        this.liveEditor.addToScriptList(str);
-        this.liveEditor.applyJs(str);
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {
