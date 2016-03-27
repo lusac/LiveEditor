@@ -15,8 +15,8 @@
      };
 
     LiveEditorCodePanel.prototype.create = function () {
-        var $button = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']" ' + this.editorName + '="1">').text('< edit code >'),
-            $panel = $('<div id="code-panel" class="code-panel collapse" ' + this.editorName + '="1">'),
+        var $button = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >'),
+            $panel = $('<div id="code-panel" class="code-panel collapse">'),
             html = '<div class="well">' +
                         '<div class="row">' +
                             '<div class="col-xs-9">' +
@@ -24,8 +24,8 @@
                             '</div>' +
                             '<div class="col-xs-3 code-panel-buttons-grid">' +
                                 '<div class="code-panel-buttons">' +
-                                    '<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">cancel</button>' +
-                                    '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#code-panel[' + this.editorName + ']">save code</button>' +
+                                    '<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#code-panel">cancel</button>' +
+                                    '<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#code-panel">save code</button>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +

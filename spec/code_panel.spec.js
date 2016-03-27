@@ -47,18 +47,7 @@ describe("CodePanel", function() {
 
         it("Button should have data-target attribute", function() {
             var $attr = $('.code-panel-button').attr('data-target');
-            expect($attr).toEqual('#code-panel[test-editor]');
-        });
-
-        it("Button should have editor attribute", function() {
-            var $attr = $('.code-panel-button').attr('test-editor');
-            expect($attr).toEqual('1');
-        });
-
-
-        it("Panel should have editor attribute", function() {
-            var $attr = $('#code-panel').attr('test-editor');
-            expect($attr).toEqual('1');
+            expect($attr).toEqual('#code-panel');
         });
 
         it("Panel should have correct structure", function() {

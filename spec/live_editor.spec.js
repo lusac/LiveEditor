@@ -125,7 +125,7 @@ describe('LiveEditor', function() {
         });
 
         it('Should build Panel', function() {
-            var $p = $('#code-panel[live-editor-test-1]');
+            var $p = $('#code-panel');
             expect($p).toExist();
         });
     });
