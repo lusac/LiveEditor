@@ -61,6 +61,7 @@
 
             if (this.experiments[name] === undefined) {
                 this.experiments[name] = {
+                    'title': this.tabsList[i],
                     'scriptList': this.js[i] ? [this.js[i]] : [],
                     'undoList': [],
                     'goalList': []
@@ -488,7 +489,7 @@
         // TODO - test js
         var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
             oldScript = this.currentExperimentScriptList(),
-            finalScript = oldScript == undefined ? newScript : oldScript + newScript;
+            finalScript = oldScript === undefined ? newScript : oldScript + newScript;
 
         this.currentExperiment().scriptList.push(finalScript);
     };
