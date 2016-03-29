@@ -44,7 +44,7 @@
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
         var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
-        this.liveEditor.addToScriptList(str);
+        this.saveChanges(str);
     };
 
     LiveEditorActions.prototype.currentSelectedEditText = function () {

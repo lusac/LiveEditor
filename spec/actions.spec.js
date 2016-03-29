@@ -78,6 +78,8 @@ describe("Actions", function() {
         });
 
         it('Should add script in scriptList', function() {
+            spyOn(liveEditor, 'applyJs');
+
             var $p = liveEditor.$editorIframe.contents().find('p');
             liveEditor.setCurrentElement($p);
 
