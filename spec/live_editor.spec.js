@@ -396,6 +396,16 @@ describe('LiveEditor', function() {
             expect(liveEditor.actions.currentSelectedAddEvent).toHaveBeenCalledWith('click');
         });
 
+        it('add-event-scroll', function() {
+            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditor.actions, 'currentSelectedAddEvent');
+
+            liveEditor.operationInit('add-event-scroll');
+
+            expect(liveEditor.unselectElements).toHaveBeenCalled();
+            expect(liveEditor.actions.currentSelectedAddEvent).toHaveBeenCalledWith('scroll');
+        });
+
         it('edit-html-save', function() {
             spyOn(liveEditor.actions, 'currentSelectedEditHtml');
 

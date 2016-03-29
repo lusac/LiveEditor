@@ -454,6 +454,11 @@
             this.unselectElements();
         }
 
+        if (operation === 'add-event-scroll') {
+            this.actions.currentSelectedAddEvent('scroll');
+            this.unselectElements();
+        }
+
         if (operation === 'edit-html-save') {
             this.actions.currentSelectedEditHtml();
         }

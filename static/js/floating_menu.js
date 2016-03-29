@@ -55,7 +55,13 @@
                 attrs: {
                     'data-operation': 'add-event-click'
                 }
-            }];
+            }, {
+                value: 'Scroll',
+                attrs: {
+                    'data-operation': 'add-event-scroll'
+                }
+            }
+            ];
 
         menuHtml += this.newItem({value: 'Edit Element', items: editList });
         menuHtml += this.newItem({attrs: {'class': 'divider'}});

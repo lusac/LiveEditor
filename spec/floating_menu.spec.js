@@ -178,12 +178,12 @@ describe('Floating Menu', function() {
             expect($item2).not.toHaveAttr('target');
         });
 
-        it('Should create Goal item', function() {
+        it('Should create goal click item', function() {
             var $i = $('li.dropdown-submenu:eq(2)>a'),
                 $li = $('li.dropdown-submenu:eq(2) .dropdown-menu li');
 
             expect($i.text()).toBe('Create new goal');
-            expect($li.length).toBe(1);
+            expect($li.length).toBe(2);
 
 
             var $click = $('li.dropdown-submenu:eq(2) .dropdown-menu li:eq(0)');
@@ -193,6 +193,25 @@ describe('Floating Menu', function() {
 
             // Attrs
             expect($click.data('operation')).toBe('add-event-click');
+            expect($click).not.toHaveAttr('toggle');
+            expect($click).not.toHaveAttr('target');
+        });
+
+        it('Should create goal scroll item', function() {
+            var $i = $('li.dropdown-submenu:eq(2)>a'),
+                $li = $('li.dropdown-submenu:eq(2) .dropdown-menu li');
+
+            expect($i.text()).toBe('Create new goal');
+            expect($li.length).toBe(2);
+
+
+            var $click = $('li.dropdown-submenu:eq(2) .dropdown-menu li:eq(1)');
+
+            // Text
+            expect($click.find('a').text()).toBe('Scroll');
+
+            // Attrs
+            expect($click.data('operation')).toBe('add-event-scroll');
             expect($click).not.toHaveAttr('toggle');
             expect($click).not.toHaveAttr('target');
         });
