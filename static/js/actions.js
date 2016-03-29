@@ -31,8 +31,8 @@
     };
 
     LiveEditorActions.prototype.currentSelectedEditHtml = function () {
-        var html = this.liveEditor.editHtmlModal.getValue(),
-            str = '$("' + this.liveEditor.currentSelected + '").replaceWith("' + html + '");';
+        var html = this.liveEditor.editHtmlModal.getValue().replace(new RegExp('\'', 'g'), '&rsquo;'),
+            str = '$(\'' + this.liveEditor.currentSelected + '\').replaceWith(\'' + html + '\');';
         this.saveChanges(str);
     };
 
