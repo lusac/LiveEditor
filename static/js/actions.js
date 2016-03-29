@@ -68,6 +68,7 @@
 
         if (this.liveEditor.experiments[newName] === undefined) {
             this.liveEditor.experiments[newNameFormated] = currentExperiment;
+            this.liveEditor.experiments[newNameFormated].title = newName;
 
             var index = this.liveEditor.tabsList.indexOf(currentName);
             this.liveEditor.tabsList[index] = newName;
