@@ -53,9 +53,9 @@ describe("Actions", function() {
 
         it('Should call saveChanges method with param', function() {
             liveEditor.currentSelected = 'my_path';
-            liveEditor.editHtmlModal.setValue('something\'s');
+            liveEditor.editHtmlModal.setValue('Test\t\nsomething\'s');
             liveEditor.actions.currentSelectedEditHtml();
-            expect(liveEditor.actions.saveChanges).toHaveBeenCalledWith('$(\'my_path\').replaceWith(\'something&rsquo;s\');');
+            expect(liveEditor.actions.saveChanges).toHaveBeenCalledWith('$(\'my_path\').replaceWith(\'Testsomething&rsquo;s\');');
         });
     });
 
