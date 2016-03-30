@@ -291,12 +291,6 @@
             }
         });
 
-        this.$editorIframe.contents().keyup(function(e) {
-            if (e.keyCode == 27) { // Esc
-                self.unselectElements();
-            }
-        });
-
         this.toolbar.$undoButton.off().on('click', function () {
             if (self.currentExperiment().undoList.length) {
                 self.actions.undo();
@@ -339,7 +333,35 @@
             // TODO - test js
             self.domOutline.draw(self.$currentSelected[0]);
         });
+
+        $(document).keyup(function(e) {
+            // TODO - test js
+            self.changeMode(e);
+        });
+
+        this.$editorIframe.contents().keyup(function(e) {
+            // TODO - test js
+            self.changeMode(e);
+
+            // TODO - test js (verify)
+            if (e.keyCode == 27) { // Esc
+                self.unselectElements();
+            }
+        });
     };
+
+    LiveEditor.prototype.changeMode = function(key) {
+        // TODO - test js
+        if (key.which == 69) {
+            // key 'e'
+            this.toolbar.$modeSelect.val('edit');
+            this.updateBody();
+        } else if (key.which == 86) {
+            // key 'v'
+            this.toolbar.$modeSelect.val('view');
+            this.updateBody();
+        }
+    }
 
     LiveEditor.prototype.addNewOption = function () {
         // TODO - CHECK IF THIS NAME DONT EXIST
