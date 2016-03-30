@@ -159,7 +159,11 @@
 
         try {
             if (mode == 'edit') {
-                $body.replaceWith($iframeBody.clone());
+                // TODO - test js
+                var $content = $iframeBody.clone();
+                $content.find('script').remove();
+
+                $body.replaceWith($content);
             } else if (mode == 'view') {
                 $body.replaceWith($iframeBody);
             }
