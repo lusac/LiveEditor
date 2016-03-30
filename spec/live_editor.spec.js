@@ -678,4 +678,7 @@ describe('LiveEditor', function() {
 
     describe('getCurrentParentsPath method', function() {
     });
+
+    describe('containerFormat method', function() {
+    });
 });

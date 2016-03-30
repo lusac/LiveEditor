@@ -216,6 +216,7 @@
     };
 
     LiveEditor.prototype.modalEvents = function () {
+        // TODO - test js
         var self = this;
 
         // Edit HTML
@@ -363,6 +364,7 @@
     }
 
     LiveEditor.prototype.unselectElements = function () {
+        // TODO - test js
         if (this.$currentSelected && this.currentSelected) {
             this.floatingMenu.close();
             this.domOutline.stop();
@@ -409,6 +411,7 @@
     };
 
     LiveEditor.prototype.getCurrentParentsPath = function () {
+        // TODO - test js
         var a = this.$currentSelected[0];
         var els = [];
         while (a) {
@@ -419,6 +422,7 @@
     };
 
     LiveEditor.prototype.openCurrentMenu = function () {
+        // TODO - test js
         if (this.currentSelected) {
             var $domOutlineBox = this.$editorIframe.contents().find('.DomOutline_box'),
                 top = this.$editorIframe.offset().top,
@@ -454,10 +458,11 @@
     };
 
     LiveEditor.prototype.containerFormat = function () {
+        // TODO - test js
         var pathList = this.getCurrentParentsPath(),
             _list = [];
 
-        for (var i=0; i <= pathList.length - 1; i++) {
+        for (var i=pathList.length-2; i>0 ; i--) {
             if (pathList[i].tagName) {
                 _list.push({
                     value: pathList[i].tagName.toLowerCase(),
