@@ -13,7 +13,7 @@
     };
 
     LiveEditorToolbar.prototype.create = function () {
-        this.$modeSelect = $('<select class="form-control" disabled="disabled">')
+        this.$modeSelect = $('<select class="form-control">')
                                 .append('<option value="edit">Edit mode</option>')
                                 .append('<option value="view">View mode</option>');
         this.$buttonAddOption = $('<button class="add-option" type="button">+ add option</button>');
