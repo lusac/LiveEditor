@@ -266,20 +266,13 @@
         this.modalEvents();
 
         document.addEventListener('domOutlineOnClick', function () {
-            self.setCurrentElement(self.domOutline.element);
-            self.openCurrentMenu();
-            self.domOutline.pause();
-
-            self.$editorIframe.contents().find('html *').on('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                self.unselectElements();
-            });
-
+            // TODO - test js
+            self.selectElement();
             console.log('dom clicked!');
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
+            // TODO - verify it has test
             self.operationInit(e.detail.operation);
         }, false);
 
@@ -322,6 +315,23 @@
         this.codePanel.$saveButton.on('click', function() {
             self.actions.saveCodePanel();
         });
+
+        $(document).on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
+            // TODO - test js
+            e.stopPropagation();
+
+            var path = $(this).data('element-path'),
+                $el = self.$editorIframe.contents().find(path)[0];
+
+            self.domOutline.draw($el);
+        }).on('mouseup', '#floating-menu .container-item-el[data-element-path]', function(e) {
+            // TODO - test js
+            e.stopPropagation();
+            self.selectElement();
+        }).on('mouseleave', '#select-container', function() {
+            // TODO - test js
+            self.domOutline.draw(self.$currentSelected[0]);
+        });
     };
 
     LiveEditor.prototype.addNewOption = function () {
@@ -332,6 +342,25 @@
         this.createExperiments();
         this.updateBody();
     };
+
+    LiveEditor.prototype.selectElement = function () {
+        // TODO - test js
+        var self = this;
+
+        if (this.floatingMenu) {
+            this.floatingMenu.close();
+        }
+
+        this.setCurrentElement(this.domOutline.element);
+        this.openCurrentMenu();
+        this.domOutline.pause();
+
+        this.$editorIframe.contents().find('html *').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            self.unselectElements();
+        });
+    }
 
     LiveEditor.prototype.unselectElements = function () {
         if (this.$currentSelected && this.currentSelected) {
@@ -433,7 +462,7 @@
                 _list.push({
                     value: pathList[i].tagName.toLowerCase(),
                     attrs: {
-                        'value': this.getElementPath(pathList[i])
+                        'data-element-path': this.getElementPath(pathList[i])
                     }
                 });
             }

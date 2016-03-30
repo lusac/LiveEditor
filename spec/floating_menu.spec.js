@@ -1,7 +1,6 @@
 describe('Floating Menu', function() {
 
     beforeEach(function() {
-        $('ul.dropdown-menu[role]').remove();
         menu = new FloatingMenu({
             elemId: 'my-id',
             data: {
@@ -36,7 +35,7 @@ describe('Floating Menu', function() {
             }
         });
 
-        $menu = $('ul.dropdown-menu[role]');
+        $menu = $('ul#floating-menu.dropdown-menu[role]');
     });
 
     afterEach(function() {
@@ -150,12 +149,14 @@ describe('Floating Menu', function() {
         });
 
         it('Should create Select Container item', function() {
-            var $i = $('li.dropdown-submenu:eq(1)>a'),
-                $li = $('li.dropdown-submenu:eq(1) .dropdown-menu li');
+            var $i = $('.dropdown-submenu:eq(1)');
 
-            expect($i.text()).toBe('Select Container');
+            expect($i).toHaveId('select-container');
+
+            var $li = $i.find('.dropdown-menu li');
+
+            expect($i.find('>a').text()).toBe('Select Container');
             expect($li.length).toBe(2);
-
 
             var $item1 = $('li.dropdown-submenu:eq(1) .dropdown-menu li:eq(0)'),
                 $item2 = $('li.dropdown-submenu:eq(1) .dropdown-menu li:eq(1)');

@@ -10,7 +10,7 @@
     FloatingMenu.prototype.init = function (params) {
         this.LEFT_GAP = 10;
         this.TOP_GAP = -30;
-        this.$menu = $('<ul class="dropdown-menu" role="menu">');
+        this.$menu = $('<ul id="floating-menu" class="dropdown-menu" role="menu">');
         this.$parent = params.appendTo || $('body');
         this.elemId = params.elemId;
         this.$parent.append(this.$menu);
@@ -68,7 +68,7 @@
         menuHtml += this.newItem({value: 'Move and Resize', attrs: {'data-operation': 'move-and-resize'}});
         menuHtml += this.newItem({value: 'Remove', attrs: {'data-operation': 'remove'}});
         menuHtml += this.newItem({attrs: {'class': 'divider'}});
-        menuHtml += this.newItem({value: 'Select Container', items: params.container});
+        menuHtml += this.newItem({value: 'Select Container', attrs: {'id': 'select-container'}, items: params.container});
         menuHtml += this.newItem({attrs: {'class': 'divider'}});
         menuHtml += this.newItem({value: 'Create new goal', items: events});
 

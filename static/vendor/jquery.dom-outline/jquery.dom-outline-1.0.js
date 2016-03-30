@@ -117,14 +117,16 @@
             return false;
         }
 
-        function draw(e) {
-            if (e.target.className.indexOf(self.opts.namespace) !== -1) {
-                return;
+        function draw(e, elem) {
+            if (elem === undefined) {
+                if (e.target.className.indexOf(self.opts.namespace) !== -1) {
+                    return;
+                }
             }
 
             self.active = true;
 
-            pub.element = e.target;
+            pub.element = elem || e.target;
 
             var scroll_top = getScrollTop(),
                 pos = pub.element.getBoundingClientRect(),
@@ -153,6 +155,10 @@
 
             return false;
         }
+
+        pub.draw = function (elem) {
+            draw(null, elem);
+        };
 
         pub.start = function () {
             removeOutlineElements();
