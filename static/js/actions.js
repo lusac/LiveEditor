@@ -19,6 +19,11 @@
         return '("' + selector + '").attr("class", "' + classes + '");';
     };
 
+    LiveEditorActions.prototype.stringFormat = function(str) {
+        // TODO - test js
+        return str.replace(new RegExp('\'', 'g'), '&rsquo;').replace(new RegExp('\t|\n', 'g'), '');
+    }
+
     LiveEditorActions.prototype.saveChanges = function (str) {
         this.liveEditor.undoListUpdate();
         this.liveEditor.addToScriptList(str);
@@ -31,7 +36,7 @@
     };
 
     LiveEditorActions.prototype.currentSelectedEditHtml = function () {
-        var html = this.liveEditor.editHtmlModal.getValue().replace(new RegExp('\'', 'g'), '&rsquo;').replace(new RegExp('\t|\n', 'g'), ''),
+        var html = this.stringFormat(this.liveEditor.editHtmlModal.getValue()),
             str = '$(\'' + this.liveEditor.currentSelected + '\').replaceWith(\'' + html + '\');';
         this.saveChanges(str);
     };
@@ -42,18 +47,18 @@
         this.saveChanges(str);
     };
 
-    LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
-        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
-        this.saveChanges(str);
-    };
-
     LiveEditorActions.prototype.currentSelectedEditText = function () {
-        var scriptText = this.liveEditor.editTextModal.getValue(),
+        var scriptText = this.stringFormat(this.liveEditor.editTextModal.getValue()),
             strScript = '$' + this._changeText(this.liveEditor.currentSelected, scriptText);
 
         this.liveEditor.undoListUpdate();
         this.liveEditor.addToScriptList(strScript);
         this.liveEditor.applyJs(strScript);
+    };
+
+    LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
+        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+        this.saveChanges(str);
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {
