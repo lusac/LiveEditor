@@ -1,6 +1,6 @@
 describe('LiveEditor', function() {
     beforeEach(function() {
-        liveEditor = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
+        liveEditorTest = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
         $liveEditor = $('.live-editor');
     });
 
@@ -17,39 +17,39 @@ describe('LiveEditor', function() {
     describe('iframe onload', function() {
         beforeEach(function() {
             $iframe = $liveEditor.find('iframe');
-            spyOn(liveEditor, 'domOutlineInit');
-            spyOn(liveEditor, 'bindEvents');
-            spyOn(liveEditor, 'saveBody');
-            spyOn(liveEditor, 'updateBody');
-            spyOn(liveEditor, 'codePanelUpdate');
-            spyOn(liveEditor, 'dispatchLoadEvent');
-            spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditorTest, 'domOutlineInit');
+            spyOn(liveEditorTest, 'bindEvents');
+            spyOn(liveEditorTest, 'saveBody');
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'codePanelUpdate');
+            spyOn(liveEditorTest, 'dispatchLoadEvent');
+            spyOn(liveEditorTest, 'applyJs');
             $iframe.load();
         });
 
 
         it('Should call domOutlineInit method', function() {
-            expect(liveEditor.domOutlineInit).toHaveBeenCalled();
+            expect(liveEditorTest.domOutlineInit).toHaveBeenCalled();
         });
 
         it('Should call bindEvents method', function() {
-            expect(liveEditor.bindEvents).toHaveBeenCalled();
+            expect(liveEditorTest.bindEvents).toHaveBeenCalled();
         });
 
         it('Should call saveBody method', function() {
-            expect(liveEditor.saveBody).toHaveBeenCalled();
+            expect(liveEditorTest.saveBody).toHaveBeenCalled();
         });
 
         it('Should call updateBody method', function() {
-            expect(liveEditor.updateBody).toHaveBeenCalled();
+            expect(liveEditorTest.updateBody).toHaveBeenCalled();
         });
 
         it('Should call codePanelUpdate method', function() {
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).toHaveBeenCalled();
         });
 
         it('Should call dispatchLoadEvent method', function() {
-            expect(liveEditor.dispatchLoadEvent).toHaveBeenCalled();
+            expect(liveEditorTest.dispatchLoadEvent).toHaveBeenCalled();
         });
     });
 
@@ -103,7 +103,7 @@ describe('LiveEditor', function() {
     describe('Build Modals', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('Should build Modals', function() {
@@ -120,7 +120,7 @@ describe('LiveEditor', function() {
     describe('Build Panel', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('Should build Panel', function() {
@@ -132,7 +132,7 @@ describe('LiveEditor', function() {
     describe('Build Toolbar', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('Should build Panel', function() {
@@ -144,12 +144,12 @@ describe('LiveEditor', function() {
     describe('Build DOM outline', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('Should init DOM outline', function() {
-            liveEditor.$editorIframe.on('load', function() {
-                var $d = liveEditor.$editorIframe.contents().find('.DomOutline_box');
+            liveEditorTest.$editorIframe.on('load', function() {
+                var $d = liveEditorTest.$editorIframe.contents().find('.DomOutline_box');
                 expect($d).toExist();
                 expect($d.css('display')).toBe('none');
             });
@@ -159,146 +159,146 @@ describe('LiveEditor', function() {
     describe('bindEvents method', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('Click in any element should call setCurrentElement method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
 
-            spyOn(liveEditor, 'setCurrentElement');
+            spyOn(liveEditorTest, 'setCurrentElement');
 
             $p.trigger('mousemove').click();
 
-            expect(liveEditor.setCurrentElement).toHaveBeenCalled();
+            expect(liveEditorTest.setCurrentElement).toHaveBeenCalled();
         });
 
         it('Click in any element should call openCurrentMenu method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
 
-            spyOn(liveEditor, 'openCurrentMenu');
+            spyOn(liveEditorTest, 'openCurrentMenu');
 
             $p.trigger('mousemove').click();
 
-            expect(liveEditor.openCurrentMenu).toHaveBeenCalled();
+            expect(liveEditorTest.openCurrentMenu).toHaveBeenCalled();
         });
 
         it('Click in floating menu item should call operationInit method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
 
-            spyOn(liveEditor, 'operationInit');
+            spyOn(liveEditorTest, 'operationInit');
 
             $('ul.dropdown-menu[role] li').click();
 
-            expect(liveEditor.operationInit).toHaveBeenCalled();
+            expect(liveEditorTest.operationInit).toHaveBeenCalled();
         });
 
         it('When an element is already select and another one is clicked, should call unselectElements method', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
             $p.trigger('mousemove').click();
 
-            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditorTest, 'unselectElements');
 
-            liveEditor.$editorIframe.contents().find('h1').trigger('mousemove').click();
+            liveEditorTest.$editorIframe.contents().find('h1').trigger('mousemove').click();
 
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
+            expect(liveEditorTest.unselectElements).toHaveBeenCalled();
         });
 
         // it('When an element is already select and ESC keydown, should call unselectElements method', function() {
-        //     var $p = liveEditor.$editorIframe.contents().find('p');
+        //     var $p = liveEditorTest.$editorIframe.contents().find('p');
         //     $p.trigger('mousemove').click();
 
-        //     spyOn(liveEditor, 'unselectElements');
+        //     spyOn(liveEditorTest, 'unselectElements');
 
-        //     liveEditor.$editorIframe.contents().find('html').trigger('keyup', {which: 27});
+        //     liveEditorTest.$editorIframe.contents().find('html').trigger('keyup', {which: 27});
 
-        //     expect(liveEditor.unselectElements).toHaveBeenCalled();
+        //     expect(liveEditorTest.unselectElements).toHaveBeenCalled();
         // });
 
         it('tab click should call changeTab method', function() {
-            spyOn(liveEditor, 'changeTab');
+            spyOn(liveEditorTest, 'changeTab');
             $('.nav-tabs a[data-toggle="tab"]:last').click();
-            expect(liveEditor.changeTab).toHaveBeenCalled();
+            expect(liveEditorTest.changeTab).toHaveBeenCalled();
         });
 
         it('tab click should call applyJs method', function() {
-            spyOn(liveEditor, 'applyJs');
+            spyOn(liveEditorTest, 'applyJs');
             $('.nav-tabs a[data-toggle="tab"]:last').click();
-            expect(liveEditor.applyJs).toHaveBeenCalled();
+            expect(liveEditorTest.applyJs).toHaveBeenCalled();
         });
 
         it('tab click should call codePanelUpdate method', function() {
-            spyOn(liveEditor, 'codePanelUpdate');
+            spyOn(liveEditorTest, 'codePanelUpdate');
             $('.nav-tabs a[data-toggle="tab"]:last').click();
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).toHaveBeenCalled();
         });
 
         it('add option button should call addNewOption method', function() {
-            spyOn(liveEditor, 'addNewOption');
+            spyOn(liveEditorTest, 'addNewOption');
             $('.add-option').click();
-            expect(liveEditor.addNewOption).toHaveBeenCalled();
+            expect(liveEditorTest.addNewOption).toHaveBeenCalled();
         });
 
         it('mode select button should call updateBody method', function() {
-            spyOn(liveEditor, 'updateBody');
+            spyOn(liveEditorTest, 'updateBody');
             $('select.form-control').trigger('change');
-            expect(liveEditor.updateBody).toHaveBeenCalled();
+            expect(liveEditorTest.updateBody).toHaveBeenCalled();
         });
 
         it('open code panel should call codePanelUpdate method', function() {
-            spyOn(liveEditor, 'codePanelUpdate');
+            spyOn(liveEditorTest, 'codePanelUpdate');
             $('#code-panel').trigger('show.bs.collapse');
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).toHaveBeenCalled();
         });
 
         it('Undo button click should call undo method if undoList is not empty', function() {
-            liveEditor.experiments.test_1.scriptList.push('$("p").remove();');
-            liveEditor.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
+            liveEditorTest.experiments.test_1.scriptList.push('$("p").remove();');
+            liveEditorTest.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
 
-            spyOn(liveEditor.actions, 'undo');
+            spyOn(liveEditorTest.actions, 'undo');
 
             $('.btn-undo').click();
 
-            expect(liveEditor.actions.undo).toHaveBeenCalled();
+            expect(liveEditorTest.actions.undo).toHaveBeenCalled();
         });
 
         it('Undo button click should not call undo method if undoList is empty', function() {
-            spyOn(liveEditor.actions, 'undo');
+            spyOn(liveEditorTest.actions, 'undo');
 
             $('.btn-undo').click();
 
-            expect(liveEditor.actions.undo).not.toHaveBeenCalled();
+            expect(liveEditorTest.actions.undo).not.toHaveBeenCalled();
         });
     });
 
     describe('setCurrentElement method', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('set value to attributes', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
 
-            expect(liveEditor.hasOwnProperty('currentSelected')).toBe(false);
-            expect(liveEditor.hasOwnProperty('$currentSelected')).toBe(false);
+            expect(liveEditorTest.hasOwnProperty('currentSelected')).toBe(false);
+            expect(liveEditorTest.hasOwnProperty('$currentSelected')).toBe(false);
 
-            liveEditor.setCurrentElement($p);
+            liveEditorTest.setCurrentElement($p);
 
-            expect(liveEditor.currentSelected).toBe('html>body>div>p');
-            expect(liveEditor.$currentSelected).toBe($p);
+            expect(liveEditorTest.currentSelected).toBe('html>body>div>p');
+            expect(liveEditorTest.$currentSelected).toBe($p);
         });
     });
 
     describe('getElementPath method', function() {
         beforeEach(function() {
             waits(150);
-            liveEditor.$editorIframe.load();
+            liveEditorTest.$editorIframe.load();
         });
 
         it('return correct path', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p'),
-                path = liveEditor.getElementPath($p);
+            var $p = liveEditorTest.$editorIframe.contents().find('p'),
+                path = liveEditorTest.getElementPath($p);
 
             expect(path).toBe('html>body>div>p');
         });
@@ -312,7 +312,7 @@ describe('LiveEditor', function() {
                 counter ++;
             }, false);
 
-            liveEditor.dispatchLoadEvent();
+            liveEditorTest.dispatchLoadEvent();
 
             expect(counter).toBe(1);
         });
@@ -325,36 +325,36 @@ describe('LiveEditor', function() {
         });
 
         it('Should append a clone from body', function() {
-            liveEditor.undoListUpdate();
-            var $item = liveEditor.experiments.test_1.undoList[0];
-            expect(liveEditor.experiments.test_1.undoList.length).toBe(1);
+            liveEditorTest.undoListUpdate();
+            var $item = liveEditorTest.experiments.test_1.undoList[0];
+            expect(liveEditorTest.experiments.test_1.undoList.length).toBe(1);
             expect($item.prop('tagName')).toBe('BODY');
         });
     });
 
     describe('addToScriptList method', function() {
         it('Should append formated string inside scriptList var', function() {
-            liveEditor.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs;');
+            liveEditorTest.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs;');
 
-            expect(liveEditor.experiments.test_1.scriptList.length).toBe(1);
-            expect(liveEditor.experiments.test_1.scriptList[0]).toBe('My test with tabs and paragraphs;');
+            expect(liveEditorTest.experiments.test_1.scriptList.length).toBe(1);
+            expect(liveEditorTest.experiments.test_1.scriptList[0]).toBe('My test with tabs and paragraphs;');
 
-            liveEditor.addToScriptList('My new script');
+            liveEditorTest.addToScriptList('My new script');
 
-            expect(liveEditor.experiments.test_1.scriptList.length).toBe(2);
-            expect(liveEditor.experiments.test_1.scriptList[1]).toBe('My test with tabs and paragraphs;My new script');
+            expect(liveEditorTest.experiments.test_1.scriptList.length).toBe(2);
+            expect(liveEditorTest.experiments.test_1.scriptList[1]).toBe('My test with tabs and paragraphs;My new script');
         });
     });
 
     describe('codePanelUpdate method', function() {
         it('Should update aceEditor value with scriptList content', function() {
-            liveEditor.experiments.test_1.scriptList.push('item 1');
-            liveEditor.experiments.test_1.scriptList.push('item 1 item 2');
-            liveEditor.experiments.test_1.scriptList.push('item 1 item 2 item 3');
+            liveEditorTest.experiments.test_1.scriptList.push('item 1');
+            liveEditorTest.experiments.test_1.scriptList.push('item 1 item 2');
+            liveEditorTest.experiments.test_1.scriptList.push('item 1 item 2 item 3');
 
-            liveEditor.codePanelUpdate();
+            liveEditorTest.codePanelUpdate();
 
-            var aceEditorValue = liveEditor.codePanel.aceEditor.aceEditor.getValue();
+            var aceEditorValue = liveEditorTest.codePanel.aceEditor.aceEditor.getValue();
 
             expect(aceEditorValue).toBe('item 1 item 2 item 3')
         });
@@ -366,99 +366,99 @@ describe('LiveEditor', function() {
         });
 
         it('always call codePanelUpdate method', function() {
-            spyOn(liveEditor, 'codePanelUpdate');
+            spyOn(liveEditorTest, 'codePanelUpdate');
 
-            liveEditor.operationInit('fake');
+            liveEditorTest.operationInit('fake');
 
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).toHaveBeenCalled();
         });
 
         it('remove operation', function() {
-            var $p = liveEditor.$editorIframe.contents().find('p');
-            liveEditor.setCurrentElement($p);
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
 
-            spyOn(liveEditor.actions, 'currentSelectedRemove');
-            spyOn(liveEditor, 'unselectElements');
+            spyOn(liveEditorTest.actions, 'currentSelectedRemove');
+            spyOn(liveEditorTest, 'unselectElements');
 
-            liveEditor.operationInit('remove');
+            liveEditorTest.operationInit('remove');
 
-            expect(liveEditor.actions.currentSelectedRemove).toHaveBeenCalled();
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedRemove).toHaveBeenCalled();
+            expect(liveEditorTest.unselectElements).toHaveBeenCalled();
         });
 
         it('add-event-click', function() {
-            spyOn(liveEditor, 'unselectElements');
-            spyOn(liveEditor.actions, 'currentSelectedAddEvent');
+            spyOn(liveEditorTest, 'unselectElements');
+            spyOn(liveEditorTest.actions, 'currentSelectedAddEvent');
 
-            liveEditor.operationInit('add-event-click');
+            liveEditorTest.operationInit('add-event-click');
 
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
-            expect(liveEditor.actions.currentSelectedAddEvent).toHaveBeenCalledWith('click');
+            expect(liveEditorTest.unselectElements).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedAddEvent).toHaveBeenCalledWith('click');
         });
 
         it('add-event-scroll', function() {
-            spyOn(liveEditor, 'unselectElements');
-            spyOn(liveEditor.actions, 'currentSelectedAddEvent');
+            spyOn(liveEditorTest, 'unselectElements');
+            spyOn(liveEditorTest.actions, 'currentSelectedAddEvent');
 
-            liveEditor.operationInit('add-event-scroll');
+            liveEditorTest.operationInit('add-event-scroll');
 
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
-            expect(liveEditor.actions.currentSelectedAddEvent).toHaveBeenCalledWith('scroll');
+            expect(liveEditorTest.unselectElements).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedAddEvent).toHaveBeenCalledWith('scroll');
         });
 
         it('edit-html-save', function() {
-            spyOn(liveEditor.actions, 'currentSelectedEditHtml');
+            spyOn(liveEditorTest.actions, 'currentSelectedEditHtml');
 
-            liveEditor.operationInit('edit-html-save');
+            liveEditorTest.operationInit('edit-html-save');
 
-            expect(liveEditor.actions.currentSelectedEditHtml).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedEditHtml).toHaveBeenCalled();
         });
 
         it('edit-text-save', function() {
-            spyOn(liveEditor.actions, 'currentSelectedEditText');
+            spyOn(liveEditorTest.actions, 'currentSelectedEditText');
 
-            liveEditor.operationInit('edit-text-save');
+            liveEditorTest.operationInit('edit-text-save');
 
-            expect(liveEditor.actions.currentSelectedEditText).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedEditText).toHaveBeenCalled();
         });
 
         it('edit-classes-save', function() {
-            spyOn(liveEditor.actions, 'currentSelectedEditClasses');
+            spyOn(liveEditorTest.actions, 'currentSelectedEditClasses');
 
-            liveEditor.operationInit('edit-classes-save');
+            liveEditorTest.operationInit('edit-classes-save');
 
-            expect(liveEditor.actions.currentSelectedEditClasses).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentSelectedEditClasses).toHaveBeenCalled();
         });
 
         it('edit-rename-modal-save', function() {
-            spyOn(liveEditor.actions, 'currentOptionRename');
+            spyOn(liveEditorTest.actions, 'currentOptionRename');
 
-            liveEditor.operationInit('edit-rename-modal-save');
+            liveEditorTest.operationInit('edit-rename-modal-save');
 
-            expect(liveEditor.actions.currentOptionRename).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentOptionRename).toHaveBeenCalled();
         });
 
         it('delete-option', function() {
-            spyOn(liveEditor.actions, 'currentOptionDelete');
+            spyOn(liveEditorTest.actions, 'currentOptionDelete');
 
-            liveEditor.operationInit('delete-option');
+            liveEditorTest.operationInit('delete-option');
 
-            expect(liveEditor.actions.currentOptionDelete).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentOptionDelete).toHaveBeenCalled();
         });
 
         it('duplicate-option', function() {
-            spyOn(liveEditor.actions, 'currentOptionDuplicate');
+            spyOn(liveEditorTest.actions, 'currentOptionDuplicate');
 
-            liveEditor.operationInit('duplicate-option');
+            liveEditorTest.operationInit('duplicate-option');
 
-            expect(liveEditor.actions.currentOptionDuplicate).toHaveBeenCalled();
+            expect(liveEditorTest.actions.currentOptionDuplicate).toHaveBeenCalled();
         });
     });
 
     describe('currentExperiment method', function() {
         it('Return correct value', function() {
-            var c = liveEditor.currentExperiment();
-            expect(c).toBe(liveEditor.experiments.test_1);
+            var c = liveEditorTest.currentExperiment();
+            expect(c).toBe(liveEditorTest.experiments.test_1);
         });
     });
 
@@ -468,38 +468,38 @@ describe('LiveEditor', function() {
         });
 
         it('Should save jquery body', function() {
-            expect(liveEditor.$iframeBody.prop('tagName')).toBe('BODY');
+            expect(liveEditorTest.$iframeBody.prop('tagName')).toBe('BODY');
         });
     });
 
     describe('currentMode method', function() {
         it('Should return default edition mode', function() {
-            var v = liveEditor.toolbar.$modeSelect.val();
-            expect(v).toBe(liveEditor.currentMode());
-            expect('edit').toBe(liveEditor.currentMode());
+            var v = liveEditorTest.toolbar.$modeSelect.val();
+            expect(v).toBe(liveEditorTest.currentMode());
+            expect('edit').toBe(liveEditorTest.currentMode());
         });
 
         it('Should return new value after select change', function() {
-            liveEditor.toolbar.$modeSelect.val('view');
-            var v = liveEditor.toolbar.$modeSelect.val();
-            expect(v).toBe(liveEditor.currentMode());
-            expect('view').toBe(liveEditor.currentMode());
+            liveEditorTest.toolbar.$modeSelect.val('view');
+            var v = liveEditorTest.toolbar.$modeSelect.val();
+            expect(v).toBe(liveEditorTest.currentMode());
+            expect('view').toBe(liveEditorTest.currentMode());
         })
     });
 
     describe('changeTab method', function() {
         beforeEach(function() {
-            spyOn(liveEditor, 'updateBody');
-            spyOn(liveEditor, 'codePanelUpdate');
-            liveEditor.changeTab();
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'codePanelUpdate');
+            liveEditorTest.changeTab();
         });
 
         it('Should call updateBody method', function() {
-            expect(liveEditor.updateBody).toHaveBeenCalled();
+            expect(liveEditorTest.updateBody).toHaveBeenCalled();
         });
 
         it('Should call codePanelUpdate method', function() {
-            expect(liveEditor.codePanelUpdate).toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).toHaveBeenCalled();
         });
     });
 
@@ -509,130 +509,130 @@ describe('LiveEditor', function() {
         });
 
         it('Should return iframe body', function() {
-            var $body = liveEditor.getIframeBody();
-            expect($body).toBe(liveEditor.$editorIframe.contents().find('body'));
+            var $body = liveEditorTest.getIframeBody();
+            expect($body).toBe(liveEditorTest.$editorIframe.contents().find('body'));
         });
     });
 
     describe('addNewOption method', function() {
         beforeEach(function() {
-            spyOn(liveEditor.tabs, 'createTabs');
-            spyOn(liveEditor, 'updateBody');
-            spyOn(liveEditor, 'createExperiments');
-            liveEditor.addNewOption();
+            spyOn(liveEditorTest.tabs, 'createTabs');
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'createExperiments');
+            liveEditorTest.addNewOption();
         });
 
         it('Should append tab name inside tabsList', function() {
-            expect(liveEditor.tabsList.length).toBe(3);
-            expect(liveEditor.tabsList[2]).toBe('Test 3');
+            expect(liveEditorTest.tabsList.length).toBe(3);
+            expect(liveEditorTest.tabsList[2]).toBe('Test 3');
 
-            liveEditor.addNewOption();
+            liveEditorTest.addNewOption();
 
-            expect(liveEditor.tabsList.length).toBe(4);
-            expect(liveEditor.tabsList[3]).toBe('Test 4');
+            expect(liveEditorTest.tabsList.length).toBe(4);
+            expect(liveEditorTest.tabsList[3]).toBe('Test 4');
         });
 
         it('Should call createTabs method', function() {
-            expect(liveEditor.tabs.createTabs).toHaveBeenCalledWith(['Test 3']);
+            expect(liveEditorTest.tabs.createTabs).toHaveBeenCalledWith(['Test 3']);
         });
 
         it('Should call createExperiments method', function() {
-            expect(liveEditor.createExperiments).toHaveBeenCalled();
+            expect(liveEditorTest.createExperiments).toHaveBeenCalled();
         });
 
         it('Should call updateBody method', function() {
-            expect(liveEditor.updateBody).toHaveBeenCalled();
+            expect(liveEditorTest.updateBody).toHaveBeenCalled();
         });
     });
 
     describe('updateBody method', function() { 
         beforeEach(function() {
             $iframe = $liveEditor.find('iframe').load();
-            spyOn(liveEditor.domOutline, 'stop');
-            spyOn(liveEditor, 'unselectElements');
-            spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'domOutlineInit');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest, 'unselectElements');
+            spyOn(liveEditorTest, 'applyJs');
+            spyOn(liveEditorTest, 'domOutlineInit');
         });
 
         it('Should call domoutline stop method', function() {
-            liveEditor.updateBody();
-            expect(liveEditor.domOutline.stop).toHaveBeenCalled();
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.domOutline.stop).toHaveBeenCalled();
         });
 
         it('Should call unselectElements method', function() {
-            liveEditor.updateBody();
-            expect(liveEditor.unselectElements).toHaveBeenCalled();
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.unselectElements).toHaveBeenCalled();
         });
 
         it('When in view mode, should not call applyJs method', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('view');
-            liveEditor.updateBody();
-            expect(liveEditor.applyJs).not.toHaveBeenCalled();
+            spyOn(liveEditorTest, 'currentMode').andReturn('view');
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.applyJs).not.toHaveBeenCalled();
         });
 
         it('When in view mode, should not call domOutlineInit method', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('view');
-            liveEditor.updateBody();
-            expect(liveEditor.domOutlineInit).not.toHaveBeenCalled();
+            spyOn(liveEditorTest, 'currentMode').andReturn('view');
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.domOutlineInit).not.toHaveBeenCalled();
         });
 
         it('When in edit mode, should call applyJs method', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('edit');
-            liveEditor.updateBody();
-            expect(liveEditor.applyJs).toHaveBeenCalled();
+            spyOn(liveEditorTest, 'currentMode').andReturn('edit');
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.applyJs).toHaveBeenCalled();
         });
 
         it('When in edit mode, should call domOutlineInit method', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('edit');
-            liveEditor.updateBody();
-            expect(liveEditor.domOutlineInit).toHaveBeenCalled();
+            spyOn(liveEditorTest, 'currentMode').andReturn('edit');
+            liveEditorTest.updateBody();
+            expect(liveEditorTest.domOutlineInit).toHaveBeenCalled();
         });
     });
 
     describe('updateBody method with waits', function() {
         beforeEach(function() {
             $iframe = $liveEditor.find('iframe').load();
-            spyOn(liveEditor.domOutline, 'stop');
-            spyOn(liveEditor, 'unselectElements');
-            spyOn(liveEditor, 'applyJs');
-            spyOn(liveEditor, 'domOutlineInit');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest, 'unselectElements');
+            spyOn(liveEditorTest, 'applyJs');
+            spyOn(liveEditorTest, 'domOutlineInit');
             waits(200);
         });
 
         it('When in edit mode should clone body element', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('edit');
+            spyOn(liveEditorTest, 'currentMode').andReturn('edit');
 
-            var $body = liveEditor.$editorIframe.contents().find('body');
+            var $body = liveEditorTest.$editorIframe.contents().find('body');
 
-            liveEditor.updateBody();
+            liveEditorTest.updateBody();
 
-            var $newBody = liveEditor.$editorIframe.contents().find('body');
+            var $newBody = liveEditorTest.$editorIframe.contents().find('body');
 
             expect($newBody).toExist();
             expect($newBody).not.toBe($body);
         });
 
         it('When in view mode should use original body element', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('view');
+            spyOn(liveEditorTest, 'currentMode').andReturn('view');
 
-            var $body = liveEditor.$editorIframe.contents().find('body');
+            var $body = liveEditorTest.$editorIframe.contents().find('body');
 
-            liveEditor.updateBody();
+            liveEditorTest.updateBody();
 
-            var $newBody = liveEditor.$editorIframe.contents().find('body');
+            var $newBody = liveEditorTest.$editorIframe.contents().find('body');
 
-            expect($newBody).toBe(liveEditor.$iframeBody);
+            expect($newBody).toBe(liveEditorTest.$iframeBody);
             expect($body).not.toBe($newBody);
         });
 
         it('has $iframeBody parameter with edit mode (clone body param)', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('edit');
+            spyOn(liveEditorTest, 'currentMode').andReturn('edit');
             var $fake = $('<div class="fake-body">');
 
-            liveEditor.updateBody($fake);
+            liveEditorTest.updateBody($fake);
 
-            var $fakeBody = liveEditor.$editorIframe.contents().find('div.fake-body'),
-                $body = liveEditor.$editorIframe.contents().find('body');
+            var $fakeBody = liveEditorTest.$editorIframe.contents().find('div.fake-body'),
+                $body = liveEditorTest.$editorIframe.contents().find('body');
 
             expect($body).not.toExist();
             expect($fakeBody).toExist();
@@ -640,13 +640,13 @@ describe('LiveEditor', function() {
         });
 
         it('has $iframeBody parameter with view mode (dont clone body param)', function() {
-            spyOn(liveEditor, 'currentMode').andReturn('view');
+            spyOn(liveEditorTest, 'currentMode').andReturn('view');
             var $fake = $('<div class="fake-body">');
 
-            liveEditor.updateBody($fake);
+            liveEditorTest.updateBody($fake);
 
-            var $fakeBody = liveEditor.$editorIframe.contents().find('div.fake-body'),
-                $body = liveEditor.$editorIframe.contents().find('body');
+            var $fakeBody = liveEditorTest.$editorIframe.contents().find('div.fake-body'),
+                $body = liveEditorTest.$editorIframe.contents().find('body');
 
             expect($body).not.toExist();
             expect($fakeBody).toExist();
@@ -656,12 +656,12 @@ describe('LiveEditor', function() {
 
     describe('codePanelUpdate method', function() {
         it('Should call aceEditor setValue method', function() {
-            var aceEditor = liveEditor.codePanel.aceEditor.aceEditor;
+            var aceEditor = liveEditorTest.codePanel.aceEditor.aceEditor;
             spyOn(aceEditor, 'setValue');
 
-            liveEditor.experiments['test_1'].scriptList.push('my_script_1');
-            liveEditor.experiments['test_1'].scriptList.push('my_script_1 my_script_2');
-            liveEditor.codePanelUpdate();
+            liveEditorTest.experiments['test_1'].scriptList.push('my_script_1');
+            liveEditorTest.experiments['test_1'].scriptList.push('my_script_1 my_script_2');
+            liveEditorTest.codePanelUpdate();
 
             expect(aceEditor.setValue).toHaveBeenCalledWith('my_script_1 my_script_2', -1);
         });

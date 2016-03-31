@@ -113,15 +113,15 @@
     };
 
     LiveEditorActions.prototype.undo = function () {
-        var object = liveEditor.currentExperiment().undoList.pop();
-        liveEditor.currentExperiment().scriptList.pop();
-        liveEditor.updateBody(object);
-        liveEditor.codePanelUpdate();
+        var object = this.liveEditor.currentExperiment().undoList.pop();
+        this.liveEditor.currentExperiment().scriptList.pop();
+        this.liveEditor.updateBody(object);
+        this.liveEditor.codePanelUpdate();
     };
 
     LiveEditorActions.prototype.saveCodePanel = function () {
-        var oldScript = liveEditor.currentExperimentScriptList(),
-            newScript = liveEditor.codePanel.aceEditor.aceEditor.getValue(),
+        var oldScript = this.liveEditor.currentExperimentScriptList(),
+            newScript = this.liveEditor.codePanel.aceEditor.aceEditor.getValue(),
             str = newScript.slice(oldScript.length, newScript.length);
 
         this.saveChanges(str);
