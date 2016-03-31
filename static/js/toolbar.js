@@ -16,7 +16,7 @@
         this.$modeSelect = $('<select class="form-control">')
                                 .append('<option value="edit">Edit mode</option>')
                                 .append('<option value="view">View mode</option>');
-        this.$buttonAddOption = $('<button class="add-option" type="button">+ add option</button>');
+        this.$buttonAddOption = $('<button type="button" class="btn btn-default add-option">+ add option</button>');
         this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
         this.$codePanelButton = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >');
         this.$toolbar = $('<ul class="toolbar">');
@@ -27,7 +27,7 @@
         this.$toolbar.append($('<li>').append(this.$codePanelButton));
 
         this.$appendTo.append(this.$toolbar);
-    }
+    };
 
     window.LiveEditorToolbar = LiveEditorToolbar;
 })(window, document, $);
