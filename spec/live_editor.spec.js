@@ -269,6 +269,26 @@ describe('LiveEditor', function() {
 
             expect(liveEditorTest.actions.undo).not.toHaveBeenCalled();
         });
+
+        it('document key up should call keyUpEvents method', function() {
+            spyOn(liveEditorTest, 'keyUpEvents');
+
+            var e = $.Event("keyup");
+            e.which = 37; 
+            $(document).trigger(e);
+
+            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        });
+
+        it('iframe document key up should call keyUpEvents method', function() {
+            spyOn(liveEditorTest, 'keyUpEvents');
+
+            var e = $.Event("keyup");
+            e.which = 37; 
+            liveEditorTest.$editorIframe.contents().trigger(e);
+
+            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        });
     });
 
     describe('setCurrentElement method', function() {
@@ -732,18 +752,68 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('openCurrentMenu method', function() {
+    describe('keyUpEvents method', function() {
+        beforeEach(function() {
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'unselectElements');
+        });
+
+        describe('key E', function() {
+            beforeEach(function() {
+                var key = {which: 69};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to Edit', function() {
+                var v = liveEditorTest.toolbar.$modeSelect.val();
+                expect(v).toBe('edit');
+            });
+
+            it('Should call updateBody method', function() {
+                expect(liveEditorTest.updateBody).toHaveBeenCalled()
+            });
+        });
+
+        describe('key V', function() {
+            beforeEach(function() {
+                var key = {which: 86};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to View', function() {
+                var v = liveEditorTest.toolbar.$modeSelect.val();
+                expect(v).toBe('view');
+            });
+
+            it('Should call updateBody method', function() {
+                expect(liveEditorTest.updateBody).toHaveBeenCalled()
+            });
+        });
+
+        describe('key ESC', function() {
+            beforeEach(function() {
+                var key = {which: 27};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to View', function() {
+                expect(liveEditorTest.unselectElements).toHaveBeenCalled();
+            });
+        });
     });
 
-    describe('unselectElements method', function() {
-    });
+    // describe('openCurrentMenu method', function() {
+    // });
 
-    describe('modalEvents method', function() {
-    });
+    // describe('unselectElements method', function() {
+    // });
 
-    describe('getCurrentParentsPath method', function() {
-    });
+    // describe('modalEvents method', function() {
+    // });
 
-    describe('containerFormat method', function() {
-    });
+    // describe('getCurrentParentsPath method', function() {
+    // });
+
+    // describe('containerFormat method', function() {
+    // });
 });

@@ -330,22 +330,15 @@
         });
 
         $(document).keyup(function(e) {
-            // TODO - test js
-            self.changeMode(e);
+            self.keyUpEvents(e);
         });
 
         this.$editorIframe.contents().keyup(function(e) {
-            // TODO - test js
-            self.changeMode(e);
-
-            // TODO - test js (verify)
-            if (e.keyCode == 27) { // Esc
-                self.unselectElements();
-            }
+            self.keyUpEvents(e);
         });
     };
 
-    LiveEditor.prototype.changeMode = function(key) {
+    LiveEditor.prototype.keyUpEvents = function(key) {
         // TODO - test js
         if (key.which == 69) {
             // key 'e'
@@ -355,6 +348,9 @@
             // key 'v'
             this.toolbar.$modeSelect.val('view');
             this.updateBody();
+        } else if (key.which == 27) {
+            // key 'esc'
+            this.unselectElements();
         }
     }
 
