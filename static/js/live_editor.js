@@ -382,7 +382,6 @@
     }
 
     LiveEditor.prototype.unselectElements = function () {
-        // TODO - test js
         if (this.$currentSelected && this.currentSelected) {
             this.floatingMenu.close();
             this.domOutline.stop();

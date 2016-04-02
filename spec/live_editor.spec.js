@@ -886,10 +886,70 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('openCurrentMenu method', function() {
+    describe('unselectElements method', function() {
+        beforeEach(function() {
+            waits(200);
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+        });
+
+        it('Should call floating menu close method', function() {
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.floatingMenu.close).toHaveBeenCalled();
+        });
+
+        it('Shoud call domOutline stop method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.domOutline.stop).toHaveBeenCalled();
+        });
+
+        it('Shoud call domOutline start method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.domOutline.start).toHaveBeenCalled();
+        });
+
+        it('Set currentSelected as null', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.$currentSelected = 1;
+            liveEditorTest.currentSelected = 1;
+
+            liveEditorTest.unselectElements();
+
+            expect(liveEditorTest.$currentSelected).toBe(null);
+            expect(liveEditorTest.currentSelected).toBe(null);
+        });
     });
 
-    describe('unselectElements method', function() {
+    describe('openCurrentMenu method', function() {
     });
 
     describe('modalEvents method', function() {
