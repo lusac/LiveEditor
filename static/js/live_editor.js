@@ -142,7 +142,6 @@
     };
 
     LiveEditor.prototype.saveBody = function () {
-        // TODO - test js
         this.$iframeBody = this.$editorIframe.contents().find('body');
         this.$iframeBody.find('script').remove();
     };

@@ -470,6 +470,10 @@ describe('LiveEditor', function() {
         it('Should save jquery body', function() {
             expect(liveEditorTest.$iframeBody.prop('tagName')).toBe('BODY');
         });
+
+        it('Should remove all script tags from body', function() {
+            expect(liveEditorTest.$iframeBody.find('script')).not.toExist();
+        });
     });
 
     describe('currentMode method', function() {
