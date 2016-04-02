@@ -339,7 +339,6 @@
     };
 
     LiveEditor.prototype.keyUpEvents = function(key) {
-        // TODO - test js
         if (key.which == 69) {
             // key 'e'
             this.toolbar.$modeSelect.val('edit');
