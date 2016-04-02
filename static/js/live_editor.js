@@ -313,7 +313,7 @@
         });
 
         this.$editor.on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
-            // TODO - test js
+            // TODO - test are commented
             e.stopPropagation();
 
             var path = $(this).data('element-path'),
@@ -321,11 +321,11 @@
 
             self.domOutline.draw($el);
         }).on('mouseup', '#floating-menu .container-item-el[data-element-path]', function(e) {
-            // TODO - test js
+            // TODO - test are commented
             e.stopPropagation();
             self.selectElement();
         }).on('mouseleave', '#select-container', function() {
-            // TODO - test js
+            // TODO - test are commented
             self.domOutline.draw(self.$currentSelected[0]);
         });
 
