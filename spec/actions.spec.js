@@ -335,4 +335,19 @@ describe("Actions", function() {
             expect(liveEditorTest.actions.saveChanges).toHaveBeenCalledWith('alert(2);')
         });
     });
+
+    describe('stringFormat method', function() {
+        it('Replace single quote for &rsquo;', function() {
+            var testString = 'My string ha\'s all this little shit\'s',
+                string = liveEditorTest.actions.stringFormat(testString);
+
+            expect(string).toBe('My string ha&rsquo;s all this little shit&rsquo;s');
+        });
+
+        it ('Remove all \t and \n', function() {
+            var testString = 'My string has \t\nall\t this little \nshits',
+                string = liveEditorTest.actions.stringFormat(testString);
+            expect(string).toBe('My string has all this little shits');
+        });
+    });
 });

@@ -20,7 +20,6 @@
     };
 
     LiveEditorActions.prototype.stringFormat = function(str) {
-        // TODO - test js
         return str.replace(new RegExp('\'', 'g'), '&rsquo;').replace(new RegExp('\t|\n', 'g'), '');
     }
 
