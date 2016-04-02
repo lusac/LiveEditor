@@ -1,11 +1,11 @@
 describe('LiveEditor', function() {
     beforeEach(function() {
         liveEditorTest = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
-        $liveEditor = $('.live-editor');
+        $liveEditorTest = $('.live-editor');
     });
 
     afterEach(function() {
-        $liveEditor.empty();
+        $liveEditorTest.empty();
         $('.modal').remove();
         $('.toolbar').remove();
         $('#code-panel').remove();
@@ -16,7 +16,7 @@ describe('LiveEditor', function() {
 
     describe('iframe onload', function() {
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe');
+            $iframe = $liveEditorTest.find('iframe');
             spyOn(liveEditorTest, 'domOutlineInit');
             spyOn(liveEditorTest, 'bindEvents');
             spyOn(liveEditorTest, 'saveBody');
@@ -55,7 +55,7 @@ describe('LiveEditor', function() {
 
     describe('Build Tabs', function() {
         it('Should build tabs', function() {
-            var $tabs = $liveEditor.find('.nav.nav-tabs');
+            var $tabs = $liveEditorTest.find('.nav.nav-tabs');
             expect($tabs).toExist();
             expect($tabs.length).toBe(1);
         });
@@ -64,7 +64,7 @@ describe('LiveEditor', function() {
     describe('Build Iframe', function() {
         beforeEach(function() {
             $s = $('.spinner-container');
-            $iframe = $liveEditor.find('iframe');
+            $iframe = $liveEditorTest.find('iframe');
         });
 
         it('Should build iframe', function() {
@@ -159,7 +159,7 @@ describe('LiveEditor', function() {
     describe('bindEvents method', function() {
         beforeEach(function() {
             waits(150);
-            liveEditorTest.$editorIframe.load();
+            // liveEditorTest.$editorIframe.load();
         });
 
         it('Click in any element should call setCurrentElement method', function() {
@@ -289,6 +289,90 @@ describe('LiveEditor', function() {
 
             expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
         });
+
+        // describe('Floating Menu mouse enter', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         _event ={type: 'mouseenter', stopPropagation: function() {} };
+        //         $el = $(document).find('#floating-menu .container-item-el[data-element-path]:first');
+
+        //         spyOn(_event, 'stopPropagation');
+        //         spyOn(liveEditorTest.domOutline, 'draw');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger(_event);
+        //         } catch (err) {}
+        //     });
+
+        //     it('Container element should call stopPropagation method', function() {
+        //         expect(_event.stopPropagation).toHaveBeenCalled();
+        //     });
+
+        //     it('Container element should call domOutline draw method', function() {
+        //         var el = liveEditorTest.$editorIframe.contents().find($el.data('element-path'))[0];
+        //         expect(liveEditorTest.domOutline.draw).toHaveBeenCalledWith(el);
+        //     });
+        // });
+        
+        // describe('Floating Menu mouse up', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         $el = $liveEditorTest.find('#floating-menu .container-item-el[data-element-path]:first');
+
+        //         _event ={type: 'mouseup', stopPropagation: function() {} };
+
+        //         spyOn(_event, 'stopPropagation');
+        //         spyOn(liveEditorTest, 'selectElement');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger(_event);
+        //         } catch (err) {}
+
+        //         $el.trigger(_event);
+        //     });
+
+        //     it('Mouseup: floating menu container element should call stopPropagation method', function() {
+        //         expect(_event.stopPropagation).toHaveBeenCalled();
+        //     });
+
+        //     it('Mouseup: floating menu container element should call selectElement method', function() {
+        //         expect(liveEditorTest.selectElement).toHaveBeenCalled();
+        //     });
+        // });
+
+        // describe('Floating Menu mouse leave', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         $el = $liveEditorTest.find('#select-container');
+
+        //         spyOn(liveEditorTest.domOutline, 'draw');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger('mouseleave');
+        //         } catch (err) {}
+        //     });
+
+        //     it('Mouseleave: floating menu container element should call domOutline draw method', function() {
+        //         expect(liveEditorTest.domOutline.draw).toHaveBeenCalledWith(liveEditorTest.$currentSelected[0]);
+        //     });
+        // });
     });
 
     describe('setCurrentElement method', function() {
@@ -579,7 +663,7 @@ describe('LiveEditor', function() {
 
     describe('updateBody method', function() { 
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe').load();
+            $iframe = $liveEditorTest.find('iframe').load();
             spyOn(liveEditorTest.domOutline, 'stop');
             spyOn(liveEditorTest, 'unselectElements');
             spyOn(liveEditorTest, 'applyJs');
@@ -623,7 +707,7 @@ describe('LiveEditor', function() {
 
     describe('updateBody method with waits', function() {
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe').load();
+            $iframe = $liveEditorTest.find('iframe').load();
             spyOn(liveEditorTest.domOutline, 'stop');
             spyOn(liveEditorTest, 'unselectElements');
             spyOn(liveEditorTest, 'applyJs');
@@ -802,18 +886,18 @@ describe('LiveEditor', function() {
         });
     });
 
-    // describe('openCurrentMenu method', function() {
-    // });
+    describe('openCurrentMenu method', function() {
+    });
 
-    // describe('unselectElements method', function() {
-    // });
+    describe('unselectElements method', function() {
+    });
 
-    // describe('modalEvents method', function() {
-    // });
+    describe('modalEvents method', function() {
+    });
 
-    // describe('getCurrentParentsPath method', function() {
-    // });
+    describe('getCurrentParentsPath method', function() {
+    });
 
-    // describe('containerFormat method', function() {
-    // });
+    describe('containerFormat method', function() {
+    });
 });

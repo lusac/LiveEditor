@@ -312,7 +312,7 @@
             self.actions.saveCodePanel();
         });
 
-        $(document).on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
+        this.$editor.on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
             // TODO - test js
             e.stopPropagation();
 
