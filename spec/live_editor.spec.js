@@ -344,6 +344,14 @@ describe('LiveEditor', function() {
             expect(liveEditorTest.experiments.test_1.scriptList.length).toBe(2);
             expect(liveEditorTest.experiments.test_1.scriptList[1]).toBe('My test with tabs and paragraphs;My new script');
         });
+
+        it('Should call currentExperimentScriptList method', function() {
+            spyOn(liveEditorTest, 'currentExperimentScriptList');
+
+            liveEditorTest.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs;');
+
+            expect(liveEditorTest.currentExperimentScriptList).toHaveBeenCalled();
+        });
     });
 
     describe('codePanelUpdate method', function() {
@@ -668,6 +676,59 @@ describe('LiveEditor', function() {
             liveEditorTest.codePanelUpdate();
 
             expect(aceEditor.setValue).toHaveBeenCalledWith('my_script_1 my_script_2', -1);
+        });
+    });
+
+    describe('currentExperimentScriptList method', function() {
+        it('Should return last item from list', function() {
+            liveEditorTest.currentExperiment().scriptList.push('item 1');
+            liveEditorTest.currentExperiment().scriptList.push('item 2');
+            liveEditorTest.currentExperiment().scriptList.push('item 3');
+            var scriptList = liveEditorTest.currentExperimentScriptList();
+
+            expect(scriptList).toBe('item 3');
+        });
+    });
+
+    describe('selectElement method', function() {
+        beforeEach(function() {
+            liveEditorTest.$editorIframe.load();
+            spyOn(liveEditorTest, 'setCurrentElement');
+            spyOn(liveEditorTest, 'openCurrentMenu');
+            spyOn(liveEditorTest.domOutline, 'pause');
+        });
+
+        it('Should close floating menu if it exist', function() {
+            liveEditorTest.floatingMenu = new FloatingMenu({ data: { value: 'element' } });;
+            spyOn(liveEditorTest.floatingMenu, 'close');
+
+            var oldMenu = liveEditorTest.floatingMenu;
+            liveEditorTest.floatingMenu = null;
+
+            liveEditorTest.selectElement();
+            expect(oldMenu.close).not.toHaveBeenCalled();
+        });
+
+        it('Should not close floating menu if it doest exist', function() {
+            liveEditorTest.floatingMenu = new FloatingMenu({ data: { value: 'element' } });;
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.floatingMenu.close).toHaveBeenCalled();
+        });
+
+        it('Should call setCurrentElement method', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.setCurrentElement).toHaveBeenCalledWith(liveEditorTest.domOutline.element);
+        });
+
+        it('Should call openCurrentMenu method', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.openCurrentMenu).toHaveBeenCalled();
+        });
+
+        it('Should pause domOutline', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.domOutline.pause).toHaveBeenCalled();
         });
     });
 

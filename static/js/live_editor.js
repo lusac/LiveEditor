@@ -368,7 +368,6 @@
     };
 
     LiveEditor.prototype.selectElement = function () {
-        // TODO - test js
         var self = this;
 
         if (this.floatingMenu) {
@@ -380,6 +379,7 @@
         this.domOutline.pause();
 
         this.$editorIframe.contents().find('html *').on('click', function(e) {
+            // TODO - test js
             e.preventDefault();
             e.stopPropagation();
             self.unselectElements();
@@ -547,7 +547,6 @@
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {
-        // TODO - test js
         var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
             oldScript = this.currentExperimentScriptList(),
             finalScript = oldScript === undefined ? newScript : oldScript + newScript;
@@ -568,7 +567,6 @@
     };
 
     LiveEditor.prototype.currentExperimentScriptList = function() {
-        // TODO - test js
         return this.currentExperiment().scriptList.slice(-1)[0];
     };
 
