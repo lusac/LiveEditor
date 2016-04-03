@@ -29,6 +29,33 @@ describe("Modal", function() {
         $('#edit-text-modal').remove();
     });
 
+    describe('init method', function() {
+        beforeEach(function() {
+            params = {
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            }
+            modal = new LiveEditorModal(params);
+        });
+
+        it('Should call create method', function() {
+            spyOn(modal, 'create');
+            modal.init(params);
+            expect(modal.create).toHaveBeenCalled();
+        });
+
+        it('Should call bindEvents method', function() {
+            spyOn(modal, 'bindEvents');
+            modal.init(params);
+            expect(modal.bindEvents).toHaveBeenCalled();
+        });
+    });
+
     describe('Create method', function() {
         it('Should create 2 modals', function() {
             var $m1 = $('#edit-html-modal'),
