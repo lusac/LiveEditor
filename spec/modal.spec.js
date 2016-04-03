@@ -127,7 +127,7 @@ describe("Modal", function() {
 
         it('Return a form field when language is css', function() {
             var $field = modal.getField();
-            expect($field[0].tagName).toBe('FORM');
+            expect($field[0].tagName).toBe('DIV');
         });
 
         it('Return param field when language is not css', function() {
@@ -179,7 +179,7 @@ describe("Modal", function() {
         });
     });
 
-    describe('styleInputWithContent method', function() {
+    describe('deleteInputStyle method', function() {
         beforeEach(function() {
             modal = new LiveEditorModal({
                 editor: 'editor-id',
@@ -196,7 +196,7 @@ describe("Modal", function() {
             var $entry = modal.getStyleInput(),
                 $btn = $entry.find('.btn-add');
 
-            modal.styleInputWithContent($entry);
+            modal.deleteInputStyle($entry);
 
             expect($btn).not.toHaveClass('btn-add');
             expect($btn).toHaveClass('btn-remove');
@@ -274,27 +274,25 @@ describe("Modal", function() {
         });
 
         it('Should call getStyleInput method', function() {
-            spyOn(modal, 'getStyleInput');
+            spyOn(modal, 'getStyleInput').andReturn($('<input>'));
             modal.addNewStyleInput();
             expect(modal.getStyleInput).toHaveBeenCalled();
         });
 
-        it('Should call styleInputWithContent method', function() {
-            spyOn(modal, 'styleInputWithContent');
+        it('Should call deleteInputStyle method', function() {
+            spyOn(modal, 'deleteInputStyle');
             var $lastEntry = modal.$modal.find('.entry:last');
-
             modal.addNewStyleInput();
-
-            expect(modal.styleInputWithContent).toHaveBeenCalledWith($lastEntry);
+            expect(modal.deleteInputStyle).toHaveBeenCalledWith($lastEntry);
         });
 
         it('Should append new entry inside form', function() {
-            var $entries = modal.$modal.find('form .entry');
+            var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(1);
 
             modal.addNewStyleInput();
 
-            var $entries = modal.$modal.find('form .entry');
+            var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(2);
         });
     });
@@ -313,18 +311,18 @@ describe("Modal", function() {
         });
 
         it('Should remove parent', function() {
-            var $entries = modal.$modal.find('form .entry');
+            var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(1);
 
             var $addBtn = modal.$modal.find('.btn-add');
             $addBtn.trigger('click');
 
-            var $entries = modal.$modal.find('form .entry');
+            var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(2);
 
             modal.removeStyleInput($entries.first().find('.btn-remove'));
 
-            var $entries = modal.$modal.find('form .entry');
+            var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(1);
 
             var $btn = modal.$modal.find('form .entry .btn-remove');

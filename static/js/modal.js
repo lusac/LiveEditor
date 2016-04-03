@@ -66,6 +66,10 @@
         this.$modal.on('click', '.btn-add', function(e) {
             e.preventDefault();
             self.addNewStyleInput();
+        }).on('keyup', '.entry input', function(e) {
+            if (e.which == 13) {
+                self.addNewStyleInput();
+            }
         }).on('click', '.btn-remove', function(e) {
             e.preventDefault();
             self.removeStyleInput($(this));
@@ -76,7 +80,7 @@
         var $field = '';
 
         if (this.language == 'css') {
-            $field = $('<form role="form" autocomplete="off">');
+            $field = $('<div>');
         } else {
             $field = $('<' + this.field + ' class="form-control" id="' + this.aceEditorId + '">');
         }
@@ -93,12 +97,13 @@
     };
 
     LiveEditorModal.prototype.addNewStyleInput = function () {
-        var $controlForm = this.$modal.find('form'),
+        var $controlForm = this.$modal.find('.modal-body>div'),
             $currentEntry = this.$modal.find('.entry:last'),
             $newEntry = this.getStyleInput();
 
         $controlForm.append($newEntry);
-        this.styleInputWithContent($currentEntry);
+        this.deleteInputStyle($currentEntry);
+        $newEntry.find('input').focus();
     };
 
     LiveEditorModal.prototype.removeStyleInput = function ($elem) {
@@ -116,7 +121,7 @@
                 '</div>');
     };
 
-    LiveEditorModal.prototype.styleInputWithContent = function ($input) {
+    LiveEditorModal.prototype.deleteInputStyle = function ($input) {
         $input.find('.btn-add')
               .removeClass('btn-add').addClass('btn-remove')
               .removeClass('btn-success').addClass('btn-danger')
