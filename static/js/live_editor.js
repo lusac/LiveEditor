@@ -237,6 +237,8 @@
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
             self.editHtmlModal.setValue(html);
+            self.editHtmlModal.aceEditor.aceEditor.focus();
+            self.editHtmlModal.aceEditor.aceEditor.navigateFileEnd();
         });
 
         // Edit Text
@@ -251,11 +253,12 @@
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected),
                 classes = current_without_cache.attr('class');
             $(this).find('.modal-body input').val(classes);
+        }).on('shown.bs.modal', function () {
+            $(this).find('.modal-body input').focus();
         });
 
         // Edit Style
         this.$editStyleModal.on('show.bs.modal', function () {
-            // TODO - test js
             var $entrys = $(this).find('.modal-body .entry'),
                 $parent = $entrys.parent(),
                 styles = self.$currentSelected.attr('style');
@@ -276,6 +279,8 @@
 
             var $newEntry = self.editStyleModal.getStyleInput();
             $parent.append($newEntry);
+        }).on('shown.bs.modal', function () {
+            $(this).find('.modal-body .entry:last input').focus();
         });
 
         // Rename Modal
