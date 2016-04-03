@@ -96,10 +96,14 @@
         return $field;
     };
 
-    LiveEditorModal.prototype.addNewStyleInput = function () {
+    LiveEditorModal.prototype.addNewStyleInput = function (value) {
         var $controlForm = this.$modal.find('.modal-body>div'),
             $currentEntry = this.$modal.find('.entry:last'),
             $newEntry = this.getStyleInput();
+
+        if (value !== undefined) {
+            $newEntry.find('input[type=text]').val(value);
+        }
 
         $controlForm.append($newEntry);
         this.deleteInputStyle($currentEntry);

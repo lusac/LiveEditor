@@ -259,26 +259,20 @@
 
         // Edit Style
         this.$editStyleModal.on('show.bs.modal', function () {
-            var $entrys = $(this).find('.modal-body .entry'),
-                $parent = $entrys.parent(),
+            var $parent = $(this).find('.modal-body>div'),
                 styles = self.$currentSelected.attr('style');
 
-            $entrys.remove();
+            $parent.empty();
 
             if (styles) {
                 styles = styles.split(';');
                 for(var i=0; i<=styles.length-1; i++) {
                     if (styles[i]) {
-                        var $newEntry = self.editStyleModal.getStyleInput();
-                        $newEntry.find('input[type=text]').val(styles[i]);
-                        $parent.append($newEntry);
-                        self.editStyleModal.styleInputWithContent($newEntry);
+                        self.editStyleModal.addNewStyleInput(styles[i]);
                     }
                 }
             }
-
-            var $newEntry = self.editStyleModal.getStyleInput();
-            $parent.append($newEntry);
+            self.editStyleModal.addNewStyleInput();
         }).on('shown.bs.modal', function () {
             $(this).find('.modal-body .entry:last input').focus();
         });

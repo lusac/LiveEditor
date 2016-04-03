@@ -295,6 +295,20 @@ describe("Modal", function() {
             var $entries = modal.$modal.find('.modal-body>div .entry');
             expect($entries.length).toBe(2);
         });
+
+        it('Should not set value to input', function() {
+            modal.addNewStyleInput();
+
+            var $entry = modal.$modal.find('.modal-body>div .entry:last');
+            expect($entry.find('input').val()).toBe('');
+        });
+
+        it('Should set value to input', function() {
+            modal.addNewStyleInput('My Value');
+
+            var $entry = modal.$modal.find('.modal-body>div .entry:last');
+            expect($entry.find('input').val()).toBe('My Value');
+        });
     });
 
     describe('removeStyleInput method', function() {
