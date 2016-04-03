@@ -381,9 +381,9 @@
             self.domOutline.draw(self.$currentSelected[0]);
         });
 
-        $(document).keyup(function(e) {
-            self.keyUpEvents(e);
-        });
+        // $(document).keyup(function(e) {
+        //     self.keyUpEvents(e);
+        // });
 
         this.$editorIframe.contents().keyup(function(e) {
             self.keyUpEvents(e);

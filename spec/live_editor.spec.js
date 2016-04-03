@@ -270,25 +270,29 @@ describe('LiveEditor', function() {
             expect(liveEditorTest.actions.undo).not.toHaveBeenCalled();
         });
 
-        it('document key up should call keyUpEvents method', function() {
-            spyOn(liveEditorTest, 'keyUpEvents');
+        // IFRAME DOCUMENT ---- BEGIN
 
-            var e = $.Event("keyup");
-            e.which = 37; 
-            $(document).trigger(e);
+        // it('document key up should call keyUpEvents method', function() {
+        //     spyOn(liveEditorTest, 'keyUpEvents');
 
-            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
-        });
+        //     var e = $.Event("keyup");
+        //     e.which = 37; 
+        //     $(document).trigger(e);
 
-        it('iframe document key up should call keyUpEvents method', function() {
-            spyOn(liveEditorTest, 'keyUpEvents');
+        //     expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        // });
 
-            var e = $.Event("keyup");
-            e.which = 37; 
-            liveEditorTest.$editorIframe.contents().trigger(e);
+        // it('iframe document key up should call keyUpEvents method', function() {
+        //     spyOn(liveEditorTest, 'keyUpEvents');
 
-            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
-        });
+        //     var e = $.Event("keyup");
+        //     e.which = 37; 
+        //     liveEditorTest.$editorIframe.contents().trigger(e);
+
+        //     expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        // });
+
+        // IFRAME DOCUMENT ---- END
 
         // describe('Floating Menu mouse enter', function() {
         //     beforeEach(function() {
