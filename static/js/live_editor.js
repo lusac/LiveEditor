@@ -91,13 +91,14 @@
     };
 
     LiveEditor.prototype.buildModals = function (params) {
+        // TODO - remove id
         this.editHtmlModal = new LiveEditorModal({
             editor: this.id,
             data: {
                 name: 'edit-html-modal-' + this.id,
                 title: 'Edit HTML',
-                field: 'textarea',
-                hasAceEditor: true
+                field: 'div',
+                language: 'html'
             }
         });
 
@@ -119,9 +120,20 @@
             }
         });
 
+        this.editStyleModal = new LiveEditorModal({
+            editor: this.id,
+            data: {
+                name: 'edit-style-modal-' + this.id,
+                title: 'Edit Style',
+                field: 'textarea',
+                language: 'css'
+            }
+        });
+
         this.$editHtmlModal = $('#edit-html-modal-' + this.id);
         this.$editTextModal = $('#edit-text-modal-' + this.id);
         this.$editClassesModal = $('#edit-classes-modal-' + this.id);
+        this.$editStyleModal = $('#edit-style-modal-' + this.id);
     };
 
     LiveEditor.prototype.buildPanel = function () {
@@ -241,14 +253,54 @@
             $(this).find('.modal-body input').val(classes);
         });
 
+        // Edit Style
+        this.$editStyleModal.on('show.bs.modal', function () {
+            // TODO - test js
+            var $entrys = $(this).find('.modal-body .entry'),
+                $parent = $entrys.parent(),
+                styles = self.$currentSelected.attr('style');
+
+            $entrys.remove();
+
+            if (styles) {
+                styles = styles.split(';');
+                for(var i=0; i<=styles.length-1; i++) {
+                    if (styles[i]) {
+                        var $newEntry = self.editStyleModal.getStyleInput();
+                        $newEntry.find('input[type=text]').val(styles[i]);
+                        $parent.append($newEntry);
+                        self.editStyleModal.styleInputWithContent($newEntry);
+                    }
+                }
+            }
+
+            var $newEntry = self.editStyleModal.getStyleInput();
+            $parent.append($newEntry);
+        });
+
         // Rename Modal
         $('#rename-modal').on('show.bs.modal', function () {
             $(this).find('.modal-body input').val('');
         });
 
+        this.$editStyleModal.on('click', '.btn-add', function(e) {
+            e.preventDefault();
+
+            var $controlForm = self.$editStyleModal.find('form'),
+                $currentEntry = $(this).parents('.entry:first'),
+                $newEntry = self.editStyleModal.getStyleInput().appendTo($controlForm);
+
+            $newEntry.find('input').val('');
+            self.editStyleModal.styleInputWithContent($currentEntry);
+        }).on('click', '.btn-remove', function(e) {
+            $(this).parents('.entry:first').remove();
+            e.preventDefault();
+        });
+
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
+        this.bindModalSave(this.$editStyleModal, 'style');
         this.bindModalSave($('#rename-modal'), 'rename-modal');
     };
 
@@ -519,6 +571,9 @@
 
         if (operation === 'edit-classes-save') {
             this.actions.currentSelectedEditClasses();
+        }
+        if (operation === 'edit-style-save') {
+            this.actions.currentSelectedEditStyle();
         }
 
         if (operation === 'edit-rename-modal-save') {

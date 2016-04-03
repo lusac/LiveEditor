@@ -12,11 +12,10 @@
         this.name = params.data.name;
         this.title = params.data.title;
         this.field = params.data.field;
-        this.hasAceEditor = false;
+        this.language = params.data.language;
 
-        if (params.data.hasAceEditor) {
+        if (this.language) {
             // TO DO: tests
-            this.hasAceEditor = true;
             this.aceEditorId = this.getID();
         }
 
@@ -24,11 +23,6 @@
     };
 
     LiveEditorModal.prototype.create = function () {
-        if (this.hasAceEditor) {
-            // TO DO: tests
-            this.field = 'div';
-        }
-
         this.$modal = $('<div class="modal fade" tabindex="-1" role="dialog">');
 
         var $div2 = $('<div class="modal-dialog" role="document">'),
@@ -37,14 +31,8 @@
                             '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>' +
                             '<h4 class="modal-title">' + this.title + '</h4>' +
                         '</div>',
-            $field = $('<' + this.field + ' class="form-control" id="' + this.aceEditorId + '">');
-
-        if (this.hasAceEditor) {
-            // TO DO: tests
-            $field.addClass('ace-editor-field');
-        }
-
-        var $section = '<div class="modal-body">' +
+            $field = this.getField(),
+            $section = '<div class="modal-body">' +
                             $field[0].outerHTML +
                         '</div>',
             $footer = '<div class="modal-footer">' +
@@ -62,13 +50,51 @@
 
         $('body').append(this.$modal);
 
-        if (this.hasAceEditor) {
+        if (this.language && this.language != 'css') {
             // TO DO: tests
             this.aceEditor = new LiveEditorAceEditor({
                 id: this.aceEditorId,
-                language: 'html'
+                language: this.language
             });
         }
+    };
+
+    LiveEditorModal.prototype.getField = function () {
+        var $field = '';
+
+        if (this.language == 'css') {
+            $field = $('<form role="form" autocomplete="off">');
+        } else {
+            $field = $('<' + this.field + ' class="form-control" id="' + this.aceEditorId + '">');
+        }
+
+        if (this.language) {
+            if (this.language != 'css') {
+                $field.addClass('ace-editor-field');
+            } else {
+                $field.append(this.getStyleInput());
+            }
+        }
+
+        return $field;
+    };
+
+    LiveEditorModal.prototype.getStyleInput = function () {
+        return $('<div class="entry input-group">'+
+                    '<input class="form-control" type="text" placeholder="Ex: background: #000" />'+
+                    '<span class="input-group-btn">'+
+                        '<button class="btn btn-success btn-add" type="button">'+
+                            '<span class="glyphicon glyphicon-plus"></span>'+
+                        '</button>'+
+                    '</span>'+
+                '</div>');
+    };
+
+    LiveEditorModal.prototype.styleInputWithContent = function ($input) {
+        $input.find('.btn-add')
+              .removeClass('btn-add').addClass('btn-remove')
+              .removeClass('btn-success').addClass('btn-danger')
+              .html('<span class="glyphicon glyphicon-minus"></span>');
     };
 
     LiveEditorModal.prototype.getID = function () {

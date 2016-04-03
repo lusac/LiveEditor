@@ -19,6 +19,10 @@
         return '("' + selector + '").attr("class", "' + classes + '");';
     };
 
+    LiveEditorActions.prototype._addStyle = function (selector, styles) {
+        return '("' + selector + '").attr("style", "' + styles + '");';
+    };
+
     LiveEditorActions.prototype.stringFormat = function(str) {
         return str.replace(new RegExp('\'', 'g'), '&rsquo;').replace(new RegExp('\t|\n', 'g'), '');
     }
@@ -43,6 +47,22 @@
     LiveEditorActions.prototype.currentSelectedEditClasses = function () {
         var scriptClasses = this.liveEditor.$editClassesModal.find('.modal-body input').val(),
             str = '$' + this._changeClass(this.liveEditor.currentSelected, scriptClasses);
+        this.saveChanges(str);
+    };
+
+    LiveEditorActions.prototype.currentSelectedEditStyle = function () {
+        var $inputs = this.liveEditor.$editStyleModal.find('.modal-body input[type=text]'),
+            styles = '';
+
+        $inputs.each(function() {
+            var val = $(this).val();
+            if (val) {
+                styles += val + ';';
+            }
+        });
+
+        var str = '$' + this._addStyle(this.liveEditor.currentSelected, styles);
+
         this.saveChanges(str);
     };
 

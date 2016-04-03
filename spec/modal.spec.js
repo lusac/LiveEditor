@@ -10,15 +10,17 @@ describe("Modal", function() {
                     title: 'Edit Text',
                     field: 'input'
                 }
-            ],
-            modal1 = new LiveEditorModal({
-                editor: 'editor-id',
-                data: datas[0]
-            }),
-            modal2 = new LiveEditorModal({
-                editor: 'editor-id',
-                data: datas[1]
-            });
+            ];
+
+        modal1 = new LiveEditorModal({
+            editor: 'editor-id',
+            data: datas[0]
+        });
+
+        modal2 = new LiveEditorModal({
+            editor: 'editor-id',
+            data: datas[1]
+        });
     });
 
     afterEach(function() {
@@ -27,8 +29,8 @@ describe("Modal", function() {
         $('#edit-text-modal').remove();
     });
 
-    describe("Create method", function() {
-        it("Should create 2 modals", function() {
+    describe('Create method', function() {
+        it('Should create 2 modals', function() {
             var $m1 = $('#edit-html-modal'),
                 $m2 = $('#edit-text-modal');
 
@@ -36,7 +38,7 @@ describe("Modal", function() {
             expect($m2.length).toEqual(1);
         });
 
-        it("Should render title", function() {
+        it('Should render title', function() {
             var $t1 = $('#edit-html-modal .modal-title').text(),
                 $t2 = $('#edit-text-modal .modal-title').text();
 
@@ -44,7 +46,7 @@ describe("Modal", function() {
             expect($t2).toEqual('Edit Text');
         });
 
-        it("Should render field", function() {
+        it('Should render field', function() {
             var $f1 = $('#edit-html-modal .modal-body textarea.form-control'),
                 $f2 = $('#edit-text-modal .modal-body input.form-control');
 
@@ -52,7 +54,7 @@ describe("Modal", function() {
             expect($f2.length).toEqual(1);
         });
 
-        it("Should render close button", function() {
+        it('Should render close button', function() {
             var $b = $('#edit-html-modal .modal-header button[data-dismiss]');
 
             expect($b.length).toEqual(1);
@@ -60,7 +62,7 @@ describe("Modal", function() {
             expect($b.html()).toEqual('<span>×</span>');
         });
 
-        it("Should render cancel button", function() {
+        it('Should render cancel button', function() {
             var $b = $('#edit-html-modal .modal-footer button[data-dismiss]');
 
             expect($b.length).toEqual(1);
@@ -68,12 +70,112 @@ describe("Modal", function() {
             expect($b.text()).toEqual('Cancel');
         });
 
-        it("Should render save button", function() {
+        it('Should render save button', function() {
             var $b = $('#edit-html-modal .modal-footer .save-btn');
 
             expect($b.length).toEqual(1);
             expect($b.attr('type')).toEqual('submit');
             expect($b.text()).toEqual('Save');
+        });
+
+        it('Should call getField method', function() {
+            spyOn(modal1, 'getField').andReturn('<div></div>');
+            modal1.create();
+            expect(modal1.getField).toHaveBeenCalled();
+        });
+    });
+
+    describe('getField method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+        });
+
+        it('Return a form field when language is css', function() {
+            var $field = modal.getField();
+            expect($field[0].tagName).toBe('FORM');
+        });
+
+        it('Return param field when language is not css', function() {
+            modal.language = 'any language';
+            var $field = modal.getField();
+            expect($field[0].tagName).toBe('TEXTAREA');
+            expect($field).toHaveId(modal.aceEditorId);
+        });
+
+        it('Add class when language is not css', function() {
+            modal.language = 'any language';
+            var $field = modal.getField();
+            expect($field).toHaveClass('ace-editor-field');
+            expect($field.find('.entry.input-group')).not.toExist();
+        });
+
+        it('Add style input when language is css', function() {
+            var $field = modal.getField();
+            expect($field).not.toHaveClass('ace-editor-field');
+            expect($field.find('.entry.input-group')).toExist();
+        });
+
+        it('Return a simple field when there is no language', function() {
+            modal.language = null;
+            var $field = modal.getField();
+            expect($field[0].tagName).toBe('TEXTAREA');
+            expect($field).not.toHaveClass('ace-editor-field');
+            expect($field.find('.entry.input-group')).not.toExist();
+        });
+    });
+
+    describe('getStyleInput method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+        });
+
+        it('Should create a correct structure', function() {
+            var $entry = modal.getStyleInput();
+            expect($entry.find('input[type=text]')).toExist();
+            expect($entry.find('.input-group-btn .btn.btn-success.btn-add[type=button] .glyphicon.glyphicon-plus')).toExist();
+        });
+    });
+
+    describe('styleInputWithContent method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+        });
+
+        it('Should create a correct structure', function() {
+            var $entry = modal.getStyleInput(),
+                $btn = $entry.find('.btn-add');
+
+            modal.styleInputWithContent($entry);
+
+            expect($btn).not.toHaveClass('btn-add');
+            expect($btn).toHaveClass('btn-remove');
+            expect($btn).not.toHaveClass('btn-success');
+            expect($btn).toHaveClass('btn-danger');
+            expect($btn.html()).toBe('<span class="glyphicon glyphicon-minus"></span>');
         });
     });
 });

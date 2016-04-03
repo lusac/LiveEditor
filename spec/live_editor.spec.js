@@ -889,12 +889,12 @@ describe('LiveEditor', function() {
     describe('unselectElements method', function() {
         beforeEach(function() {
             waits(200);
-            var $p = liveEditorTest.$editorIframe.contents().find('p');
-            liveEditorTest.setCurrentElement($p);
-            liveEditorTest.openCurrentMenu();
         });
 
         it('Should call floating menu close method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
 
             spyOn(liveEditorTest.floatingMenu, 'close');
             spyOn(liveEditorTest.domOutline, 'stop');

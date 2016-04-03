@@ -350,4 +350,29 @@ describe("Actions", function() {
             expect(string).toBe('My string has all this little shits');
         });
     });
+
+    describe('currentSelectedEditStyle method', function() {
+        beforeEach(function() {
+            var input = '<input type="text">';
+
+            spyOn(liveEditorTest.actions, 'saveChanges');
+
+            liveEditorTest.currentSelected = 'html>body>p';
+            liveEditorTest.$editStyleModal.find('.modal-body').append($(input).val('background: red'));
+            liveEditorTest.$editStyleModal.find('.modal-body').append($(input).val('font-size: 10px'));
+        });
+
+        it('Should call _addStyle method', function() {
+            var str = 'background: red;font-size: 10px;';
+            spyOn(liveEditorTest.actions, '_addStyle');
+            liveEditorTest.actions.currentSelectedEditStyle();
+            expect(liveEditorTest.actions._addStyle).toHaveBeenCalledWith('html>body>p', str);
+        });
+
+        it('Should call saveChanges method', function() {
+            var str = '$("html>body>p").attr("style", "background: red;font-size: 10px;");'
+            liveEditorTest.actions.currentSelectedEditStyle();
+            expect(liveEditorTest.actions.saveChanges).toHaveBeenCalledWith(str);
+        });
+    });
 });

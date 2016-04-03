@@ -47,7 +47,9 @@
             }, {
                 value: 'Edit Style',
                 attrs: {
-                    'data-operation': 'edit-style'
+                    'data-operation': 'edit-style',
+                    'data-toggle': 'modal',
+                    'data-target':'#edit-style-modal-' + this.elemId
                 }
             }],
             events = [{
