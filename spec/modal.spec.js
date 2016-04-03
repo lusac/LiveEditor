@@ -178,4 +178,130 @@ describe("Modal", function() {
             expect($btn.html()).toBe('<span class="glyphicon glyphicon-minus"></span>');
         });
     });
+
+    describe('bindEvents method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+
+            _event ={type: 'click', preventDefault: function() {} };
+        });
+
+        it('Click on btn-add should call preventDefault method', function() {
+            spyOn(_event, 'preventDefault');
+            spyOn(modal, 'addNewStyleInput');
+            modal.$modal.find('.btn-add').trigger(_event);
+            expect(_event.preventDefault).toHaveBeenCalled();
+        });
+
+        it('Click on btn-add should call addNewStyleInput method', function() {
+            spyOn(modal, 'addNewStyleInput');
+            modal.$modal.find('.btn-add').trigger('click');
+            expect(modal.addNewStyleInput).toHaveBeenCalled();
+        });
+
+        it('Click on btn-remove should call preventDefault method', function() {
+            spyOn(_event, 'preventDefault');
+            spyOn(modal, 'removeStyleInput');
+
+            var $addBtn = modal.$modal.find('.btn-add');
+            $addBtn.trigger(_event);
+
+            var $removeBtn = modal.$modal.find('.btn-remove');
+            $removeBtn.trigger(_event);
+            
+            expect(_event.preventDefault).toHaveBeenCalled();
+        });
+
+        it('Click on btn-remove should call removeStyleInput method', function() {
+            spyOn(modal, 'removeStyleInput');
+
+            var $addBtn = modal.$modal.find('.btn-add');
+            $addBtn.trigger('click');
+
+            var $removeBtn = modal.$modal.find('.btn-remove');
+            $removeBtn.trigger('click');
+
+            expect(modal.removeStyleInput).toHaveBeenCalled();
+        });
+    });
+
+    describe('addNewStyleInput method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+        });
+
+        it('Should call getStyleInput method', function() {
+            spyOn(modal, 'getStyleInput');
+            modal.addNewStyleInput();
+            expect(modal.getStyleInput).toHaveBeenCalled();
+        });
+
+        it('Should call styleInputWithContent method', function() {
+            spyOn(modal, 'styleInputWithContent');
+            var $lastEntry = modal.$modal.find('.entry:last');
+
+            modal.addNewStyleInput();
+
+            expect(modal.styleInputWithContent).toHaveBeenCalledWith($lastEntry);
+        });
+
+        it('Should append new entry inside form', function() {
+            var $entries = modal.$modal.find('form .entry');
+            expect($entries.length).toBe(1);
+
+            modal.addNewStyleInput();
+
+            var $entries = modal.$modal.find('form .entry');
+            expect($entries.length).toBe(2);
+        });
+    });
+
+    describe('removeStyleInput method', function() {
+        beforeEach(function() {
+            modal = new LiveEditorModal({
+                editor: 'editor-id',
+                data: {
+                    name: 'edit-style-modal',
+                    title: 'Edit Style',
+                    field: 'textarea',
+                    language: 'css'
+                }
+            });
+        });
+
+        it('Should remove parent', function() {
+            var $entries = modal.$modal.find('form .entry');
+            expect($entries.length).toBe(1);
+
+            var $addBtn = modal.$modal.find('.btn-add');
+            $addBtn.trigger('click');
+
+            var $entries = modal.$modal.find('form .entry');
+            expect($entries.length).toBe(2);
+
+            modal.removeStyleInput($entries.first().find('.btn-remove'));
+
+            var $entries = modal.$modal.find('form .entry');
+            expect($entries.length).toBe(1);
+
+            var $btn = modal.$modal.find('form .entry .btn-remove');
+            expect($btn).not.toExist();
+        });
+    });
 });

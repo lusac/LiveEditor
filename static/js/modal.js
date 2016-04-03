@@ -20,6 +20,7 @@
         }
 
         this.create();
+        this.bindEvents();
     };
 
     LiveEditorModal.prototype.create = function () {
@@ -59,6 +60,18 @@
         }
     };
 
+    LiveEditorModal.prototype.bindEvents = function () {
+        var self = this;
+
+        this.$modal.on('click', '.btn-add', function(e) {
+            e.preventDefault();
+            self.addNewStyleInput();
+        }).on('click', '.btn-remove', function(e) {
+            e.preventDefault();
+            self.removeStyleInput($(this));
+        });
+    }
+
     LiveEditorModal.prototype.getField = function () {
         var $field = '';
 
@@ -77,6 +90,19 @@
         }
 
         return $field;
+    };
+
+    LiveEditorModal.prototype.addNewStyleInput = function () {
+        var $controlForm = this.$modal.find('form'),
+            $currentEntry = this.$modal.find('.entry:last'),
+            $newEntry = this.getStyleInput();
+
+        $controlForm.append($newEntry);
+        this.styleInputWithContent($currentEntry);
+    };
+
+    LiveEditorModal.prototype.removeStyleInput = function ($elem) {
+        $elem.parents('.entry').remove();
     };
 
     LiveEditorModal.prototype.getStyleInput = function () {

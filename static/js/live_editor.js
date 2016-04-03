@@ -283,20 +283,6 @@
             $(this).find('.modal-body input').val('');
         });
 
-        this.$editStyleModal.on('click', '.btn-add', function(e) {
-            e.preventDefault();
-
-            var $controlForm = self.$editStyleModal.find('form'),
-                $currentEntry = $(this).parents('.entry:first'),
-                $newEntry = self.editStyleModal.getStyleInput().appendTo($controlForm);
-
-            $newEntry.find('input').val('');
-            self.editStyleModal.styleInputWithContent($currentEntry);
-        }).on('click', '.btn-remove', function(e) {
-            $(this).parents('.entry:first').remove();
-            e.preventDefault();
-        });
-
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
