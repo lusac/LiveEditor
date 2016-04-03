@@ -325,9 +325,7 @@
         });
 
         this.toolbar.$undoButton.off().on('click', function () {
-            if (self.currentExperiment().undoList.length) {
-                self.actions.undo();
-            }
+            self.actions.undo();
         });
 
         this.tabs.$tabs.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
@@ -367,13 +365,23 @@
             self.domOutline.draw(self.$currentSelected[0]);
         });
 
-        // $(document).keyup(function(e) {
-        //     self.keyUpEvents(e);
-        // });
+        $(document).keydown(function(e) {
+            self.keyDownEvents(e);
+        });
+
+        this.$editorIframe.contents().keydown(function(e) {
+            self.keyDownEvents(e);
+        });
 
         this.$editorIframe.contents().keyup(function(e) {
             self.keyUpEvents(e);
         });
+    };
+
+    LiveEditor.prototype.keyDownEvents = function (key) {
+        if ((key.ctrlKey || key.metaKey) && key.which == 90) {
+            this.actions.undo();
+        }
     };
 
     LiveEditor.prototype.keyUpEvents = function(key) {
@@ -389,7 +397,7 @@
             // key 'esc'
             this.unselectElements();
         }
-    }
+    };
 
     LiveEditor.prototype.addNewOption = function () {
         // TODO - CHECK IF THIS NAME DONT EXIST
@@ -417,7 +425,7 @@
             e.stopPropagation();
             self.unselectElements();
         });
-    }
+    };
 
     LiveEditor.prototype.unselectElements = function () {
         if (this.$currentSelected && this.currentSelected) {

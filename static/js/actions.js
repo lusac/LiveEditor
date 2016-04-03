@@ -132,10 +132,12 @@
     };
 
     LiveEditorActions.prototype.undo = function () {
-        var object = this.liveEditor.currentExperiment().undoList.pop();
-        this.liveEditor.currentExperiment().scriptList.pop();
-        this.liveEditor.updateBody(object);
-        this.liveEditor.codePanelUpdate();
+        if (this.liveEditor.currentExperiment().undoList.length) {
+            var object = this.liveEditor.currentExperiment().undoList.pop();
+            this.liveEditor.currentExperiment().scriptList.pop();
+            this.liveEditor.updateBody(object);
+            this.liveEditor.codePanelUpdate();
+        }
     };
 
     LiveEditorActions.prototype.saveCodePanel = function () {

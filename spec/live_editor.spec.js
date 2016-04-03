@@ -262,37 +262,35 @@ describe('LiveEditor', function() {
             expect(liveEditorTest.actions.undo).toHaveBeenCalled();
         });
 
-        it('Undo button click should not call undo method if undoList is empty', function() {
-            spyOn(liveEditorTest.actions, 'undo');
+        it('document key down should call keyDownEvents method', function() {
+            spyOn(liveEditorTest, 'keyDownEvents');
 
-            $('.btn-undo').click();
+            var e = $.Event('keydown');
+            e.which = 37; 
+            $(document).trigger(e);
 
-            expect(liveEditorTest.actions.undo).not.toHaveBeenCalled();
+            expect(liveEditorTest.keyDownEvents).toHaveBeenCalled();
         });
 
-        // IFRAME DOCUMENT ---- BEGIN
+        it('iframe document key down should call keyDownEvents method', function() {
+            spyOn(liveEditorTest, 'keyDownEvents');
 
-        // it('document key up should call keyUpEvents method', function() {
-        //     spyOn(liveEditorTest, 'keyUpEvents');
+            var e = $.Event('keydown');
+            e.which = 37; 
+            liveEditorTest.$editorIframe.contents().trigger(e);
 
-        //     var e = $.Event("keyup");
-        //     e.which = 37; 
-        //     $(document).trigger(e);
+            expect(liveEditorTest.keyDownEvents).toHaveBeenCalled();
+        });
 
-        //     expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
-        // });
+        it('iframe document key up should call keyUpEvents method', function() {
+            spyOn(liveEditorTest, 'keyUpEvents');
 
-        // it('iframe document key up should call keyUpEvents method', function() {
-        //     spyOn(liveEditorTest, 'keyUpEvents');
+            var e = $.Event('keyup');
+            e.which = 37; 
+            liveEditorTest.$editorIframe.contents().trigger(e);
 
-        //     var e = $.Event("keyup");
-        //     e.which = 37; 
-        //     liveEditorTest.$editorIframe.contents().trigger(e);
-
-        //     expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
-        // });
-
-        // IFRAME DOCUMENT ---- END
+            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        });
 
         // describe('Floating Menu mouse enter', function() {
         //     beforeEach(function() {
@@ -886,6 +884,40 @@ describe('LiveEditor', function() {
 
             it('Should set toolbar modeSelect to View', function() {
                 expect(liveEditorTest.unselectElements).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('keyDownEvents method', function() {
+        beforeEach(function() {
+            spyOn(liveEditorTest.actions, 'undo');
+        });
+
+        describe('key ctrl + z', function() {
+            beforeEach(function() {
+                var key = {
+                    which: 90,
+                    ctrlKey: true
+                };
+                liveEditorTest.keyDownEvents(key);
+            });
+
+            it('Should call actions.undo method', function() {
+                expect(liveEditorTest.actions.undo).toHaveBeenCalled()
+            });
+        });
+
+        describe('key cmd + z', function() {
+            beforeEach(function() {
+                var key = {
+                    which: 90,
+                    metaKey: true
+                };
+                liveEditorTest.keyDownEvents(key);
+            });
+
+            it('Should call actions.undo method', function() {
+                expect(liveEditorTest.actions.undo).toHaveBeenCalled()
             });
         });
     });

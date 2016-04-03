@@ -277,6 +277,16 @@ describe("Actions", function() {
             waits(200);
         });
 
+        it('Should do nothing if undoList is empty', function() {
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'codePanelUpdate');
+
+            liveEditorTest.actions.undo();
+
+            expect(liveEditorTest.updateBody).not.toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).not.toHaveBeenCalled();
+        });
+
         it('Should remove last item from undoList var', function() {
             liveEditorTest.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
             liveEditorTest.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
