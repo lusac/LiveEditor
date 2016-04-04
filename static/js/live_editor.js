@@ -18,9 +18,9 @@
         this.buildModals(params);
         this.buildPanel(params);
         this.buildToolbar();
-        this.initActions();
 
         this.$editorIframe.on('load', function() {
+            self.initActions();
             self.domOutlineInit();
             self.bindEvents();
             self.$editorIframe.show();
@@ -156,7 +156,7 @@
             $iframeBody = $iframeBody || this.$iframeBody,
             mode = this.currentMode();
 
-        this.domOutline.stop();
+        this.domOutline.stop(); // remove?
         this.unselectElements();
 
         try {
@@ -542,6 +542,10 @@
 
         if (operation === 'duplicate-option') {
             this.actions.currentOptionDuplicate();
+        }
+
+        if (operation === 'move-and-resize') {
+            this.actions.dragAndDrop();
         }
 
         this.codePanelUpdate();

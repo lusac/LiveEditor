@@ -9,6 +9,8 @@
 
     LiveEditorActions.prototype.init = function (liveEditor) {
         this.liveEditor = liveEditor;
+        this.$currentSelected = this.$draggable = null;
+        this.bindEvents();
     };
 
     LiveEditorActions.prototype._changeText = function (selector, text) {
@@ -28,6 +30,40 @@
         this.liveEditor.undoListUpdate();
         this.liveEditor.addToScriptList(str);
         this.liveEditor.applyJs(str);
+    };
+
+    LiveEditorActions.prototype.bindEvents = function () {
+        // TODO - test js
+        var self = this;
+
+        this.liveEditor.$editorIframe.contents().on('mousemove', function(e) {
+            console.log('moving...');
+            if (self.$draggable && self.isDragging) {
+                self.$draggable.offset({
+                    top: e.pageY - self.$draggable.outerHeight() / 2,
+                    left: e.pageX - self.$draggable.outerWidth() / 2
+                });
+                self.$currentSelected.offset({
+                    top: e.pageY - self.$draggable.outerHeight() / 2,
+                    left: e.pageX - self.$draggable.outerWidth() / 2
+                });
+            }
+        });
+
+        this.liveEditor.$editorIframe.contents().on('mousedown', function (e) {
+            if (self.$draggable) {
+                self.isDragging = true;
+            }
+        });
+
+        this.liveEditor.$editorIframe.contents().on('mouseup', function (e) {
+            if (self.$draggable && self.isDragging) {
+                self.$draggable.attr('style', '');
+                self.isDragging = false;
+                self.$currentSelected = self.$draggable = null;
+                self.liveEditor.domOutline.start();
+            }
+        });
     };
 
     LiveEditorActions.prototype.currentSelectedRemove = function () {
@@ -125,6 +161,20 @@
             str = newScript.slice(oldScript.length, newScript.length);
 
         this.saveChanges(str);
+    };
+
+    LiveEditorActions.prototype.dragAndDrop = function () {
+        // TODO - test js
+        console.log('drag!');
+        this.$currentSelected = this.liveEditor.$currentSelected;
+        this.liveEditor.unselectElements();
+        this.liveEditor.domOutline.draw(this.$currentSelected[0]);
+        this.liveEditor.domOutline.pause();
+        this.$draggable = this.liveEditor.$editorIframe.contents().find('.DomOutline_box');
+        this.$draggable.css({
+            'cursor': 'move',
+            'pointer-events': 'inherit'
+        });
     };
 
     window.LiveEditorActions = LiveEditorActions;
