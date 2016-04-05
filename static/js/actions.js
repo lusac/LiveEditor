@@ -77,7 +77,18 @@
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
         var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+        this.saveGoal(str);
         this.saveChanges(str);
+    };
+
+    LiveEditorActions.prototype.saveGoal = function (goal) {
+        var newScript = goal.replace(new RegExp('\t|\n', 'g'), ''),
+            goalListLength = this.liveEditor.currentExperiment().goalList.length,
+            oldScript = this.liveEditor.currentExperiment().goalList[goalListLength - 1]
+            finalScript = oldScript === undefined ? newScript : oldScript + newScript;
+
+        this.liveEditor.currentExperiment().goalList.push(finalScript);
+        this.liveEditor.updateExperimentState();
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {

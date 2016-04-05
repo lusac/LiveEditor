@@ -311,7 +311,7 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
-            // TODO - verify it has test
+            // TODO - verify if has test
             self.operationInit(e.detail.operation);
         }, false);
 
@@ -610,6 +610,14 @@
 
     LiveEditor.prototype.currentExperimentScriptList = function() {
         return this.currentExperiment().scriptList.slice(-1)[0];
+    };
+
+    LiveEditor.prototype.updateExperimentState = function() {
+        var currentTab = this.tabs.current();
+        var currentExp = this.currentExperiment();
+        if (currentExp.goalList.length > 0) {
+            currentTab.find("span.glyphicon").remove()
+        }
     };
 
     window.LiveEditor = LiveEditor;
