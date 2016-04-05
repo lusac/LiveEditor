@@ -19,6 +19,7 @@
         this.buildPanel(params);
         this.buildToolbar();
         this.initActions();
+        this.updateExperimentState();
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
@@ -64,10 +65,26 @@
                     'title': this.tabsList[i],
                     'scriptList': this.js[i] ? [this.js[i]] : [],
                     'undoList': [],
-                    'goalList': []
+                    'goalList': this.extractGoals(this.js[i]),
                 };
             }
         }
+
+    };
+
+    LiveEditor.prototype.extractGoals = function(js) {
+        var scripts = js.split(";");
+        var goalList = [];
+        for (var i = 0, l = scripts.length; i < l; i++) {
+            var v = scripts[i];
+            if (v === "") {
+                continue;
+            }
+            if (v.match("easyab-track.*")) {
+                goalList.push(v);
+            }
+        }
+        return goalList;
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
