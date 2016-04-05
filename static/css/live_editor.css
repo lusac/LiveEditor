@@ -120,3 +120,12 @@
     display: block;
     height: 180px !important;
 }
+
+/* Tab */
+span.icon {
+    color: #ff0000;
+}
+
+span.icon.glyphicon {
+    margin-right: 6px;
+}

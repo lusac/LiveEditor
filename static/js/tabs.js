@@ -86,7 +86,7 @@
                 $li.addClass('active');
             }
 
-            $li.append('<a data-toggle="tab" data-name="' + name + '"><span class="glyphicon glyphicon-exclamation-sign"></span>' + tabsList[i] + '<span class="caret"></span></a>');
+            $li.append('<a data-toggle="tab" data-name="' + name + '"><span class="icon glyphicon glyphicon-exclamation-sign"></span>' + tabsList[i] + '<span class="caret"></span></a>');
             $li.append($ul.clone());
             this.$tabs.append($li);
         }
