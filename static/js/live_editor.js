@@ -375,6 +375,11 @@
         this.$editorIframe.contents().keyup(function(e) {
             self.keyUpEvents(e);
         });
+
+        this.toolbar.$goalButton.on('click', function() {
+            // TODO - test js
+            self.goalState($(this));
+        });
     };
 
     LiveEditor.prototype.keyDownEvents = function (key) {
@@ -537,6 +542,29 @@
 
         return _list;
     };
+
+    LiveEditor.prototype.goalState = function ($btn) {
+        // TODO - test js
+        var id = 'goal-style',
+            activeClass = 'active',
+            $style = this.$editorIframe.contents().find('#' + id);
+
+        if ($style.length > 0) {
+            $style.remove();
+            $btn.removeClass(activeClass);
+            this.$iframeBody.find('#' + id).remove();
+        } else {
+            var css = '<style id="' + id + '">' +
+                        '[easyab-track-scroll], ' +
+                        '[easyab-track-click] { ' +
+                            'background: red !important;' +
+                        '}' +
+                      '</style>';
+            $btn.addClass(activeClass);
+            this.$iframeBody.append(css);
+            this.$editorIframe.contents().find('body').append(css);
+        }
+    }
 
     LiveEditor.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
