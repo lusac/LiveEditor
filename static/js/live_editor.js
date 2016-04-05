@@ -72,6 +72,7 @@
 
     };
 
+    // TO DO - test
     LiveEditor.prototype.extractGoals = function(js) {
         var scripts = js.split(";");
         var goalList = [];
@@ -84,7 +85,15 @@
                 goalList.push(v);
             }
         }
-        return goalList;
+        var unique = function(array) {
+            var a = [];
+            for (i = 0; i < array.length; i++) {
+                var current = array[i];
+                if (a.indexOf(current) < 0) a.push(current);
+            }
+            return a;
+        };
+        return unique(goalList);
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
