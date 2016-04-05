@@ -19,6 +19,12 @@
         this.createTabs(this.tabs);
         this.buildModals();
         this.$parent.append(this.$tabs);
+        $("span.icon").tooltip({
+            placement: "bottom",
+            title: '<p style="text-align: left; font-size: 10px;">Você ainda não configurou o <strong>GOAL</strong> desta aba.</p>',
+            container: "body",
+            html: true,
+        });
     };
 
     LiveEditorTabs.prototype.buildModals = function () {
@@ -86,7 +92,8 @@
                 $li.addClass('active');
             }
 
-            $li.append('<a data-toggle="tab" data-name="' + name + '"><span class="icon glyphicon glyphicon-exclamation-sign"></span>' + tabsList[i] + '<span class="caret"></span></a>');
+            var warning_icon = '<span class="icon glyphicon glyphicon-exclamation-sign"></span>'
+            $li.append('<a data-toggle="tab" data-name="' + name + '">' + warning_icon + tabsList[i] + '<span class="caret"></span></a>');
             $li.append($ul.clone());
             this.$tabs.append($li);
         }
