@@ -16,9 +16,10 @@
 
     LiveEditorTabs.prototype.create = function () {
         this.$tabs = $('<ul class="nav nav-tabs live-editor-tabs">');
+        this.$buttonAddOption = $('<a class="live-editor-add-option">+ add option</a>');
         this.createTabs(this.tabs);
         this.buildModals();
-        this.$parent.append(this.$tabs);
+        this.$parent.append(this.$tabs, this.$buttonAddOption);
         $("span.icon").tooltip({
             placement: "bottom",
             title: 'Você ainda não configurou o GOAL desta aba.',

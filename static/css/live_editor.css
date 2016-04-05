@@ -29,6 +29,11 @@
     display: inline-block;
 }
 
+.live-editor-add-option {
+    cursor: pointer;
+    margin-left: 13px;
+}
+
 /* TOOLBAR */
 
 .nav-tabs,

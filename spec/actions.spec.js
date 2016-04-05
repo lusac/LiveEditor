@@ -6,10 +6,11 @@ describe("Actions", function() {
 
     afterEach(function() {
         $liveEditor.empty();
-        $('.toolbar').remove();
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
+        $('.live-editor-toolbar').remove();
+        $('.live-editor-add-option').remove();
         $('ul.dropdown-menu[role]').remove();
     });
 

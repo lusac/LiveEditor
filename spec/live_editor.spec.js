@@ -7,10 +7,10 @@ describe('LiveEditor', function() {
     afterEach(function() {
         $liveEditorTest.empty();
         $('.modal').remove();
-        $('.toolbar').remove();
         $('#code-panel').remove();
         $('.modal-backdrop').remove();
         $('.code-panel-button').remove();
+        $('.live-editor-toolbar').remove();
         $('ul.dropdown-menu[role]').remove();
     });
 
@@ -235,7 +235,7 @@ describe('LiveEditor', function() {
 
         it('add option button should call addNewOption method', function() {
             spyOn(liveEditorTest, 'addNewOption');
-            $('.add-option').click();
+            $('.live-editor-add-option').click();
             expect(liveEditorTest.addNewOption).toHaveBeenCalled();
         });
 

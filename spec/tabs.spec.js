@@ -7,6 +7,7 @@ describe("Tabs", function() {
     afterEach(function() {
         $('.nav-tabs').remove();
         $('#rename-modal').remove();
+        $('.live-editor-add-option').remove();
     });
 
     describe('init method', function() {
@@ -61,6 +62,12 @@ describe("Tabs", function() {
         it('Should append tabs inside parent', function() {
             var $tab = $('body>.nav-tabs');
             expect($tab).toExist();
+        });
+
+        it('Should render an add option button', function() {
+            var $b = $('.live-editor-add-option');
+            expect($b).toExist();
+            expect($b.text()).toBe('+ add option');
         });
     });
 

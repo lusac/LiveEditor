@@ -22,12 +22,6 @@ describe('Toolbar', function() {
             expect($t).toExist();
         });
 
-        it('Should render an add option button', function() {
-            var $b = $('.container ul.live-editor-toolbar li .add-option');
-            expect($b).toExist();
-            expect($b.text()).toBe('+ add option');
-        });
-
         it('Should render an edit/view mode button', function() {
             var $s = $('.container ul.live-editor-toolbar li select.form-control'),
                 $opts = $s.find('option');

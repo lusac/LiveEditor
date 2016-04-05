@@ -365,7 +365,7 @@
             self.updateBody();
         });
 
-        this.toolbar.$buttonAddOption.on('click', function() {
+        this.tabs.$buttonAddOption.on('click', function() {
             self.addNewOption();
         });
 
