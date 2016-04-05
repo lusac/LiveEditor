@@ -12,6 +12,7 @@
         this.editorId = 'code-panel-ace-editor-' + this.editorName;
         this.appendTo = params.appendTo || null;
         this.create();
+        this.bindEvents();
      };
 
     LiveEditorCodePanel.prototype.create = function () {
@@ -44,6 +45,17 @@
         this.aceEditor = new LiveEditorAceEditor({
             id: this.editorId,
             language: 'javascript'
+        });
+    };
+
+    LiveEditorCodePanel.prototype.bindEvents = function () {
+        // TODO - test js - refator
+        $('#code-panel').on('show.bs.collapse', function() {
+            $('.code-panel-button').addClass('active');
+        });
+
+        $('#code-panel').on('hide.bs.collapse', function() {
+            $('.code-panel-button').removeClass('active');
         });
     };
 
