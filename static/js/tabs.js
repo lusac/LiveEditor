@@ -21,9 +21,8 @@
         this.$parent.append(this.$tabs);
         $("span.icon").tooltip({
             placement: "bottom",
-            title: '<p style="text-align: left; font-size: 10px;">Você ainda não configurou o <strong>GOAL</strong> desta aba.</p>',
+            title: 'Você ainda não configurou o GOAL desta aba.',
             container: "body",
-            html: true,
         });
     };
 
