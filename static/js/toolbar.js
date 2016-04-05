@@ -17,7 +17,7 @@
                                 .append('<option value="edit">Edit mode</option>')
                                 .append('<option value="view">View mode</option>');
         this.$buttonAddOption = $('<button type="button" class="btn btn-default add-option">+ add option</button>');
-        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo">Undo</button>');
+        this.$undoButton = $('<button type="button" class="btn btn-default btn-undo"><span class="glyphicon glyphicon-share-alt"></span></button>');
         this.$codePanelButton = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >');
         this.$goalButton = $('<button class="btn btn-primary btn-sm" type="button"><span class="glyphicon glyphicon-flag"></span></button>');
         this.$toolbar = $('<ul class="toolbar">');

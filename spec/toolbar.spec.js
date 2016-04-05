@@ -41,7 +41,7 @@ describe('Toolbar', function() {
         it('Should render an undo button', function() {
             var $b = $('.container ul.toolbar li .btn-undo');
             expect($b).toExist();
-            expect($b.text()).toBe('Undo');
+            expect($b.html()).toBe('<span class="glyphicon glyphicon-share-alt"></span>');
         });
 
         it("Should render codePanel button", function() {
