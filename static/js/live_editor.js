@@ -410,6 +410,8 @@
         this.tabs.createTabs([name]);
         this.createExperiments();
         this.updateBody();
+        // TO-DO: test.js
+        this.toolbar.$toolbar.trigger('created-option');
     };
 
     LiveEditor.prototype.selectElement = function () {

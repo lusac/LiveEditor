@@ -125,8 +125,9 @@
         this.liveEditor.tabsList.splice(index, 1);
         this.liveEditor.tabs.current().parent().remove();
         this.liveEditor.tabs.$tabs.find('>li:first>a').click();
-
         delete this.liveEditor.experiments[currentNameFormated];
+        // TO-DO: test.js
+        this.liveEditor.toolbar.$toolbar.trigger('deleted-option');
     };
 
     LiveEditorActions.prototype.currentOptionDuplicate = function () {
