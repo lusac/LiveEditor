@@ -135,8 +135,8 @@ describe('LiveEditor', function() {
             liveEditorTest.$editorIframe.load();
         });
 
-        it('Should build Panel', function() {
-            var $t = $('ul.toolbar');
+        it('Should build Toolbar', function() {
+            var $t = $('ul.live-editor-toolbar');
             expect($t).toExist();
         });
     });

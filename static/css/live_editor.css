@@ -32,13 +32,13 @@
 /* TOOLBAR */
 
 .nav-tabs,
-.toolbar {
+.live-editor-toolbar {
     margin: 0;
     display: inline-block;
     vertical-align: middle;
 }
 
-.toolbar li {
+.live-editor-toolbar li {
     list-style: none;
     margin-right: 10px;
     display: inline-block;

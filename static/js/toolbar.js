@@ -20,7 +20,7 @@
         this.$undoButton = $('<button type="button" class="btn btn-default btn-undo"><span class="glyphicon glyphicon-share-alt"></span></button>');
         this.$codePanelButton = $('<button class="btn btn-primary btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel">').text('< edit code >');
         this.$goalButton = $('<button class="btn btn-primary btn-sm" type="button"><span class="glyphicon glyphicon-flag"></span></button>');
-        this.$toolbar = $('<ul class="toolbar">');
+        this.$toolbar = $('<ul class="live-editor-toolbar">');
 
         this.$toolbar.append($('<li>').append(this.$buttonAddOption));
         this.$toolbar.append($('<li>').append(this.$modeSelect));

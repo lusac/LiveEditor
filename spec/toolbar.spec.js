@@ -18,18 +18,18 @@ describe('Toolbar', function() {
         });
 
         it('Should render a toolbar ul', function() {
-            var $t = $('.container ul.toolbar');
+            var $t = $('.container ul.live-editor-toolbar');
             expect($t).toExist();
         });
 
         it('Should render an add option button', function() {
-            var $b = $('.container ul.toolbar li .add-option');
+            var $b = $('.container ul.live-editor-toolbar li .add-option');
             expect($b).toExist();
             expect($b.text()).toBe('+ add option');
         });
 
         it('Should render an edit/view mode button', function() {
-            var $s = $('.container ul.toolbar li select.form-control'),
+            var $s = $('.container ul.live-editor-toolbar li select.form-control'),
                 $opts = $s.find('option');
 
             expect($s).toExist();
@@ -39,19 +39,19 @@ describe('Toolbar', function() {
         });
 
         it('Should render an undo button', function() {
-            var $b = $('.container ul.toolbar li .btn-undo');
+            var $b = $('.container ul.live-editor-toolbar li .btn-undo');
             expect($b).toExist();
             expect($b.html()).toBe('<span class="glyphicon glyphicon-share-alt"></span>');
         });
 
         it("Should render codePanel button", function() {
-            var $btn = $('.container ul.toolbar li .code-panel-button');
+            var $btn = $('.container ul.live-editor-toolbar li .code-panel-button');
             expect($btn.length).toEqual(1);
             expect($btn.text()).toEqual('< edit code >');
         });
 
         it("codePanel button should have data-target attribute", function() {
-            var $attr = $('.container ul.toolbar li  .code-panel-button').attr('data-target');
+            var $attr = $('.container ul.live-editor-toolbar li  .code-panel-button').attr('data-target');
             expect($attr).toEqual('#code-panel');
         });
     });
