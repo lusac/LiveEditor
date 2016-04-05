@@ -41,7 +41,7 @@ describe('Toolbar', function() {
         it("Should render codePanel button", function() {
             var $btn = $('.container ul.live-editor-toolbar li .code-panel-button');
             expect($btn.length).toEqual(1);
-            expect($btn.text()).toEqual('< edit code >');
+            expect($btn.html()).toEqual('<span class="glyphicon glyphicon-console"></span>');
         });
 
         it("codePanel button should have data-target attribute", function() {
