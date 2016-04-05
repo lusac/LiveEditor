@@ -19,7 +19,7 @@
         this.buildPanel(params);
         this.buildToolbar();
         this.initActions();
-        this.updateExperimentState();
+        this.updateTabsExperimentState();
 
         this.$editorIframe.on('load', function() {
             self.domOutlineInit();
@@ -665,6 +665,19 @@
         if (currentExp.goalList.length > 0) {
             currentTab.find("span.glyphicon").remove()
         }
+    };
+
+    LiveEditor.prototype.updateTabsExperimentState = function () {
+        for(var i=0; i<=this.tabsList.length-1; i++) {
+            var name = this.tabs.slugify(this.tabsList[i]);
+
+            if (this.experiments[name] !== undefined) {
+                if (this.experiments[name].goalList.length > 0) {
+                    var query = "a[data-name='" + name + "']";
+                    this.tabs.$tabs.find(query).find("span.glyphicon").remove()
+                }
+            }
+        } 
     };
 
     window.LiveEditor = LiveEditor;
