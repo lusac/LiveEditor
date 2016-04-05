@@ -129,3 +129,9 @@ span.icon {
 span.icon.glyphicon {
     margin-right: 6px;
 }
+
+/* Button */
+.btn {
+    outline: none !important;
+}
+
