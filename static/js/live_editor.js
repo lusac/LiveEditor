@@ -65,7 +65,7 @@
                     'title': this.tabsList[i],
                     'scriptList': this.js[i] ? [this.js[i]] : [],
                     'undoList': [],
-                    'goalList': this.extractGoals(this.js[i]),
+                    'goalList': this.extractGoals(this.js[i] ? this.js[i] : ""),
                 };
             }
         }
