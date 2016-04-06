@@ -37,6 +37,8 @@
     };
 
     LiveEditor.prototype.initVars = function (params) {
+        // TODO - test js - trackValue
+        this.trackValue = params.trackValue || 1;
         this.device = params.device;
         this.tabsList = params.tabs;
         this.id = params.editor.replace('#', '');
@@ -69,19 +71,18 @@
                 };
             }
         }
-
     };
 
     // TO DO - test
     LiveEditor.prototype.extractGoals = function(js) {
-        var scripts = js.split(";");
+        var scripts = js.split(';');
         var goalList = [];
         for (var i = 0, l = scripts.length; i < l; i++) {
             var v = scripts[i];
-            if (v === "") {
+            if (v === '') {
                 continue;
             }
-            if (v.match("easyab-track.*")) {
+            if (v.match('easyab-track.*')) {
                 goalList.push(v);
             }
         }

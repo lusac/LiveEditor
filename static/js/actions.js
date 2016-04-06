@@ -76,7 +76,8 @@
     };
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
-        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+        // TODO - test js - trackValue
+        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", "' + this.liveEditor.trackValue + '");';
         this.saveGoal(str);
         this.saveChanges(str);
     };
