@@ -20,6 +20,10 @@
         this.createTabs(this.tabs);
         this.buildModals();
         this.$parent.append(this.$tabs, this.$buttonAddOption);
+        this.applyTooltip();
+    };
+
+    LiveEditorTabs.prototype.applyTooltip = function () {
         $("span.icon").tooltip({
             placement: "bottom",
             title: 'Você ainda não configurou o GOAL desta aba.',

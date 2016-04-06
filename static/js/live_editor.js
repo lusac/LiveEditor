@@ -435,6 +435,7 @@
         var name = 'Test ' + (this.tabsList.length + 1);
         this.tabsList.push(name);
         this.tabs.createTabs([name]);
+        this.tabs.applyTooltip();
         this.createExperiments();
         this.updateBody();
         // TO-DO: test.js
@@ -687,7 +688,7 @@
                     this.tabs.$tabs.find(query).find("span.glyphicon").remove()
                 }
             }
-        } 
+        }
     };
 
     window.LiveEditor = LiveEditor;

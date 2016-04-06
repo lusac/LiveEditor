@@ -142,6 +142,7 @@
         this.liveEditor.experiments[currentNameFormated] = oldExperiment;
 
         this.liveEditor.changeTab();
+        this.liveEditor.tabs.applyTooltip()
     };
 
     LiveEditorActions.prototype.undo = function () {
