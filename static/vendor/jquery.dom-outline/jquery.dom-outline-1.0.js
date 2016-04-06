@@ -74,7 +74,7 @@
                     '}' +
                     '.' + self.opts.namespace + '_box {' +
                     '    background: rgba(0, 153, 204, 0.05);' +
-                    '    position: fixed;' +
+                    '    position: absolute;' +
                     '    z-index: 9999999999;' +
                     '    pointer-events: none;' +
                     '    outline: 3px solid rgb(0, 153, 204);' +
