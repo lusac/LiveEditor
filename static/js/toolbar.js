@@ -23,10 +23,10 @@
         this.$goalButton = $('<button class="btn btn-default btn-sm" type="button" title="mark goals"><span class="glyphicon glyphicon-flag"></span></button>');
         this.$toolbar = $('<ul class="live-editor-toolbar">');
 
-        this.$toolbar.append($('<li>').append(this.$modeSelect));
         this.$toolbar.append($('<li>').append(this.$undoButton));
-        this.$toolbar.append($('<li>').append(this.$codePanelButton));
         this.$toolbar.append($('<li>').append(this.$goalButton));
+        this.$toolbar.append($('<li>').append(this.$codePanelButton));
+        this.$toolbar.append($('<li>').append(this.$modeSelect));
 
         this.$appendTo.append(this.$toolbar);
     };
