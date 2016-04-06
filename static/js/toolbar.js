@@ -13,13 +13,14 @@
     };
 
     LiveEditorToolbar.prototype.create = function () {
+        // TODO - test js - buttons title
         this.$modeSelect = $('<select class="form-control">')
                                 .append('<option value="edit">Edit mode</option>')
                                 .append('<option value="view">View mode</option>');
 
-        this.$undoButton = $('<button type="button" class="btn btn-default btn-sm btn-undo"><span class="glyphicon glyphicon-share-alt"></span></button>');
-        this.$codePanelButton = $('<button class="btn btn-default btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel"><span class="glyphicon glyphicon-console"></span></button>');
-        this.$goalButton = $('<button class="btn btn-default btn-sm" type="button"><span class="glyphicon glyphicon-flag"></span></button>');
+        this.$undoButton = $('<button type="button" class="btn btn-default btn-sm btn-undo" title="undo"><span class="glyphicon glyphicon-share-alt"></span></button>');
+        this.$codePanelButton = $('<button class="btn btn-default btn-sm code-panel-button" type="button" data-toggle="collapse" data-target="#code-panel" title="console"><span class="glyphicon glyphicon-console"></span></button>');
+        this.$goalButton = $('<button class="btn btn-default btn-sm" type="button" title="mark goals"><span class="glyphicon glyphicon-flag"></span></button>');
         this.$toolbar = $('<ul class="live-editor-toolbar">');
 
         this.$toolbar.append($('<li>').append(this.$modeSelect));
