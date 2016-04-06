@@ -87,11 +87,6 @@
         }
 
         function createOutlineElements() {
-            self.elements.top = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-            self.elements.bottom = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-            self.elements.left = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-            self.elements.right = jQuery('<div>').addClass(self.opts.namespace).insertAfter(self.opts.$elem);
-
             self.elements.box = jQuery('<div>').addClass(self.opts.namespace + '_box').insertAfter(self.opts.$elem);
         }
 
