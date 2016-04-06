@@ -38,7 +38,7 @@
 
     LiveEditor.prototype.initVars = function (params) {
         // TODO - test js - trackValue
-        this.trackValue = params.trackValue || 1;
+        this.trackValue = params.trackValue || '1';
         this.device = params.device;
         this.tabsList = params.tabs;
         this.id = params.editor.replace('#', '');

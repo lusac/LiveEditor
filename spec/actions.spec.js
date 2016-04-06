@@ -87,7 +87,7 @@ describe("Actions", function() {
             liveEditorTest.actions.currentSelectedAddEvent('custom-event');
 
             expect(liveEditorTest.experiments.test_1.scriptList.length).toEqual(1);
-            expect(liveEditorTest.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
+            expect(liveEditorTest.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", "1");']);
         });
     });
 
