@@ -114,7 +114,11 @@
 
         function draw(e, elem) {
             if (elem === undefined) {
-                if (e.target.className.indexOf(self.opts.namespace) !== -1) {
+                try {
+                    if (e.target.className.indexOf(self.opts.namespace) !== -1) {
+                        return;
+                    }
+                } catch (err) {
                     return;
                 }
             }
