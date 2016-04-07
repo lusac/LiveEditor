@@ -115,6 +115,10 @@
                         .append('<span class="caret"></span>');
 
             delete this.liveEditor.experiments[currentNameFormated];
+            this.liveEditor.tabs.current().trigger({
+              type:"renamed-option",
+              name:currentName
+            });
         }
     };
 
