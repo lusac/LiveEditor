@@ -29,19 +29,30 @@
     display: inline-block;
 }
 
+.live-editor-add-option {
+    cursor: pointer;
+    margin-left: 13px;
+}
+
 /* TOOLBAR */
 
 .nav-tabs,
-.toolbar {
+.live-editor-toolbar {
     margin: 0;
     display: inline-block;
     vertical-align: middle;
 }
 
-.toolbar li {
+.live-editor-toolbar li {
     list-style: none;
     margin-right: 10px;
     display: inline-block;
+}
+
+.btn-undo .glyphicon-share-alt {
+    transform: scale(-1, 1);
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
 }
 
 /* CODE PANEL */
@@ -50,7 +61,7 @@
     left: 0 !important;
     bottom: 0 !important;
     width: 100% !important;
-    position: absolute !important;
+    position: fixed !important;
 }
 
 .code-panel .well {
@@ -120,3 +131,18 @@
     display: block;
     height: 180px !important;
 }
+
+/* Tab */
+span.icon {
+    color: #ff0000;
+}
+
+span.icon.glyphicon {
+    margin-right: 6px;
+}
+
+/* Button */
+.btn {
+    outline: none !important;
+}
+

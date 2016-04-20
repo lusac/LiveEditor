@@ -18,6 +18,8 @@
         this.buildModals(params);
         this.buildPanel(params);
         this.buildToolbar();
+        this.initActions();
+        this.updateTabsExperimentState();
 
         this.$editorIframe.on('load', function() {
             self.initActions();
@@ -36,6 +38,8 @@
     };
 
     LiveEditor.prototype.initVars = function (params) {
+        // TODO - test js - trackValue
+        this.trackValue = params.trackValue || '1';
         this.device = params.device;
         this.tabsList = params.tabs;
         this.id = params.editor.replace('#', '');
@@ -64,10 +68,34 @@
                     'title': this.tabsList[i],
                     'scriptList': this.js[i] ? [this.js[i]] : [],
                     'undoList': [],
-                    'goalList': []
+                    'goalList': this.extractGoals(this.js[i] ? this.js[i] : ""),
                 };
             }
         }
+    };
+
+    // TO DO - test
+    LiveEditor.prototype.extractGoals = function(js) {
+        var scripts = js.split(';');
+        var goalList = [];
+        for (var i = 0, l = scripts.length; i < l; i++) {
+            var v = scripts[i];
+            if (v === '') {
+                continue;
+            }
+            if (v.match('easyab-track.*')) {
+                goalList.push(v);
+            }
+        }
+        var unique = function(array) {
+            var a = [];
+            for (i = 0; i < array.length; i++) {
+                var current = array[i];
+                if (a.indexOf(current) < 0) a.push(current);
+            }
+            return a;
+        };
+        return unique(goalList);
     };
 
     LiveEditor.prototype.buildIframe = function (params) {
@@ -91,13 +119,14 @@
     };
 
     LiveEditor.prototype.buildModals = function (params) {
+        // TODO - remove id
         this.editHtmlModal = new LiveEditorModal({
             editor: this.id,
             data: {
                 name: 'edit-html-modal-' + this.id,
                 title: 'Edit HTML',
-                field: 'textarea',
-                hasAceEditor: true
+                field: 'div',
+                language: 'html'
             }
         });
 
@@ -119,9 +148,20 @@
             }
         });
 
+        this.editStyleModal = new LiveEditorModal({
+            editor: this.id,
+            data: {
+                name: 'edit-style-modal-' + this.id,
+                title: 'Edit Style',
+                field: 'textarea',
+                language: 'css'
+            }
+        });
+
         this.$editHtmlModal = $('#edit-html-modal-' + this.id);
         this.$editTextModal = $('#edit-text-modal-' + this.id);
         this.$editClassesModal = $('#edit-classes-modal-' + this.id);
+        this.$editStyleModal = $('#edit-style-modal-' + this.id);
     };
 
     LiveEditor.prototype.buildPanel = function () {
@@ -142,7 +182,6 @@
     };
 
     LiveEditor.prototype.saveBody = function () {
-        // TODO - test js
         this.$iframeBody = this.$editorIframe.contents().find('body');
         this.$iframeBody.find('script').remove();
     };
@@ -161,11 +200,7 @@
 
         try {
             if (mode == 'edit') {
-                // TODO - test js
-                var $content = $iframeBody.clone();
-                $content.find('script').remove();
-
-                $body.replaceWith($content);
+                $body.replaceWith($iframeBody.clone());
             } else if (mode == 'view') {
                 $body.replaceWith($iframeBody);
             }
@@ -230,6 +265,8 @@
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected)[0],
                 html = current_without_cache.outerHTML;
             self.editHtmlModal.setValue(html);
+            self.editHtmlModal.aceEditor.aceEditor.focus();
+            self.editHtmlModal.aceEditor.aceEditor.navigateFileEnd();
         });
 
         // Edit Text
@@ -244,6 +281,28 @@
             var current_without_cache = self.$editorIframe.contents().find(self.currentSelected),
                 classes = current_without_cache.attr('class');
             $(this).find('.modal-body input').val(classes);
+        }).on('shown.bs.modal', function () {
+            $(this).find('.modal-body input').focus();
+        });
+
+        // Edit Style
+        this.$editStyleModal.on('show.bs.modal', function () {
+            var $parent = $(this).find('.modal-body>div'),
+                styles = self.$currentSelected.attr('style');
+
+            $parent.empty();
+
+            if (styles) {
+                styles = styles.split(';');
+                for(var i=0; i<=styles.length-1; i++) {
+                    if (styles[i]) {
+                        self.editStyleModal.addNewStyleInput(styles[i]);
+                    }
+                }
+            }
+            self.editStyleModal.addNewStyleInput();
+        }).on('shown.bs.modal', function () {
+            $(this).find('.modal-body .entry:last input').focus();
         });
 
         // Rename Modal
@@ -254,6 +313,7 @@
         this.bindModalSave(this.$editHtmlModal, 'html');
         this.bindModalSave(this.$editTextModal, 'text');
         this.bindModalSave(this.$editClassesModal, 'classes');
+        this.bindModalSave(this.$editStyleModal, 'style');
         this.bindModalSave($('#rename-modal'), 'rename-modal');
     };
 
@@ -279,7 +339,7 @@
         }, false);
 
         document.addEventListener('floatingMenuItemClicked', function (e) {
-            // TODO - verify it has test
+            // TODO - verify if has test
             self.operationInit(e.detail.operation);
         }, false);
 
@@ -292,9 +352,7 @@
         });
 
         this.toolbar.$undoButton.off().on('click', function () {
-            if (self.currentExperiment().undoList.length) {
-                self.actions.undo();
-            }
+            self.actions.undo();
         });
 
         this.tabs.$tabs.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
@@ -309,7 +367,7 @@
             self.updateBody();
         });
 
-        this.toolbar.$buttonAddOption.on('click', function() {
+        this.tabs.$buttonAddOption.on('click', function() {
             self.addNewOption();
         });
 
@@ -317,8 +375,8 @@
             self.actions.saveCodePanel();
         });
 
-        $(document).on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
-            // TODO - test js
+        this.$editor.on('mouseenter', '#floating-menu .container-item-el[data-element-path]', function(e) {
+            // TODO - test are commented
             e.stopPropagation();
 
             var path = $(this).data('element-path'),
@@ -326,32 +384,39 @@
 
             self.domOutline.draw($el);
         }).on('mouseup', '#floating-menu .container-item-el[data-element-path]', function(e) {
-            // TODO - test js
+            // TODO - test are commented
             e.stopPropagation();
             self.selectElement();
         }).on('mouseleave', '#select-container', function() {
-            // TODO - test js
+            // TODO - test are commented
             self.domOutline.draw(self.$currentSelected[0]);
         });
 
-        $(document).keyup(function(e) {
-            // TODO - test js
-            self.changeMode(e);
+        $(document).keydown(function(e) {
+            self.keyDownEvents(e);
+        });
+
+        this.$editorIframe.contents().keydown(function(e) {
+            self.keyDownEvents(e);
         });
 
         this.$editorIframe.contents().keyup(function(e) {
-            // TODO - test js
-            self.changeMode(e);
+            self.keyUpEvents(e);
+        });
 
-            // TODO - test js (verify)
-            if (e.keyCode == 27) { // Esc
-                self.unselectElements();
-            }
+        this.toolbar.$goalButton.on('click', function() {
+            // TODO - test js
+            self.goalState($(this));
         });
     };
 
-    LiveEditor.prototype.changeMode = function(key) {
-        // TODO - test js
+    LiveEditor.prototype.keyDownEvents = function (key) {
+        if ((key.ctrlKey || key.metaKey) && key.which == 90) {
+            this.actions.undo();
+        }
+    };
+
+    LiveEditor.prototype.keyUpEvents = function(key) {
         if (key.which == 69) {
             // key 'e'
             this.toolbar.$modeSelect.val('edit');
@@ -360,20 +425,25 @@
             // key 'v'
             this.toolbar.$modeSelect.val('view');
             this.updateBody();
+        } else if (key.which == 27) {
+            // key 'esc'
+            this.unselectElements();
         }
-    }
+    };
 
     LiveEditor.prototype.addNewOption = function () {
         // TODO - CHECK IF THIS NAME DONT EXIST
         var name = 'Test ' + (this.tabsList.length + 1);
         this.tabsList.push(name);
         this.tabs.createTabs([name]);
+        this.tabs.applyTooltip();
         this.createExperiments();
         this.updateBody();
+        // TO-DO: test.js
+        this.toolbar.$toolbar.trigger('created-option');
     };
 
     LiveEditor.prototype.selectElement = function () {
-        // TODO - test js
         var self = this;
 
         if (this.floatingMenu) {
@@ -385,14 +455,14 @@
         this.domOutline.pause();
 
         this.$editorIframe.contents().find('html *').on('click', function(e) {
+            // TODO - test js
             e.preventDefault();
             e.stopPropagation();
             self.unselectElements();
         });
-    }
+    };
 
     LiveEditor.prototype.unselectElements = function () {
-        // TODO - test js
         if (this.$currentSelected && this.currentSelected) {
             this.floatingMenu.close();
             this.domOutline.stop();
@@ -504,6 +574,29 @@
         return _list;
     };
 
+    LiveEditor.prototype.goalState = function ($btn) {
+        // TODO - test js
+        var id = 'goal-style',
+            activeClass = 'active',
+            $style = this.$editorIframe.contents().find('#' + id);
+
+        if ($style.length > 0) {
+            $style.remove();
+            $btn.removeClass(activeClass);
+            this.$iframeBody.find('#' + id).remove();
+        } else {
+            var css = '<style id="' + id + '">' +
+                        '[easyab-track-scroll], ' +
+                        '[easyab-track-click] { ' +
+                            'background: red !important;' +
+                        '}' +
+                      '</style>';
+            $btn.addClass(activeClass);
+            this.$iframeBody.append(css);
+            this.$editorIframe.contents().find('body').append(css);
+        }
+    }
+
     LiveEditor.prototype.operationInit = function (operation) {
         if (operation === 'remove') {
             this.actions.currentSelectedRemove();
@@ -531,6 +624,9 @@
         if (operation === 'edit-classes-save') {
             this.actions.currentSelectedEditClasses();
         }
+        if (operation === 'edit-style-save') {
+            this.actions.currentSelectedEditStyle();
+        }
 
         if (operation === 'edit-rename-modal-save') {
             this.actions.currentOptionRename();
@@ -556,7 +652,6 @@
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {
-        // TODO - test js
         var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
             oldScript = this.currentExperimentScriptList(),
             finalScript = oldScript === undefined ? newScript : oldScript + newScript;
@@ -577,8 +672,28 @@
     };
 
     LiveEditor.prototype.currentExperimentScriptList = function() {
-        // TODO - test js
         return this.currentExperiment().scriptList.slice(-1)[0];
+    };
+
+    LiveEditor.prototype.updateExperimentState = function() {
+        var currentTab = this.tabs.current();
+        var currentExp = this.currentExperiment();
+        if (currentExp.goalList.length > 0) {
+            currentTab.find("span.glyphicon").remove()
+        }
+    };
+
+    LiveEditor.prototype.updateTabsExperimentState = function () {
+        for(var i=0; i<=this.tabsList.length-1; i++) {
+            var name = this.tabs.slugify(this.tabsList[i]);
+
+            if (this.experiments[name] !== undefined) {
+                if (this.experiments[name].goalList.length > 0) {
+                    var query = "a[data-name='" + name + "']";
+                    this.tabs.$tabs.find(query).find("span.glyphicon").remove()
+                }
+            }
+        }
     };
 
     window.LiveEditor = LiveEditor;

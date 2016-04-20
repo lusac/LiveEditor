@@ -6,10 +6,11 @@ describe("Actions", function() {
 
     afterEach(function() {
         $liveEditor.empty();
-        $('.toolbar').remove();
         $('.modal').remove();
         $('#code-panel').remove();
         $('.code-panel-button').remove();
+        $('.live-editor-toolbar').remove();
+        $('.live-editor-add-option').remove();
         $('ul.dropdown-menu[role]').remove();
     });
 
@@ -86,7 +87,7 @@ describe("Actions", function() {
             liveEditorTest.actions.currentSelectedAddEvent('custom-event');
 
             expect(liveEditorTest.experiments.test_1.scriptList.length).toEqual(1);
-            expect(liveEditorTest.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", 1);']);
+            expect(liveEditorTest.experiments.test_1.scriptList).toEqual(['$("html>body>div>p").attr("easyab-track-custom-event", "1");']);
         });
     });
 
@@ -277,6 +278,16 @@ describe("Actions", function() {
             waits(200);
         });
 
+        it('Should do nothing if undoList is empty', function() {
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'codePanelUpdate');
+
+            liveEditorTest.actions.undo();
+
+            expect(liveEditorTest.updateBody).not.toHaveBeenCalled();
+            expect(liveEditorTest.codePanelUpdate).not.toHaveBeenCalled();
+        });
+
         it('Should remove last item from undoList var', function() {
             liveEditorTest.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
             liveEditorTest.experiments.test_1.undoList.push('self.$editorIframe.contents().find("div").append("<p>Hello World</p>");');
@@ -333,6 +344,46 @@ describe("Actions", function() {
             liveEditorTest.actions.saveCodePanel();
 
             expect(liveEditorTest.actions.saveChanges).toHaveBeenCalledWith('alert(2);')
+        });
+    });
+
+    describe('stringFormat method', function() {
+        it('Replace single quote for &rsquo;', function() {
+            var testString = 'My string ha\'s all this little shit\'s',
+                string = liveEditorTest.actions.stringFormat(testString);
+
+            expect(string).toBe('My string ha&rsquo;s all this little shit&rsquo;s');
+        });
+
+        it ('Remove all \t and \n', function() {
+            var testString = 'My string has \t\nall\t this little \nshits',
+                string = liveEditorTest.actions.stringFormat(testString);
+            expect(string).toBe('My string has all this little shits');
+        });
+    });
+
+    describe('currentSelectedEditStyle method', function() {
+        beforeEach(function() {
+            var input = '<input type="text">';
+
+            spyOn(liveEditorTest.actions, 'saveChanges');
+
+            liveEditorTest.currentSelected = 'html>body>p';
+            liveEditorTest.$editStyleModal.find('.modal-body').append($(input).val('background: red'));
+            liveEditorTest.$editStyleModal.find('.modal-body').append($(input).val('font-size: 10px'));
+        });
+
+        it('Should call _addStyle method', function() {
+            var str = 'background: red;font-size: 10px;';
+            spyOn(liveEditorTest.actions, '_addStyle');
+            liveEditorTest.actions.currentSelectedEditStyle();
+            expect(liveEditorTest.actions._addStyle).toHaveBeenCalledWith('html>body>p', str);
+        });
+
+        it('Should call saveChanges method', function() {
+            var str = '$("html>body>p").attr("style", "background: red;font-size: 10px;");'
+            liveEditorTest.actions.currentSelectedEditStyle();
+            expect(liveEditorTest.actions.saveChanges).toHaveBeenCalledWith(str);
         });
     });
 });

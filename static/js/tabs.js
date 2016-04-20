@@ -16,9 +16,19 @@
 
     LiveEditorTabs.prototype.create = function () {
         this.$tabs = $('<ul class="nav nav-tabs live-editor-tabs">');
+        this.$buttonAddOption = $('<a class="live-editor-add-option">+ add option</a>');
         this.createTabs(this.tabs);
         this.buildModals();
-        this.$parent.append(this.$tabs);
+        this.$parent.append(this.$tabs, this.$buttonAddOption);
+        this.applyTooltip();
+    };
+
+    LiveEditorTabs.prototype.applyTooltip = function () {
+        $("span.icon").tooltip({
+            placement: "bottom",
+            title: 'Você ainda não configurou o GOAL desta aba.',
+            container: "body",
+        });
     };
 
     LiveEditorTabs.prototype.buildModals = function () {
@@ -86,7 +96,8 @@
                 $li.addClass('active');
             }
 
-            $li.append('<a data-toggle="tab" data-name="' + name + '">' + tabsList[i] + '<span class="caret"></span></a>');
+            var warning_icon = '<span class="icon glyphicon glyphicon-exclamation-sign"></span>'
+            $li.append('<a data-toggle="tab" data-name="' + name + '">' + warning_icon + tabsList[i] + '<span class="caret"></span></a>');
             $li.append($ul.clone());
             this.$tabs.append($li);
         }

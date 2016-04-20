@@ -21,8 +21,11 @@
         return '("' + selector + '").attr("class", "' + classes + '");';
     };
 
+    LiveEditorActions.prototype._addStyle = function (selector, styles) {
+        return '("' + selector + '").attr("style", "' + styles + '");';
+    };
+
     LiveEditorActions.prototype.stringFormat = function(str) {
-        // TODO - test js
         return str.replace(new RegExp('\'', 'g'), '&rsquo;').replace(new RegExp('\t|\n', 'g'), '');
     }
 
@@ -83,6 +86,22 @@
         this.saveChanges(str);
     };
 
+    LiveEditorActions.prototype.currentSelectedEditStyle = function () {
+        var $inputs = this.liveEditor.$editStyleModal.find('.modal-body input[type=text]'),
+            styles = '';
+
+        $inputs.each(function() {
+            var val = $(this).val();
+            if (val) {
+                styles += val + ';';
+            }
+        });
+
+        var str = '$' + this._addStyle(this.liveEditor.currentSelected, styles);
+
+        this.saveChanges(str);
+    };
+
     LiveEditorActions.prototype.currentSelectedEditText = function () {
         var scriptText = this.stringFormat(this.liveEditor.editTextModal.getValue()),
             strScript = '$' + this._changeText(this.liveEditor.currentSelected, scriptText);
@@ -93,8 +112,20 @@
     };
 
     LiveEditorActions.prototype.currentSelectedAddEvent = function (e) {
-        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", 1);';
+        // TODO - test js - trackValue
+        var str = '$("' + this.liveEditor.currentSelected + '").attr("easyab-track-' + e + '", "' + this.liveEditor.trackValue + '");';
+        this.saveGoal(str);
         this.saveChanges(str);
+    };
+
+    LiveEditorActions.prototype.saveGoal = function (goal) {
+        var newScript = goal.replace(new RegExp('\t|\n', 'g'), ''),
+            goalListLength = this.liveEditor.currentExperiment().goalList.length,
+            oldScript = this.liveEditor.currentExperiment().goalList[goalListLength - 1]
+            finalScript = oldScript === undefined ? newScript : oldScript + newScript;
+
+        this.liveEditor.currentExperiment().goalList.push(finalScript);
+        this.liveEditor.updateExperimentState();
     };
 
     LiveEditorActions.prototype.currentOptionRename = function () {
@@ -120,10 +151,16 @@
                         .append('<span class="caret"></span>');
 
             delete this.liveEditor.experiments[currentNameFormated];
+            this.liveEditor.tabs.current().trigger({
+              type:"renamed-option",
+              name:currentName
+            });
         }
     };
 
     LiveEditorActions.prototype.currentOptionDelete = function () {
+        // TO-DO: test.js
+        this.liveEditor.tabs.current().trigger('deleted-option');
         var currentName = this.liveEditor.tabs.current().text(),
             currentNameFormated = this.liveEditor.tabs.slugify(currentName),
             index = this.liveEditor.tabsList.indexOf(currentName);
@@ -146,13 +183,16 @@
         this.liveEditor.experiments[currentNameFormated] = oldExperiment;
 
         this.liveEditor.changeTab();
+        this.liveEditor.tabs.applyTooltip()
     };
 
     LiveEditorActions.prototype.undo = function () {
-        var object = this.liveEditor.currentExperiment().undoList.pop();
-        this.liveEditor.currentExperiment().scriptList.pop();
-        this.liveEditor.updateBody(object);
-        this.liveEditor.codePanelUpdate();
+        if (this.liveEditor.currentExperiment().undoList.length) {
+            var object = this.liveEditor.currentExperiment().undoList.pop();
+            this.liveEditor.currentExperiment().scriptList.pop();
+            this.liveEditor.updateBody(object);
+            this.liveEditor.codePanelUpdate();
+        }
     };
 
     LiveEditorActions.prototype.saveCodePanel = function () {

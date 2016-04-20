@@ -1,22 +1,22 @@
 describe('LiveEditor', function() {
     beforeEach(function() {
         liveEditorTest = new LiveEditor({editor: '#live-editor-test-1', tabs: ['test 1', 'test 2'], url: 'site.html'});
-        $liveEditor = $('.live-editor');
+        $liveEditorTest = $('.live-editor');
     });
 
     afterEach(function() {
-        $liveEditor.empty();
+        $liveEditorTest.empty();
         $('.modal').remove();
-        $('.toolbar').remove();
         $('#code-panel').remove();
         $('.modal-backdrop').remove();
         $('.code-panel-button').remove();
+        $('.live-editor-toolbar').remove();
         $('ul.dropdown-menu[role]').remove();
     });
 
     describe('iframe onload', function() {
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe');
+            $iframe = $liveEditorTest.find('iframe');
             spyOn(liveEditorTest, 'domOutlineInit');
             spyOn(liveEditorTest, 'bindEvents');
             spyOn(liveEditorTest, 'saveBody');
@@ -55,7 +55,7 @@ describe('LiveEditor', function() {
 
     describe('Build Tabs', function() {
         it('Should build tabs', function() {
-            var $tabs = $liveEditor.find('.nav.nav-tabs');
+            var $tabs = $liveEditorTest.find('.nav.nav-tabs');
             expect($tabs).toExist();
             expect($tabs.length).toBe(1);
         });
@@ -64,7 +64,7 @@ describe('LiveEditor', function() {
     describe('Build Iframe', function() {
         beforeEach(function() {
             $s = $('.spinner-container');
-            $iframe = $liveEditor.find('iframe');
+            $iframe = $liveEditorTest.find('iframe');
         });
 
         it('Should build iframe', function() {
@@ -135,8 +135,8 @@ describe('LiveEditor', function() {
             liveEditorTest.$editorIframe.load();
         });
 
-        it('Should build Panel', function() {
-            var $t = $('ul.toolbar');
+        it('Should build Toolbar', function() {
+            var $t = $('ul.live-editor-toolbar');
             expect($t).toExist();
         });
     });
@@ -159,7 +159,7 @@ describe('LiveEditor', function() {
     describe('bindEvents method', function() {
         beforeEach(function() {
             waits(150);
-            liveEditorTest.$editorIframe.load();
+            // liveEditorTest.$editorIframe.load();
         });
 
         it('Click in any element should call setCurrentElement method', function() {
@@ -235,7 +235,7 @@ describe('LiveEditor', function() {
 
         it('add option button should call addNewOption method', function() {
             spyOn(liveEditorTest, 'addNewOption');
-            $('.add-option').click();
+            $('.live-editor-add-option').click();
             expect(liveEditorTest.addNewOption).toHaveBeenCalled();
         });
 
@@ -262,13 +262,119 @@ describe('LiveEditor', function() {
             expect(liveEditorTest.actions.undo).toHaveBeenCalled();
         });
 
-        it('Undo button click should not call undo method if undoList is empty', function() {
-            spyOn(liveEditorTest.actions, 'undo');
+        it('document key down should call keyDownEvents method', function() {
+            spyOn(liveEditorTest, 'keyDownEvents');
 
-            $('.btn-undo').click();
+            var e = $.Event('keydown');
+            e.which = 37; 
+            $(document).trigger(e);
 
-            expect(liveEditorTest.actions.undo).not.toHaveBeenCalled();
+            expect(liveEditorTest.keyDownEvents).toHaveBeenCalled();
         });
+
+        it('iframe document key down should call keyDownEvents method', function() {
+            spyOn(liveEditorTest, 'keyDownEvents');
+
+            var e = $.Event('keydown');
+            e.which = 37; 
+            liveEditorTest.$editorIframe.contents().trigger(e);
+
+            expect(liveEditorTest.keyDownEvents).toHaveBeenCalled();
+        });
+
+        it('iframe document key up should call keyUpEvents method', function() {
+            spyOn(liveEditorTest, 'keyUpEvents');
+
+            var e = $.Event('keyup');
+            e.which = 37; 
+            liveEditorTest.$editorIframe.contents().trigger(e);
+
+            expect(liveEditorTest.keyUpEvents).toHaveBeenCalled();
+        });
+
+        // describe('Floating Menu mouse enter', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         _event ={type: 'mouseenter', stopPropagation: function() {} };
+        //         $el = $(document).find('#floating-menu .container-item-el[data-element-path]:first');
+
+        //         spyOn(_event, 'stopPropagation');
+        //         spyOn(liveEditorTest.domOutline, 'draw');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger(_event);
+        //         } catch (err) {}
+        //     });
+
+        //     it('Container element should call stopPropagation method', function() {
+        //         expect(_event.stopPropagation).toHaveBeenCalled();
+        //     });
+
+        //     it('Container element should call domOutline draw method', function() {
+        //         var el = liveEditorTest.$editorIframe.contents().find($el.data('element-path'))[0];
+        //         expect(liveEditorTest.domOutline.draw).toHaveBeenCalledWith(el);
+        //     });
+        // });
+        
+        // describe('Floating Menu mouse up', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         $el = $liveEditorTest.find('#floating-menu .container-item-el[data-element-path]:first');
+
+        //         _event ={type: 'mouseup', stopPropagation: function() {} };
+
+        //         spyOn(_event, 'stopPropagation');
+        //         spyOn(liveEditorTest, 'selectElement');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger(_event);
+        //         } catch (err) {}
+
+        //         $el.trigger(_event);
+        //     });
+
+        //     it('Mouseup: floating menu container element should call stopPropagation method', function() {
+        //         expect(_event.stopPropagation).toHaveBeenCalled();
+        //     });
+
+        //     it('Mouseup: floating menu container element should call selectElement method', function() {
+        //         expect(liveEditorTest.selectElement).toHaveBeenCalled();
+        //     });
+        // });
+
+        // describe('Floating Menu mouse leave', function() {
+        //     beforeEach(function() {
+        //         var $p = liveEditorTest.$editorIframe.contents().find('p');
+
+        //         liveEditorTest.setCurrentElement($p);
+        //         liveEditorTest.openCurrentMenu();
+
+        //         $el = $liveEditorTest.find('#select-container');
+
+        //         spyOn(liveEditorTest.domOutline, 'draw');
+
+        //         // because the bind is been called many
+        //         // times for each LiveEditor instances
+        //         try {
+        //             $el.trigger('mouseleave');
+        //         } catch (err) {}
+        //     });
+
+        //     it('Mouseleave: floating menu container element should call domOutline draw method', function() {
+        //         expect(liveEditorTest.domOutline.draw).toHaveBeenCalledWith(liveEditorTest.$currentSelected[0]);
+        //     });
+        // });
     });
 
     describe('setCurrentElement method', function() {
@@ -343,6 +449,14 @@ describe('LiveEditor', function() {
 
             expect(liveEditorTest.experiments.test_1.scriptList.length).toBe(2);
             expect(liveEditorTest.experiments.test_1.scriptList[1]).toBe('My test with tabs and paragraphs;My new script');
+        });
+
+        it('Should call currentExperimentScriptList method', function() {
+            spyOn(liveEditorTest, 'currentExperimentScriptList');
+
+            liveEditorTest.addToScriptList('\nMy test\t with\t tabs\n and\t\n paragraphs;');
+
+            expect(liveEditorTest.currentExperimentScriptList).toHaveBeenCalled();
         });
     });
 
@@ -470,6 +584,10 @@ describe('LiveEditor', function() {
         it('Should save jquery body', function() {
             expect(liveEditorTest.$iframeBody.prop('tagName')).toBe('BODY');
         });
+
+        it('Should remove all script tags from body', function() {
+            expect(liveEditorTest.$iframeBody.find('script')).not.toExist();
+        });
     });
 
     describe('currentMode method', function() {
@@ -547,7 +665,7 @@ describe('LiveEditor', function() {
 
     describe('updateBody method', function() { 
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe').load();
+            $iframe = $liveEditorTest.find('iframe').load();
             spyOn(liveEditorTest.domOutline, 'stop');
             spyOn(liveEditorTest, 'unselectElements');
             spyOn(liveEditorTest, 'applyJs');
@@ -591,7 +709,7 @@ describe('LiveEditor', function() {
 
     describe('updateBody method with waits', function() {
         beforeEach(function() {
-            $iframe = $liveEditor.find('iframe').load();
+            $iframe = $liveEditorTest.find('iframe').load();
             spyOn(liveEditorTest.domOutline, 'stop');
             spyOn(liveEditorTest, 'unselectElements');
             spyOn(liveEditorTest, 'applyJs');
@@ -667,10 +785,207 @@ describe('LiveEditor', function() {
         });
     });
 
-    describe('openCurrentMenu method', function() {
+    describe('currentExperimentScriptList method', function() {
+        it('Should return last item from list', function() {
+            liveEditorTest.currentExperiment().scriptList.push('item 1');
+            liveEditorTest.currentExperiment().scriptList.push('item 2');
+            liveEditorTest.currentExperiment().scriptList.push('item 3');
+            var scriptList = liveEditorTest.currentExperimentScriptList();
+
+            expect(scriptList).toBe('item 3');
+        });
+    });
+
+    describe('selectElement method', function() {
+        beforeEach(function() {
+            liveEditorTest.$editorIframe.load();
+            spyOn(liveEditorTest, 'setCurrentElement');
+            spyOn(liveEditorTest, 'openCurrentMenu');
+            spyOn(liveEditorTest.domOutline, 'pause');
+        });
+
+        it('Should close floating menu if it exist', function() {
+            liveEditorTest.floatingMenu = new FloatingMenu({ data: { value: 'element' } });;
+            spyOn(liveEditorTest.floatingMenu, 'close');
+
+            var oldMenu = liveEditorTest.floatingMenu;
+            liveEditorTest.floatingMenu = null;
+
+            liveEditorTest.selectElement();
+            expect(oldMenu.close).not.toHaveBeenCalled();
+        });
+
+        it('Should not close floating menu if it doest exist', function() {
+            liveEditorTest.floatingMenu = new FloatingMenu({ data: { value: 'element' } });;
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.floatingMenu.close).toHaveBeenCalled();
+        });
+
+        it('Should call setCurrentElement method', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.setCurrentElement).toHaveBeenCalledWith(liveEditorTest.domOutline.element);
+        });
+
+        it('Should call openCurrentMenu method', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.openCurrentMenu).toHaveBeenCalled();
+        });
+
+        it('Should pause domOutline', function() {
+            liveEditorTest.selectElement();
+            expect(liveEditorTest.domOutline.pause).toHaveBeenCalled();
+        });
+    });
+
+    describe('keyUpEvents method', function() {
+        beforeEach(function() {
+            spyOn(liveEditorTest, 'updateBody');
+            spyOn(liveEditorTest, 'unselectElements');
+        });
+
+        describe('key E', function() {
+            beforeEach(function() {
+                var key = {which: 69};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to Edit', function() {
+                var v = liveEditorTest.toolbar.$modeSelect.val();
+                expect(v).toBe('edit');
+            });
+
+            it('Should call updateBody method', function() {
+                expect(liveEditorTest.updateBody).toHaveBeenCalled()
+            });
+        });
+
+        describe('key V', function() {
+            beforeEach(function() {
+                var key = {which: 86};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to View', function() {
+                var v = liveEditorTest.toolbar.$modeSelect.val();
+                expect(v).toBe('view');
+            });
+
+            it('Should call updateBody method', function() {
+                expect(liveEditorTest.updateBody).toHaveBeenCalled()
+            });
+        });
+
+        describe('key ESC', function() {
+            beforeEach(function() {
+                var key = {which: 27};
+                liveEditorTest.keyUpEvents(key);
+            });
+
+            it('Should set toolbar modeSelect to View', function() {
+                expect(liveEditorTest.unselectElements).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('keyDownEvents method', function() {
+        beforeEach(function() {
+            spyOn(liveEditorTest.actions, 'undo');
+        });
+
+        describe('key ctrl + z', function() {
+            beforeEach(function() {
+                var key = {
+                    which: 90,
+                    ctrlKey: true
+                };
+                liveEditorTest.keyDownEvents(key);
+            });
+
+            it('Should call actions.undo method', function() {
+                expect(liveEditorTest.actions.undo).toHaveBeenCalled()
+            });
+        });
+
+        describe('key cmd + z', function() {
+            beforeEach(function() {
+                var key = {
+                    which: 90,
+                    metaKey: true
+                };
+                liveEditorTest.keyDownEvents(key);
+            });
+
+            it('Should call actions.undo method', function() {
+                expect(liveEditorTest.actions.undo).toHaveBeenCalled()
+            });
+        });
     });
 
     describe('unselectElements method', function() {
+        beforeEach(function() {
+            waits(200);
+        });
+
+        it('Should call floating menu close method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.floatingMenu.close).toHaveBeenCalled();
+        });
+
+        it('Shoud call domOutline stop method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.domOutline.stop).toHaveBeenCalled();
+        });
+
+        it('Shoud call domOutline start method', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.unselectElements();
+            expect(liveEditorTest.domOutline.start).toHaveBeenCalled();
+        });
+
+        it('Set currentSelected as null', function() {
+            var $p = liveEditorTest.$editorIframe.contents().find('p');
+            liveEditorTest.setCurrentElement($p);
+            liveEditorTest.openCurrentMenu();
+
+            spyOn(liveEditorTest.floatingMenu, 'close');
+            spyOn(liveEditorTest.domOutline, 'stop');
+            spyOn(liveEditorTest.domOutline, 'start');
+
+            liveEditorTest.$currentSelected = 1;
+            liveEditorTest.currentSelected = 1;
+
+            liveEditorTest.unselectElements();
+
+            expect(liveEditorTest.$currentSelected).toBe(null);
+            expect(liveEditorTest.currentSelected).toBe(null);
+        });
+    });
+
+    describe('openCurrentMenu method', function() {
     });
 
     describe('modalEvents method', function() {
