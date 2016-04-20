@@ -61,12 +61,21 @@
 
         this.liveEditor.$editorIframe.contents().on('mouseup', function (e) {
             if (self.$draggable && self.isDragging) {
+                self.currentSelectedMove();
                 self.$draggable.attr('style', '');
                 self.isDragging = false;
                 self.$currentSelected = self.$draggable = null;
                 self.liveEditor.domOutline.start();
             }
         });
+    };
+
+    LiveEditorActions.prototype.currentSelectedMove = function () {
+        // TO DO - test
+        var elemPath = this.liveEditor.getElementPath(this.$currentSelected),
+            str = '$("' + elemPath + '").css({top: "' + this.$currentSelected.css('top') + '", left: "' + this.$currentSelected.css('left') +'", position: "relative"});';
+
+        this.saveChanges(str);
     };
 
     LiveEditorActions.prototype.currentSelectedRemove = function () {
