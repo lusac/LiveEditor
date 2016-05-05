@@ -438,6 +438,7 @@
         this.tabs.applyTooltip();
         this.createExperiments();
         this.updateBody();
+        this.codePanelUpdate();
         // TO-DO: test.js
         this.toolbar.$toolbar.trigger('created-option');
     };
@@ -647,17 +648,23 @@
     };
 
     LiveEditor.prototype.addToScriptList = function (str) {
-        var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
-            oldScript = this.currentExperimentScriptList(),
-            finalScript = oldScript === undefined ? newScript : oldScript + newScript;
+        if (str){
+            var newScript = str.replace(new RegExp('\t|\n', 'g'), ''),
+                oldScript = this.currentExperimentScriptList(),
+                finalScript = oldScript === undefined ? newScript : oldScript + newScript;
 
-        this.currentExperiment().scriptList.push(finalScript);
+            this.currentExperiment().scriptList.push(finalScript);
+        } else {
+            this.currentExperiment().scriptList.push("");
+        }
     };
 
     LiveEditor.prototype.codePanelUpdate = function () {
         var str = this.currentExperimentScriptList();
-        if (str) {
+        if (str.length > 0) {
             this.codePanel.aceEditor.aceEditor.setValue(str, -1);
+        } else {
+            this.codePanel.aceEditor.aceEditor.setValue("");
         }
     };
 
