@@ -667,7 +667,11 @@
     };
 
     LiveEditor.prototype.currentExperimentScriptList = function() {
-        return this.currentExperiment().scriptList.slice(-1)[0];
+        var scriptList = this.currentExperiment().scriptList.slice(-1);
+        if(scriptList.length > 0){
+            return this.currentExperiment().scriptList.slice(-1)[0]
+        }
+        return []
     };
 
     LiveEditor.prototype.updateExperimentState = function() {
